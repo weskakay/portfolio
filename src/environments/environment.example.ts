@@ -1,4 +1,4 @@
-// Vorlage — kopiere zu environment.ts und environment.development.ts
+// Vorlage: kopiere zu environment.ts und environment.development.ts
 // und trage echte Werte ein. environment.ts/.development.ts sind in .gitignore.
 export const environment = {
   production: false,

@@ -1,1 +1,100 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global design tokens and base styles */
+
+:root {
+  /* Colors */
+  --color-bg-dark: #141d2f;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-cream: #fffcf3;
+
+  --color-accent-lime: #70e61c;
+  --color-accent-purple: #9747ff;
+  --color-secundario: #00bc8f;
+  --color-magenta: #fb47ff;
+  --color-yellow: #ff9900;
+  --color-dark-green: #4d7e67;
+
+  /* Font */
+  --font-family: 'Poppins', sans-serif;
+
+  /* Font sizes */
+  --fs-hero-name: 128px;
+  --fs-hero-sub: 64px;
+  --fs-deco-i-am: 90px;
+  --fs-overlay-link: 28px;
+  --fs-logo: 22px;
+  --fs-nav: 18px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+
+  /* Weights */
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  /* Layout */
+  --max-width: 1440px;
+  --hero-width: 1344px;
+  --hero-height: 610px;
+  --navbar-height: 109px;
+  --navbar-pad-x: 100px;
+  --navbar-pad-y: 37px;
+
+  /* Button */
+  --btn-radius: 10px;
+  --btn-pad-y: 15px;
+  --btn-pad-x: 30px;
+  --btn-gap: 10px;
+
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Radius + controls */
+  --radius-sm: 8px;
+  --control-size: 36px;
+
+  /* Line height */
+  --lh-default: 1.2;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-default);
+  color: var(--color-white);
+  background: var(--color-bg-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

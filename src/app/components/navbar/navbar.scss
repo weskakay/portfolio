@@ -1,0 +1,130 @@
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  background: var(--color-bg-dark);
+}
+
+.navbar__logo {
+  font-size: var(--fs-logo);
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.navbar__nav {
+  display: none;
+}
+
+.navbar__link {
+  color: var(--color-white);
+  font-size: var(--fs-nav);
+  transition: color 200ms;
+}
+
+.navbar__link:hover {
+  color: var(--color-secundario);
+}
+
+.navbar__lang {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.navbar__lang-btn {
+  width: var(--control-size);
+  height: var(--control-size);
+  border: 1px solid var(--color-white);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-white);
+  font-size: var(--fs-small);
+  transition: background 200ms, color 200ms;
+}
+
+.navbar__lang-btn.is-active {
+  background: var(--color-accent-lime);
+  border-color: var(--color-accent-lime);
+  color: var(--color-black);
+}
+
+.navbar__burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: var(--control-size);
+  height: var(--control-size);
+  border: 0;
+  background: transparent;
+}
+
+/* burger bar geometry is icon-internal, not a shared design token */
+.navbar__burger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-white);
+  transition: transform 200ms, opacity 200ms;
+}
+
+.navbar__burger.is-open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.navbar__burger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__burger.is-open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.navbar__overlay {
+  position: fixed;
+  inset: var(--navbar-height) 0 0 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  background: var(--color-bg-dark);
+}
+
+.navbar__overlay a {
+  color: var(--color-white);
+  font-size: var(--fs-overlay-link);
+  font-weight: var(--fw-bold);
+  transition: color 200ms;
+}
+
+.navbar__overlay a:hover {
+  color: var(--color-secundario);
+}
+
+@media (min-width: 900px) {
+  .navbar {
+    padding: 0 var(--navbar-pad-x);
+  }
+
+  .navbar__nav {
+    display: flex;
+    gap: var(--space-xl);
+  }
+
+  .navbar__burger {
+    display: none;
+  }
+}

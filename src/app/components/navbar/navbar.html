@@ -1,0 +1,53 @@
+<header class="navbar">
+  <a class="navbar__logo" href="#hero" (click)="closeMenu()">Kay Weska</a>
+
+  <div class="navbar__right">
+    <nav class="navbar__nav" aria-label="Hauptnavigation">
+      <a class="navbar__link" href="#about">{{ lang.dict().nav.about }}</a>
+      <a class="navbar__link" href="#skills">{{ lang.dict().nav.skills }}</a>
+      <a class="navbar__link" href="#portfolio">{{ lang.dict().nav.portfolio }}</a>
+    </nav>
+
+    <div class="navbar__lang" role="group" aria-label="Sprache wählen">
+      <button
+        type="button"
+        class="navbar__lang-btn"
+        [class.is-active]="lang.lang() === 'de'"
+        (click)="switchLang('de')"
+        aria-label="Auf Deutsch wechseln"
+      >
+        DE
+      </button>
+      <button
+        type="button"
+        class="navbar__lang-btn"
+        [class.is-active]="lang.lang() === 'en'"
+        (click)="switchLang('en')"
+        aria-label="Switch to English"
+      >
+        EN
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="navbar__burger"
+      [class.is-open]="menuOpen()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Menü öffnen oder schließen"
+      (click)="toggleMenu()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+@if (menuOpen()) {
+  <nav class="navbar__overlay" aria-label="Mobile Navigation">
+    <a href="#about" (click)="closeMenu()">{{ lang.dict().nav.about }}</a>
+    <a href="#skills" (click)="closeMenu()">{{ lang.dict().nav.skills }}</a>
+    <a href="#portfolio" (click)="closeMenu()">{{ lang.dict().nav.portfolio }}</a>
+  </nav>
+}
