@@ -24,6 +24,8 @@
   --fs-hero-sub-sm: 28px;
   --fs-deco-i-am: 90px;
   --fs-deco-i-am-sm: 44px;
+  --fs-section: 48px;
+  --fs-section-sm: 32px;
   --fs-overlay-link: 28px;
   --fs-logo: 22px;
   --fs-nav: 18px;
@@ -60,8 +62,13 @@
   --control-size: 36px;
   --icon-size: 24px;
 
-  /* Line height */
+  /* Section spacing (desktop) */
+  --section-pad-y: 120px;
+  --section-pad-x: 100px;
+
+  /* Line heights */
   --lh-default: 1.2;
+  --lh-body: 1.6;
 }
 
 *,

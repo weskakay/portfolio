@@ -1,0 +1,23 @@
+<section id="skills" class="skills">
+  <div class="skills__inner">
+    <div class="skills__text">
+      <h2 class="skills__heading">{{ lang.dict().skills.heading }}</h2>
+      <p class="skills__intro">{{ lang.dict().skills.intro }}</p>
+      <ul class="skills__methods">
+        @for (method of lang.dict().skills.methods; track method) {
+          <li class="skills__badge">{{ method }}</li>
+        }
+      </ul>
+      <p class="skills__more">{{ lang.dict().skills.more }}</p>
+    </div>
+
+    <ul class="skills__grid">
+      @for (skill of skills; track skill.name) {
+        <li class="skills__item">
+          <img class="skills__icon" [src]="'/icons/' + skill.icon + '.svg'" [alt]="skill.name" />
+          <span class="skills__name">{{ skill.name }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

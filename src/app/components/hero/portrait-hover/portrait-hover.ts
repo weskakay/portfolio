@@ -91,21 +91,29 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
       transparent: true,
       vertexShader: VERTEX_SHADER,
       fragmentShader: FRAGMENT_SHADER,
-      uniforms: {
-        uTexA: { value: texA },
-        uTexB: { value: texB },
-        uMouse: { value: this.mouse },
-        uOffsetB: { value: new THREE.Vector2(0, 0) },
-        uTint: { value: new THREE.Color(0x70e61c) },
-        uHover: { value: 0 },
-        uAuto: { value: 0 },
-        uRadius: { value: 0.34 },
-        uSoft: { value: 0.12 },
-        uStrength: { value: 0.05 },
-        uTime: { value: 0 },
-      },
+      uniforms: this.createUniforms(texA, texB),
     });
     this.scene!.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material));
+  }
+
+  /** Shader uniforms: both textures plus the effect control values. */
+  private createUniforms(texA: THREE.Texture, texB: THREE.Texture): Record<string, THREE.IUniform> {
+    return { uTexA: { value: texA }, uTexB: { value: texB }, ...this.controlUniforms() };
+  }
+
+  /** Effect control uniforms: cursor, tint, sweep and tuning values. */
+  private controlUniforms(): Record<string, THREE.IUniform> {
+    return {
+      uMouse: { value: this.mouse },
+      uOffsetB: { value: new THREE.Vector2(0, 0) },
+      uTint: { value: new THREE.Color(0x70e61c) },
+      uHover: { value: 0 },
+      uAuto: { value: 0 },
+      uRadius: { value: 0.34 },
+      uSoft: { value: 0.12 },
+      uStrength: { value: 0.05 },
+      uTime: { value: 0 },
+    };
   }
 
   /** Attach pointer listeners that drive position and hover intensity. */
