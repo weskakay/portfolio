@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+/* portrait box: dimensions are component layout, not shared tokens */
+.ph {
+  position: relative;
+  width: 260px;
+  aspect-ratio: 4 / 5;
+}
+
+.ph__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.ph.is-ready .ph__canvas {
+  display: block;
+}
+
+.ph__fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.ph.is-ready .ph__fallback {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .ph {
+    width: 360px;
+  }
+}

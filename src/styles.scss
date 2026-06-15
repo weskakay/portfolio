@@ -17,10 +17,13 @@
   /* Font */
   --font-family: 'Poppins', sans-serif;
 
-  /* Font sizes */
+  /* Font sizes (desktop + mobile variants for fluid headings) */
   --fs-hero-name: 128px;
+  --fs-hero-name-sm: 56px;
   --fs-hero-sub: 64px;
+  --fs-hero-sub-sm: 28px;
   --fs-deco-i-am: 90px;
+  --fs-deco-i-am-sm: 44px;
   --fs-overlay-link: 28px;
   --fs-logo: 22px;
   --fs-nav: 18px;
@@ -55,6 +58,7 @@
   /* Radius + controls */
   --radius-sm: 8px;
   --control-size: 36px;
+  --icon-size: 24px;
 
   /* Line height */
   --lh-default: 1.2;
