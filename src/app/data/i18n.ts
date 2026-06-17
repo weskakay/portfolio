@@ -27,6 +27,17 @@ export interface Dictionary {
     more: string;
     methods: string[];
   };
+  portfolio: {
+    heading: string;
+    intro: string;
+    live: string;
+    code: string;
+    details: string;
+    close: string;
+    aboutLabel: string;
+    techLabel: string;
+    highlightLabel: string;
+  };
 }
 
 export const TRANSLATIONS: Record<Lang, Dictionary> = {
@@ -55,6 +66,17 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       more: 'Du suchst eine andere Technologie? Kein Problem, ich lerne schnell dazu.',
       methods: ['Scrum', 'Kanban', 'REST API', 'Testautomatisierung', 'IoT', 'OOP'],
     },
+    portfolio: {
+      heading: 'Portfolio',
+      intro: 'Eine Auswahl meiner Arbeiten. Klick dich rein und probier sie aus.',
+      live: 'Live-Test',
+      code: 'GitHub',
+      details: 'Details ansehen',
+      close: 'Schließen',
+      aboutLabel: 'Worum geht es?',
+      techLabel: 'Eingesetzte Technologien',
+      highlightLabel: 'Highlight',
+    },
   },
   en: {
     nav: { about: 'About me', skills: 'Skills', portfolio: 'Portfolio' },
@@ -80,6 +102,17 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
         'From frontend to backend, from databases to DevOps. I stay curious and pick up new technologies quickly.',
       more: 'Looking for another technology? No problem, I learn fast.',
       methods: ['Scrum', 'Kanban', 'REST API', 'Test automation', 'IoT', 'OOP'],
+    },
+    portfolio: {
+      heading: 'Portfolio',
+      intro: 'A selection of my work. Click in and try it out.',
+      live: 'Live Test',
+      code: 'GitHub',
+      details: 'View details',
+      close: 'Close',
+      aboutLabel: 'About the project',
+      techLabel: 'Technologies I used',
+      highlightLabel: 'Highlight',
     },
   },
 };

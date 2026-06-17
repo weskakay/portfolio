@@ -66,6 +66,11 @@
   --section-pad-y: 120px;
   --section-pad-x: 100px;
 
+  /* Surfaces + overlays */
+  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-border-subtle: rgba(255, 255, 255, 0.12);
+
   /* Line heights */
   --lh-default: 1.2;
   --lh-body: 1.6;
