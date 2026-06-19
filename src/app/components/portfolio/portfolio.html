@@ -10,13 +10,18 @@
             type="button"
             class="card"
             (click)="openDetail(project)"
-            [attr.aria-label]="project.title + ': ' + lang.dict().portfolio.details"
+            [attr.aria-label]="titleFor(project) + ': ' + lang.dict().portfolio.details"
           >
-            <span class="card__media">
-              <img class="card__img" [src]="project.image" [alt]="project.title" loading="lazy" />
+            <span class="card__media" [class.card__media--logo]="!!project.logo">
+              <img
+                class="card__img"
+                [src]="project.logo || project.image"
+                [alt]="titleFor(project)"
+                loading="lazy"
+              />
               <span class="card__hint">{{ lang.dict().portfolio.details }}</span>
             </span>
-            <span class="card__title">{{ project.title }}</span>
+            <span class="card__title">{{ titleFor(project) }}</span>
           </button>
         </li>
       }
@@ -40,12 +45,20 @@
         >
           ×
         </button>
-        <h3 class="modal__title">{{ project.title }}</h3>
+        <h3 class="modal__title">{{ titleFor(project) }}</h3>
 
-        <div class="modal__body">
-          <div class="modal__info">
+        @if (project.story; as story) {
+          <div class="modal__story">
+            @if (story.afterHeading) {
+              <img class="modal__shot" [src]="story.afterHeading" [alt]="titleFor(project)" loading="lazy" />
+            }
+
             <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
             <p class="modal__text">{{ project.description[lang.lang()] }}</p>
+
+            @if (story.afterAbout) {
+              <img class="modal__shot" [src]="story.afterAbout" [alt]="titleFor(project)" loading="lazy" />
+            }
 
             <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
             <ul class="modal__tech">
@@ -59,42 +72,79 @@
               }
             </ul>
 
+            @if (story.afterTech) {
+              <img class="modal__shot" [src]="story.afterTech" [alt]="titleFor(project)" loading="lazy" />
+            }
+
             @if (project.highlight) {
               <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
               <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
             }
-          </div>
 
-          <div class="modal__aside">
-            <img class="modal__img" [src]="project.image" [alt]="project.title" />
-            @if (project.type === 'web') {
-              <div class="modal__actions">
-                @if (project.repoUrl) {
-                  <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
-                    lang.dict().portfolio.code
-                  }}</a>
-                } @else {
-                  <button type="button" class="card__btn" disabled>
-                    {{ lang.dict().portfolio.code }}
-                  </button>
-                }
-                @if (project.liveUrl) {
-                  <a
-                    class="card__btn card__btn--primary"
-                    [href]="project.liveUrl"
-                    target="_blank"
-                    rel="noopener"
-                    >{{ lang.dict().portfolio.live }}</a
-                  >
-                } @else {
-                  <button type="button" class="card__btn card__btn--primary" disabled>
-                    {{ lang.dict().portfolio.live }}
-                  </button>
-                }
-              </div>
+            @if (story.afterHighlight) {
+              <img class="modal__shot" [src]="story.afterHighlight" [alt]="titleFor(project)" loading="lazy" />
             }
           </div>
-        </div>
+        } @else {
+          <div class="modal__body">
+            <div class="modal__info">
+              <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
+              <p class="modal__text">{{ project.description[lang.lang()] }}</p>
+
+              <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
+              <ul class="modal__tech">
+                @for (badge of project.badges; track badge) {
+                  <li class="modal__tech-item">
+                    @if (iconFor(badge); as icon) {
+                      <img class="modal__tech-icon" [src]="icon" alt="" />
+                    }
+                    {{ badge }}
+                  </li>
+                }
+              </ul>
+
+              @if (project.highlight) {
+                <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
+                <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
+              }
+            </div>
+
+            <div class="modal__aside">
+              <img
+                class="modal__img"
+                [class.modal__img--logo]="project.image.endsWith('.svg')"
+                [src]="project.image"
+                [alt]="titleFor(project)"
+              />
+              @if (project.type === 'web') {
+                <div class="modal__actions">
+                  @if (project.repoUrl) {
+                    <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
+                      lang.dict().portfolio.code
+                    }}</a>
+                  } @else {
+                    <button type="button" class="card__btn" disabled>
+                      {{ lang.dict().portfolio.code }}
+                    </button>
+                  }
+                  @if (project.liveUrl) {
+                    <a
+                      class="card__btn card__btn--primary"
+                      [href]="project.liveUrl"
+                      target="_blank"
+                      rel="noopener"
+                      >{{ lang.dict().portfolio.live }}</a
+                    >
+                  } @else {
+                    <button type="button" class="card__btn card__btn--primary" disabled>
+                      {{ lang.dict().portfolio.live }}
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
       </div>
     </div>
   }

@@ -31,12 +31,22 @@ export class Portfolio {
     Python: 'python',
     PHP: 'php',
     'C++': 'cplusplus',
+    Node: 'nodejs',
+    Docker: 'docker',
+    AWS: 'aws',
+    MySQL: 'mysql',
+    JIRA: 'jira',
   };
 
   /** Icon path for a tech badge, or null when no logo exists for it. */
   iconFor(badge: string): string | null {
     const name = this.badgeIcons[badge];
     return name ? `/icons/${name}.svg` : null;
+  }
+
+  /** Display title for the active language, falling back to the default title. */
+  titleFor(project: Project): string {
+    return this.lang.lang() === 'en' && project.titleEn ? project.titleEn : project.title;
   }
 
   /** Open the detail modal for a project. */

@@ -67,6 +67,16 @@
   transform: scale(1.04);
 }
 
+/* logo images: show the whole logo on the dark surface, framed and not cropped */
+.card__media--logo {
+  border: 1px solid var(--color-border-subtle);
+}
+
+.card__media--logo .card__img {
+  object-fit: contain;
+  padding: var(--space-lg);
+}
+
 .card__hint {
   position: absolute;
   inset: 0;
@@ -187,6 +197,12 @@
   background: var(--color-surface);
 }
 
+.modal__img--logo {
+  object-fit: contain;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border-subtle);
+}
+
 .modal__title {
   font-size: var(--fs-section-sm);
   font-weight: var(--fw-bold);
@@ -229,6 +245,18 @@
   flex-wrap: wrap;
   gap: var(--space-md);
   margin-top: var(--space-md);
+}
+
+.modal__story {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.modal__shot {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
 }
 
 @media (min-width: 900px) {

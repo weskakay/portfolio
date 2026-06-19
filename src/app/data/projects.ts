@@ -3,10 +3,18 @@ import type { Lang } from './i18n';
 export interface Project {
   id: string;
   title: string;
+  titleEn?: string;
   description: Record<Lang, string>;
   badges: string[];
   type: 'web' | 'maker';
   image: string;
+  logo?: string;
+  story?: {
+    afterHeading?: string;
+    afterAbout?: string;
+    afterTech?: string;
+    afterHighlight?: string;
+  };
   liveUrl?: string;
   repoUrl?: string;
   highlight?: Record<Lang, string>;
@@ -23,6 +31,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['Angular', 'TypeScript', 'Supabase', 'SCSS'],
     type: 'web',
     image: '/images/projects/poll-app.png',
+    logo: '/images/projects/logos/poll-app.png',
     repoUrl: 'https://github.com/weskakay/poll-app',
   },
   {
@@ -35,6 +44,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['JavaScript', 'Canvas', 'OOP'],
     type: 'web',
     image: '/images/projects/el-pollo-loco.png',
+    logo: '/images/projects/logos/el-pollo-loco.svg',
     repoUrl: 'https://github.com/weskakay/el-pollo-loco',
   },
   {
@@ -46,7 +56,8 @@ export const PROJECTS: readonly Project[] = [
     },
     badges: ['JavaScript', 'Firebase'],
     type: 'web',
-    image: '/images/projects/join.png',
+    image: '/images/projects/logos/join.svg',
+    logo: '/images/projects/logos/join.svg',
     repoUrl: 'https://github.com/weskakay/join-415',
   },
   {
@@ -59,6 +70,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['TypeScript', 'Vite', 'SCSS'],
     type: 'web',
     image: '/images/projects/memory.png',
+    logo: '/images/projects/logos/memory.png',
     repoUrl: 'https://github.com/weskakay/memory',
   },
   {
@@ -70,7 +82,8 @@ export const PROJECTS: readonly Project[] = [
     },
     badges: ['JavaScript', 'REST API'],
     type: 'web',
-    image: '/images/projects/pokedex.png',
+    image: '/images/projects/logos/pokedex.svg',
+    logo: '/images/projects/logos/pokedex.svg',
   },
   {
     id: 'sakura-ramen',
@@ -81,8 +94,31 @@ export const PROJECTS: readonly Project[] = [
     },
     badges: ['HTML', 'CSS'],
     type: 'web',
-    image: '/images/projects/sakura-ramen.png',
+    image: '/images/projects/logos/sakura-ramen.svg',
+    logo: '/images/projects/logos/sakura-ramen.svg',
     repoUrl: 'https://github.com/weskakay/sakura_ramen',
+  },
+  {
+    id: 'weather-station',
+    title: 'Wetterstation',
+    titleEn: 'Weather Station',
+    description: {
+      de: 'Eine selbst gebaute Wetterstation mit eigener App. Sensoren erfassen Temperatur, Niederschlag und weitere Werte, ein Raspberry Pi rechnet sie um und sammelt sie auf einem eigenen Server. Eine App zeigt alles als Tages-, Wochen-, Monats- und Jahresansicht mit Diagrammen.',
+      en: 'A self-built weather station with its own app. Sensors capture temperature, precipitation and more, a Raspberry Pi converts the readings and gathers them on a dedicated server. An app shows everything as day, week, month and year views with charts.',
+    },
+    badges: ['IoT', 'Sensorik', 'Python', 'PHP', 'Linux', 'Raspberry Pi', 'JavaScript', 'Android'],
+    type: 'maker',
+    image: '/images/projects/weather-station1.jpg',
+    story: {
+      afterHeading: '/images/projects/weather-station5.jpg',
+      afterAbout: '/images/projects/weather-station2.jpg',
+      afterTech: '/images/projects/weather-station4.jpg',
+      afterHighlight: '/images/projects/weather-station3.jpg',
+    },
+    highlight: {
+      de: 'Die gesammelten Werte lassen sich als Tag, Woche, Monat und Jahr auswerten, jeweils mit Diagrammen und Verlauf.',
+      en: 'The collected readings can be analysed by day, week, month and year, each with charts and trends.',
+    },
   },
   {
     id: 't3-tracker',
@@ -93,7 +129,12 @@ export const PROJECTS: readonly Project[] = [
     },
     badges: ['IoT', 'GPS/GNSS', 'Embedded', 'Python', 'PHP'],
     type: 'maker',
-    image: '/images/projects/t3-tracker.png',
+    image: '/images/projects/tracker3.jpg',
+    story: {
+      afterHeading: '/images/projects/service-design.jpg',
+      afterAbout: '/images/projects/tracker5.jpg',
+      afterTech: '/images/projects/tracker2.jpg',
+    },
   },
   {
     id: 'rfid-ble-scanner',
@@ -104,6 +145,31 @@ export const PROJECTS: readonly Project[] = [
     },
     badges: ['IoT', 'RFID', 'BLE', 'C++', 'Python', 'Embedded'],
     type: 'maker',
-    image: '/images/projects/rfid-ble-scanner.png',
+    image: '/images/projects/rfidble1.jpg',
+    story: {
+      afterHeading: '/images/projects/rfidble4.jpg',
+      afterAbout: '/images/projects/rfidble3.jpg',
+      afterTech: '/images/projects/rfidble2.jpg',
+    },
+  },
+  {
+    id: 'atf',
+    title: 'ATF',
+    description: {
+      de: 'Ein firmeninternes Framework für automatisierte Tests in der Automobilbranche. Damit lassen sich Teststände, Testfahrten und Prüfabläufe automatisieren, von der Testfarm über Skripte und Steuer-Code bis zur Auswertung. Viele Werkzeuge laufen unter einer Oberfläche zusammen, das macht wiederkehrende Tests schnell und reproduzierbar.',
+      en: 'A company-internal framework for automated testing in the automotive field. It automates test benches, test drives and test routines, from the test farm through scripts and control code to evaluation. Many tools come together under one interface, which makes recurring tests fast and reproducible.',
+    },
+    badges: ['Smoke Test', 'Sensorik', 'Automation', 'Python', 'C++', 'Docker', 'AWS', 'JIRA'],
+    type: 'maker',
+    image: '/images/projects/atf3.jpg',
+    story: {
+      afterHeading: '/images/projects/atf2.jpg',
+      afterTech: '/images/projects/atf1.jpg',
+      afterHighlight: '/images/projects/atf4.jpg',
+    },
+    highlight: {
+      de: 'Eine eigene Testfarm, auf der viele Prüfabläufe automatisch laufen und ihre Ergebnisse zentral zusammenfließen.',
+      en: 'A dedicated test farm where many test routines run automatically and their results flow together in one place.',
+    },
   },
 ];
