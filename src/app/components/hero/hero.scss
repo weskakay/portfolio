@@ -1,10 +1,10 @@
 .hero {
   position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   align-items: center;
   padding: calc(var(--navbar-height) + var(--space-xl)) var(--space-lg) var(--space-xl);
-  background: var(--color-bg-dark);
   overflow: hidden;
 }
 
@@ -60,15 +60,19 @@
   font-weight: var(--fw-bold);
 }
 
-.hero__portrait {
-  flex-shrink: 0;
-}
-
 .hero__social {
   display: flex;
+  align-self: flex-start;
   align-items: center;
   gap: var(--space-md);
   list-style: none;
+}
+
+.hero__social::before {
+  content: '';
+  width: 4rem;
+  height: 2px;
+  background: var(--color-accent-lime);
 }
 
 .hero__social a {
@@ -93,13 +97,8 @@
 
 @media (min-width: 900px) {
   .hero__inner {
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     min-height: 70vh;
-  }
-
-  .hero__left {
-    align-items: flex-start;
   }
 
   .hero__iam {

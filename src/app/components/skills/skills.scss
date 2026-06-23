@@ -1,6 +1,7 @@
 .skills {
+  position: relative;
+  z-index: 1;
   padding: var(--space-xl) var(--space-lg);
-  background: var(--color-bg-dark);
 }
 
 .skills__inner {

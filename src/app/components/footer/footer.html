@@ -1,17 +1,18 @@
-<section id="hero" class="hero">
-  <div class="hero__inner">
-    <div class="hero__left">
-      <div class="hero__intro">
-        <span class="hero__iam" aria-hidden="true">{{ lang.dict().hero.iam }}</span>
-        <div class="hero__headline">
-          <h1 class="hero__name">Kay Weska</h1>
-          <p class="hero__role">{{ lang.dict().hero.role }}</p>
-        </div>
-      </div>
-      <a class="hero__cta" href="#contact">{{ lang.dict().hero.cta }}</a>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a class="footer__logo-link" routerLink="/" fragment="hero" aria-label="Kay Weska">
+        <img class="footer__logo" src="/logo-w.svg" alt="" />
+      </a>
+      <nav class="footer__legal" aria-label="Rechtliches">
+        <a routerLink="/impressum">{{ lang.dict().footer.impressum }}</a>
+        <a routerLink="/datenschutz">{{ lang.dict().footer.datenschutz }}</a>
+      </nav>
     </div>
 
-    <ul class="hero__social">
+    <p class="footer__rights">© {{ year }} Kay Weska. {{ lang.dict().footer.rights }}</p>
+
+    <ul class="footer__social">
       <li>
         <a href="https://github.com/weskakay" target="_blank" rel="noopener" aria-label="GitHub">
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -39,7 +40,5 @@
         </a>
       </li>
     </ul>
-
-    <span class="hero__scroll" aria-hidden="true">{{ lang.dict().hero.scroll }}</span>
   </div>
-</section>
+</footer>

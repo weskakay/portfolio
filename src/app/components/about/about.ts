@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
+import { PortraitHover } from '../hero/portrait-hover/portrait-hover';
 
-/** "About me" section: a short intro plus three personal highlights. */
+/** "About me" section: intro, personal highlights and the cursor-reactive portrait. */
 @Component({
   selector: 'app-about',
-  imports: [],
+  imports: [PortraitHover],
   templateUrl: './about.html',
   styleUrl: './about.scss',
 })

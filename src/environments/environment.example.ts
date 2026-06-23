@@ -1,5 +1,5 @@
-// Vorlage: kopiere zu environment.ts und environment.development.ts
-// und trage echte Werte ein. environment.ts/.development.ts sind in .gitignore.
+// Template: copy to environment.ts and environment.development.ts and fill in
+// real values. environment.ts/.development.ts are gitignored.
 export const environment = {
   production: false,
   supabaseUrl: 'YOUR_SUPABASE_URL',

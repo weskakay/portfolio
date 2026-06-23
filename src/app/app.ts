@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './components/navbar/navbar';
-import { Hero } from './components/hero/hero';
-import { About } from './components/about/about';
-import { Skills } from './components/skills/skills';
-import { Portfolio } from './components/portfolio/portfolio';
+import { Footer } from './components/footer/footer';
 
+/** Root shell: fixed navbar, ambient background glow, routed page and footer. */
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, Hero, About, Skills, Portfolio],
+  imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

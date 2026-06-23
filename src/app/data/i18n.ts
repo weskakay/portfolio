@@ -5,6 +5,7 @@ export interface Dictionary {
     about: string;
     skills: string;
     portfolio: string;
+    contact: string;
   };
   hero: {
     iam: string;
@@ -38,11 +39,39 @@ export interface Dictionary {
     techLabel: string;
     highlightLabel: string;
   };
+  contact: {
+    heading: string;
+    lead: string;
+    intro: string;
+    cta: string;
+    ctaContact: string;
+    name: string;
+    email: string;
+    message: string;
+    privacy: string;
+    privacyLink: string;
+    submit: string;
+    sending: string;
+    success: string;
+    error: string;
+    errName: string;
+    errEmail: string;
+    errMessage: string;
+    errPrivacy: string;
+  };
+  footer: {
+    rights: string;
+    impressum: string;
+    datenschutz: string;
+  };
+  legal: {
+    back: string;
+  };
 }
 
 export const TRANSLATIONS: Record<Lang, Dictionary> = {
   de: {
-    nav: { about: 'Über mich', skills: 'Fähigkeiten', portfolio: 'Portfolio' },
+    nav: { about: 'Über mich', skills: 'Fähigkeiten', portfolio: 'Portfolio', contact: 'Kontakt' },
     hero: {
       iam: 'Ich bin',
       role: 'FULLSTACK DEVELOPER',
@@ -77,9 +106,38 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       techLabel: 'Eingesetzte Technologien',
       highlightLabel: 'Highlight',
     },
+    contact: {
+      heading: 'Kontakt',
+      lead: 'Hast du ein Projekt?',
+      intro:
+        'Erzähl mir von deinem Projekt und der Rolle, die du suchst. Ich bringe Erfahrung vom Sensor bis zur Oberfläche mit.',
+      cta: 'Du suchst einen Fullstack-Entwickler?',
+      ctaContact: 'Schreib mir!',
+      name: 'Name',
+      email: 'E-Mail',
+      message: 'Nachricht',
+      privacy: 'Ich bin mit der Verarbeitung meiner Daten gemäß der',
+      privacyLink: 'Datenschutzerklärung',
+      submit: 'Nachricht senden',
+      sending: 'Wird gesendet',
+      success: 'Danke, deine Nachricht ist angekommen.',
+      error: 'Da ist etwas schiefgelaufen. Bitte versuch es später noch einmal.',
+      errName: 'Bitte gib deinen Namen ein.',
+      errEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
+      errMessage: 'Bitte schreib mindestens 10 Zeichen.',
+      errPrivacy: 'Bitte stimme der Datenschutzerklärung zu.',
+    },
+    footer: {
+      rights: 'Alle Rechte vorbehalten.',
+      impressum: 'Impressum',
+      datenschutz: 'Datenschutz',
+    },
+    legal: {
+      back: 'Zurück zur Startseite',
+    },
   },
   en: {
-    nav: { about: 'About me', skills: 'Skills', portfolio: 'Portfolio' },
+    nav: { about: 'About me', skills: 'Skills', portfolio: 'Portfolio', contact: 'Contact' },
     hero: {
       iam: 'I am',
       role: 'FULLSTACK DEVELOPER',
@@ -113,6 +171,35 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       aboutLabel: 'About the project',
       techLabel: 'Technologies I used',
       highlightLabel: 'Highlight',
+    },
+    contact: {
+      heading: 'Contact',
+      lead: 'Got a project?',
+      intro:
+        'Tell me about your project and the role you have in mind. I bring experience from the sensor to the interface.',
+      cta: 'Need a Fullstack developer?',
+      ctaContact: 'Contact me!',
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      privacy: 'I agree to the processing of my data according to the',
+      privacyLink: 'privacy policy',
+      submit: 'Send message',
+      sending: 'Sending',
+      success: 'Thanks, your message came through.',
+      error: 'Something went wrong. Please try again later.',
+      errName: 'Please enter your name.',
+      errEmail: 'Please enter a valid email address.',
+      errMessage: 'Please write at least 10 characters.',
+      errPrivacy: 'Please accept the privacy policy.',
+    },
+    footer: {
+      rights: 'All rights reserved.',
+      impressum: 'Legal notice',
+      datenschutz: 'Privacy',
+    },
+    legal: {
+      back: 'Back to home',
     },
   },
 };

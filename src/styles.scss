@@ -1,5 +1,33 @@
 /* Global design tokens and base styles */
 
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins-700.woff2') format('woff2');
+}
+
+html {
+  scroll-padding-top: var(--navbar-height);
+  background: var(--color-bg-dark);
+  overscroll-behavior-y: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 :root {
   /* Colors */
   --color-bg-dark: #141d2f;
@@ -13,6 +41,7 @@
   --color-magenta: #fb47ff;
   --color-yellow: #ff9900;
   --color-dark-green: #4d7e67;
+  --color-error: #ff6b6b;
 
   /* Font */
   --font-family: 'Poppins', sans-serif;

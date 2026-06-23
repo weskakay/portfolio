@@ -1,0 +1,107 @@
+<section id="contact" class="contact">
+  <div class="contact__inner">
+    <h2 class="contact__heading">{{ lang.dict().contact.heading }}</h2>
+
+    <div class="contact__body">
+      <div class="contact__lead-col">
+        <h3 class="contact__lead">{{ lang.dict().contact.lead }}</h3>
+        <p class="contact__intro">{{ lang.dict().contact.intro }}</p>
+        <p class="contact__cta">
+          {{ lang.dict().contact.cta }} <strong>{{ lang.dict().contact.ctaContact }}</strong>
+        </p>
+      </div>
+
+      <form class="contact__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="contact__field">
+          <label class="contact__label" for="contact-name">{{ lang.dict().contact.name }}</label>
+          <input
+            id="contact-name"
+            class="contact__input"
+            type="text"
+            formControlName="name"
+            autocomplete="name"
+            [attr.aria-invalid]="showError('name')"
+          />
+          <span class="contact__error" aria-live="polite">
+            @if (showError('name')) {
+              {{ lang.dict().contact.errName }}
+            }
+          </span>
+        </div>
+
+        <div class="contact__field">
+          <label class="contact__label" for="contact-email">{{ lang.dict().contact.email }}</label>
+          <input
+            id="contact-email"
+            class="contact__input"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            [attr.aria-invalid]="showError('email')"
+          />
+          <span class="contact__error" aria-live="polite">
+            @if (showError('email')) {
+              {{ lang.dict().contact.errEmail }}
+            }
+          </span>
+        </div>
+
+        <div class="contact__field">
+          <label class="contact__label" for="contact-message">{{ lang.dict().contact.message }}</label>
+          <textarea
+            id="contact-message"
+            class="contact__input contact__textarea"
+            rows="5"
+            formControlName="message"
+            [attr.aria-invalid]="showError('message')"
+          ></textarea>
+          <span class="contact__error" aria-live="polite">
+            @if (showError('message')) {
+              {{ lang.dict().contact.errMessage }}
+            }
+          </span>
+        </div>
+
+        <div class="contact__privacy">
+          <input
+            id="contact-privacy"
+            type="checkbox"
+            formControlName="privacy"
+            [attr.aria-invalid]="showError('privacy')"
+          />
+          <label for="contact-privacy">
+            {{ lang.dict().contact.privacy }}
+            <a routerLink="/datenschutz" (click)="$event.stopPropagation()">{{
+              lang.dict().contact.privacyLink
+            }}</a
+            >.
+          </label>
+        </div>
+        <span class="contact__error" aria-live="polite">
+          @if (showError('privacy')) {
+            {{ lang.dict().contact.errPrivacy }}
+          }
+        </span>
+
+        <button
+          type="submit"
+          class="contact__submit"
+          [disabled]="form.invalid || status() === 'sending'"
+        >
+          {{ status() === 'sending' ? lang.dict().contact.sending : lang.dict().contact.submit }}
+        </button>
+
+        <p class="contact__status contact__status--ok" aria-live="polite">
+          @if (status() === 'success') {
+            {{ lang.dict().contact.success }}
+          }
+        </p>
+        <p class="contact__status contact__status--err" aria-live="polite">
+          @if (status() === 'error') {
+            {{ lang.dict().contact.error }}
+          }
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

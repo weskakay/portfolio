@@ -1,11 +1,16 @@
 <header class="navbar">
-  <a class="navbar__logo" href="#hero" (click)="closeMenu()">Kay Weska</a>
+  <a class="navbar__logo" routerLink="/" fragment="hero" (click)="closeMenu()">
+    <span><span class="navbar__logo-k">K</span>ay</span>
+    <img class="navbar__logo-w" src="/logo-w.svg" alt="W" />
+    <span>eska</span>
+  </a>
 
   <div class="navbar__right">
     <nav class="navbar__nav" aria-label="Hauptnavigation">
-      <a class="navbar__link" href="#about">{{ lang.dict().nav.about }}</a>
-      <a class="navbar__link" href="#skills">{{ lang.dict().nav.skills }}</a>
-      <a class="navbar__link" href="#portfolio">{{ lang.dict().nav.portfolio }}</a>
+      <a class="navbar__link" routerLink="/" fragment="about">{{ lang.dict().nav.about }}</a>
+      <a class="navbar__link" routerLink="/" fragment="skills">{{ lang.dict().nav.skills }}</a>
+      <a class="navbar__link" routerLink="/" fragment="portfolio">{{ lang.dict().nav.portfolio }}</a>
+      <a class="navbar__link" routerLink="/" fragment="contact">{{ lang.dict().nav.contact }}</a>
     </nav>
 
     <div class="navbar__lang" role="group" aria-label="Sprache wählen">
@@ -46,8 +51,9 @@
 
 @if (menuOpen()) {
   <nav class="navbar__overlay" aria-label="Mobile Navigation">
-    <a href="#about" (click)="closeMenu()">{{ lang.dict().nav.about }}</a>
-    <a href="#skills" (click)="closeMenu()">{{ lang.dict().nav.skills }}</a>
-    <a href="#portfolio" (click)="closeMenu()">{{ lang.dict().nav.portfolio }}</a>
+    <a routerLink="/" fragment="about" (click)="closeMenu()">{{ lang.dict().nav.about }}</a>
+    <a routerLink="/" fragment="skills" (click)="closeMenu()">{{ lang.dict().nav.skills }}</a>
+    <a routerLink="/" fragment="portfolio" (click)="closeMenu()">{{ lang.dict().nav.portfolio }}</a>
+    <a routerLink="/" fragment="contact" (click)="closeMenu()">{{ lang.dict().nav.contact }}</a>
   </nav>
 }

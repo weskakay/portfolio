@@ -11,9 +11,27 @@
 }
 
 .navbar__logo {
+  display: inline-flex;
+  align-items: center;
   font-size: var(--fs-logo);
   font-weight: var(--fw-bold);
   color: var(--color-white);
+}
+
+.navbar__logo-k {
+  color: var(--color-accent-lime);
+}
+
+.navbar__logo-w {
+  height: 1.2em;
+  width: auto;
+  margin: 0 0.05em 0 0.3em;
+  transition: transform 250ms, filter 250ms;
+}
+
+.navbar__logo:hover .navbar__logo-w {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 5px var(--color-accent-lime));
 }
 
 .navbar__right {

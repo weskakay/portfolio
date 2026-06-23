@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import type { Lang } from '../../data/i18n';
 
@@ -8,7 +9,7 @@ import type { Lang } from '../../data/i18n';
  */
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })

@@ -1,0 +1,77 @@
+<main class="legal">
+  <a class="legal__back" routerLink="/">{{ lang.dict().legal.back }}</a>
+
+  @if (lang.lang() === 'de') {
+    <h1 class="legal__heading">Impressum</h1>
+    <div class="legal__text">
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        Kay Weska<br />
+        Semperstraße 3e<br />
+        01069 Dresden
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Telefon: +49 173 2856681<br />
+        E-Mail: weskakay&#64;gmail.com
+      </p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>
+        Kay Weska<br />
+        Semperstraße 3e<br />
+        01069 Dresden
+      </p>
+
+      <h2>Streitschlichtung</h2>
+      <p>
+        Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+        <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener"
+          >https://ec.europa.eu/consumers/odr/</a
+        >. Meine E-Mail-Adresse findest du oben in diesem Impressum.
+      </p>
+      <p>
+        Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+        Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
+    </div>
+  } @else {
+    <h1 class="legal__heading">Legal notice</h1>
+    <div class="legal__text">
+      <p class="legal__note">This is a courtesy translation. The German version is legally binding.</p>
+
+      <h2>Information pursuant to § 5 TMG</h2>
+      <p>
+        Kay Weska<br />
+        Semperstraße 3e<br />
+        01069 Dresden, Germany
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Phone: +49 173 2856681<br />
+        Email: weskakay&#64;gmail.com
+      </p>
+
+      <h2>Responsible for the content according to § 18 (2) MStV</h2>
+      <p>
+        Kay Weska<br />
+        Semperstraße 3e<br />
+        01069 Dresden, Germany
+      </p>
+
+      <h2>Dispute resolution</h2>
+      <p>
+        The European Commission provides a platform for online dispute resolution (ODR):
+        <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener"
+          >https://ec.europa.eu/consumers/odr/</a
+        >. You can find my email address above.
+      </p>
+      <p>
+        I am neither willing nor obliged to take part in dispute resolution proceedings before a
+        consumer arbitration board.
+      </p>
+    </div>
+  }
+</main>

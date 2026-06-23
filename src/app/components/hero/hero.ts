@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { PortraitHover } from './portrait-hover/portrait-hover';
 
 /**
  * Above-the-fold hero section: intro headline, call to action, social links
- * and the cursor-reactive portrait (see PortraitHover).
+ * and the scroll indicator.
  */
 @Component({
   selector: 'app-hero',
-  imports: [PortraitHover],
+  imports: [],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
