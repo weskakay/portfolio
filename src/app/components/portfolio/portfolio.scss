@@ -164,13 +164,13 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: 820px;
   max-height: 90vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   border-radius: var(--btn-radius);
   border: 1px solid var(--color-border-subtle);
   background: var(--color-bg-dark);
@@ -256,6 +256,7 @@
 
 .modal__shot {
   width: 100%;
+  max-height: 280px;
   border-radius: var(--radius-sm);
   object-fit: cover;
 }
@@ -283,5 +284,10 @@
 
   .modal__aside {
     flex: 0 0 42%;
+  }
+
+  .modal__panel {
+    max-width: 700px;
+    max-height: 80vh;
   }
 }

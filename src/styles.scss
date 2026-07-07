@@ -20,6 +20,20 @@ html {
   scroll-padding-top: var(--navbar-height);
   background: var(--color-bg-dark);
   overscroll-behavior-y: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent-lime) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-lime);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -67,8 +81,6 @@ html {
 
   /* Layout */
   --max-width: 1440px;
-  --hero-width: 1344px;
-  --hero-height: 610px;
   --navbar-height: 109px;
   --navbar-pad-x: 100px;
   --navbar-pad-y: 37px;

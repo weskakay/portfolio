@@ -27,38 +27,70 @@
       }
     </ul>
   </div>
+</section>
 
-  @if (selected(); as project) {
-    <div class="modal" role="dialog" aria-modal="true">
+@if (selected(); as project) {
+  <div class="modal" role="dialog" aria-modal="true">
+    <button
+      type="button"
+      class="modal__backdrop"
+      (click)="closeDetail()"
+      [attr.aria-label]="lang.dict().portfolio.close"
+    ></button>
+    <div class="modal__panel">
       <button
         type="button"
-        class="modal__backdrop"
+        class="modal__close"
         (click)="closeDetail()"
         [attr.aria-label]="lang.dict().portfolio.close"
-      ></button>
-      <div class="modal__panel">
-        <button
-          type="button"
-          class="modal__close"
-          (click)="closeDetail()"
-          [attr.aria-label]="lang.dict().portfolio.close"
-        >
-          ×
-        </button>
-        <h3 class="modal__title">{{ titleFor(project) }}</h3>
+      >
+        ×
+      </button>
+      <h3 class="modal__title">{{ titleFor(project) }}</h3>
 
-        @if (project.story; as story) {
-          <div class="modal__story">
-            @if (story.afterHeading) {
-              <img class="modal__shot" [src]="story.afterHeading" [alt]="titleFor(project)" loading="lazy" />
+      @if (project.story; as story) {
+        <div class="modal__story">
+          @if (story.afterHeading) {
+            <img class="modal__shot" [src]="story.afterHeading" [alt]="titleFor(project)" loading="lazy" />
+          }
+
+          <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
+          <p class="modal__text">{{ project.description[lang.lang()] }}</p>
+
+          @if (story.afterAbout) {
+            <img class="modal__shot" [src]="story.afterAbout" [alt]="titleFor(project)" loading="lazy" />
+          }
+
+          <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
+          <ul class="modal__tech">
+            @for (badge of project.badges; track badge) {
+              <li class="modal__tech-item">
+                @if (iconFor(badge); as icon) {
+                  <img class="modal__tech-icon" [src]="icon" alt="" />
+                }
+                {{ badge }}
+              </li>
             }
+          </ul>
 
+          @if (story.afterTech) {
+            <img class="modal__shot" [src]="story.afterTech" [alt]="titleFor(project)" loading="lazy" />
+          }
+
+          @if (project.highlight) {
+            <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
+            <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
+          }
+
+          @if (story.afterHighlight) {
+            <img class="modal__shot" [src]="story.afterHighlight" [alt]="titleFor(project)" loading="lazy" />
+          }
+        </div>
+      } @else {
+        <div class="modal__body">
+          <div class="modal__info">
             <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
             <p class="modal__text">{{ project.description[lang.lang()] }}</p>
-
-            @if (story.afterAbout) {
-              <img class="modal__shot" [src]="story.afterAbout" [alt]="titleFor(project)" loading="lazy" />
-            }
 
             <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
             <ul class="modal__tech">
@@ -72,80 +104,48 @@
               }
             </ul>
 
-            @if (story.afterTech) {
-              <img class="modal__shot" [src]="story.afterTech" [alt]="titleFor(project)" loading="lazy" />
-            }
-
             @if (project.highlight) {
               <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
               <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
             }
+          </div>
 
-            @if (story.afterHighlight) {
-              <img class="modal__shot" [src]="story.afterHighlight" [alt]="titleFor(project)" loading="lazy" />
+          <div class="modal__aside">
+            <img
+              class="modal__img"
+              [class.modal__img--logo]="project.image.endsWith('.svg')"
+              [src]="project.image"
+              [alt]="titleFor(project)"
+            />
+            @if (project.type === 'web') {
+              <div class="modal__actions">
+                @if (project.repoUrl) {
+                  <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
+                    lang.dict().portfolio.code
+                  }}</a>
+                } @else {
+                  <button type="button" class="card__btn" disabled>
+                    {{ lang.dict().portfolio.code }}
+                  </button>
+                }
+                @if (project.liveUrl) {
+                  <a
+                    class="card__btn card__btn--primary"
+                    [href]="project.liveUrl"
+                    target="_blank"
+                    rel="noopener"
+                    >{{ lang.dict().portfolio.live }}</a
+                  >
+                } @else {
+                  <button type="button" class="card__btn card__btn--primary" disabled>
+                    {{ lang.dict().portfolio.live }}
+                  </button>
+                }
+              </div>
             }
           </div>
-        } @else {
-          <div class="modal__body">
-            <div class="modal__info">
-              <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
-              <p class="modal__text">{{ project.description[lang.lang()] }}</p>
-
-              <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
-              <ul class="modal__tech">
-                @for (badge of project.badges; track badge) {
-                  <li class="modal__tech-item">
-                    @if (iconFor(badge); as icon) {
-                      <img class="modal__tech-icon" [src]="icon" alt="" />
-                    }
-                    {{ badge }}
-                  </li>
-                }
-              </ul>
-
-              @if (project.highlight) {
-                <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
-                <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
-              }
-            </div>
-
-            <div class="modal__aside">
-              <img
-                class="modal__img"
-                [class.modal__img--logo]="project.image.endsWith('.svg')"
-                [src]="project.image"
-                [alt]="titleFor(project)"
-              />
-              @if (project.type === 'web') {
-                <div class="modal__actions">
-                  @if (project.repoUrl) {
-                    <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
-                      lang.dict().portfolio.code
-                    }}</a>
-                  } @else {
-                    <button type="button" class="card__btn" disabled>
-                      {{ lang.dict().portfolio.code }}
-                    </button>
-                  }
-                  @if (project.liveUrl) {
-                    <a
-                      class="card__btn card__btn--primary"
-                      [href]="project.liveUrl"
-                      target="_blank"
-                      rel="noopener"
-                      >{{ lang.dict().portfolio.live }}</a
-                    >
-                  } @else {
-                    <button type="button" class="card__btn card__btn--primary" disabled>
-                      {{ lang.dict().portfolio.live }}
-                    </button>
-                  }
-                </div>
-              }
-            </div>
-          </div>
-        }
-      </div>
+        </div>
+      }
     </div>
-  }
-</section>
+  </div>
+}
