@@ -52,9 +52,9 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
     this.dispose();
   }
 
-  /** True only on devices with a real hover pointer (desktop). */
+  /** True only on desktop with a real hovering fine pointer; touch uses the crossfade. */
   private canHover(): boolean {
-    return window.matchMedia('(hover: hover)').matches;
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   }
 
   /** Load textures, build the scene, wire events and start rendering. */

@@ -39,6 +39,10 @@ export interface Dictionary {
     techLabel: string;
     highlightLabel: string;
   };
+  gallery: {
+    heading: string;
+    subtitle: string;
+  };
   contact: {
     heading: string;
     lead: string;
@@ -106,6 +110,10 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       techLabel: 'Eingesetzte Technologien',
       highlightLabel: 'Highlight',
     },
+    gallery: {
+      heading: 'ON AND OFF THE PITCH',
+      subtitle: 'Fußball ist mein Ausgleich. Ein paar Momente auf und neben dem Platz.',
+    },
     contact: {
       heading: 'Kontakt',
       lead: 'Hast du ein Projekt?',
@@ -171,6 +179,10 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       aboutLabel: 'About the project',
       techLabel: 'Technologies I used',
       highlightLabel: 'Highlight',
+    },
+    gallery: {
+      heading: 'ON AND OFF THE PITCH',
+      subtitle: 'Football is my balance. A few moments on and off the pitch.',
     },
     contact: {
       heading: 'Contact',

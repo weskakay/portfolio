@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { PROJECTS, type Project } from '../../data/projects';
 
@@ -16,6 +16,15 @@ export class Portfolio {
   protected readonly lang = inject(LanguageService);
   protected readonly projects = PROJECTS;
   protected readonly selected = signal<Project | null>(null);
+
+  /** Lock page scroll while the detail modal is open. */
+  private readonly lockBodyScroll = effect((onCleanup) => {
+    if (!this.selected()) return;
+    document.body.style.overflow = 'hidden';
+    onCleanup(() => {
+      document.body.style.overflow = '';
+    });
+  });
 
   private readonly badgeIcons: Record<string, string> = {
     Angular: 'angular',
@@ -41,7 +50,7 @@ export class Portfolio {
   /** Icon path for a tech badge, or null when no logo exists for it. */
   iconFor(badge: string): string | null {
     const name = this.badgeIcons[badge];
-    return name ? `/icons/${name}.svg` : null;
+    return name ? `/tech-icons/${name}.svg` : null;
   }
 
   /** Display title for the active language, falling back to the default title. */

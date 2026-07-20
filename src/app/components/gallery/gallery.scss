@@ -1,0 +1,136 @@
+.gallery {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) 0;
+}
+
+.gallery__intro {
+  padding: 0 var(--section-pad-x);
+  margin-bottom: var(--space-xl);
+}
+
+.gallery__heading {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
+}
+
+.gallery__subtitle {
+  margin-top: var(--space-sm);
+  max-width: 40rem;
+  line-height: var(--lh-body);
+  color: var(--color-white);
+}
+
+/* Base (touch / reduced motion): a stacked masonry collage */
+.gallery__collage {
+  columns: 2;
+  column-gap: var(--space-lg);
+  padding: 0 var(--section-pad-x);
+}
+
+.gallery__tile {
+  break-inside: avoid;
+  margin: 0 0 var(--space-lg);
+}
+
+.gallery__caption {
+  margin-bottom: var(--space-sm);
+  font-size: var(--fs-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  opacity: 0.7;
+}
+
+.gallery__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+}
+
+/* tile shapes and heights below are collage layout, not shared tokens */
+.gallery__tile--portrait .gallery__frame {
+  aspect-ratio: 3 / 4;
+}
+
+.gallery__tile--landscape .gallery__frame {
+  aspect-ratio: 4 / 3;
+}
+
+.gallery__tile--square .gallery__frame {
+  aspect-ratio: 1 / 1;
+}
+
+.gallery__tile--tall .gallery__frame {
+  aspect-ratio: 2 / 3;
+}
+
+.gallery__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Desktop mouse with motion: the collage pans horizontally on scroll */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .gallery {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .gallery__viewport {
+    overflow: hidden;
+  }
+
+  .gallery__collage {
+    columns: initial;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    width: max-content;
+    height: 82svh;
+  }
+
+  .gallery__tile {
+    margin: 0;
+  }
+
+  .gallery__tile:nth-child(3n + 1) {
+    align-self: flex-start;
+  }
+
+  .gallery__tile:nth-child(3n + 2) {
+    align-self: center;
+  }
+
+  .gallery__tile:nth-child(3n) {
+    align-self: flex-end;
+  }
+
+  .gallery__frame {
+    width: auto;
+  }
+
+  .gallery__tile--portrait .gallery__frame {
+    height: 60svh;
+  }
+
+  .gallery__tile--landscape .gallery__frame {
+    height: 42svh;
+  }
+
+  .gallery__tile--square .gallery__frame {
+    height: 50svh;
+  }
+
+  .gallery__tile--tall .gallery__frame {
+    height: 66svh;
+  }
+}

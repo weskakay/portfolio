@@ -20,6 +20,7 @@ html {
   scroll-padding-top: var(--navbar-height);
   background: var(--color-bg-dark);
   overscroll-behavior-y: none;
+  overflow-x: clip;
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent-lime) transparent;
 }
@@ -60,15 +61,11 @@ html {
   /* Font */
   --font-family: 'Poppins', sans-serif;
 
-  /* Font sizes (desktop + mobile variants for fluid headings) */
-  --fs-hero-name: 128px;
-  --fs-hero-name-sm: 56px;
-  --fs-hero-sub: 64px;
-  --fs-hero-sub-sm: 28px;
-  --fs-deco-i-am: 90px;
-  --fs-deco-i-am-sm: 44px;
-  --fs-section: 48px;
-  --fs-section-sm: 32px;
+  /* Font sizes: headings scale fluidly between mobile and desktop */
+  --fs-hero-name: clamp(48px, 11vw, 128px);
+  --fs-hero-sub: clamp(26px, 5.5vw, 64px);
+  --fs-deco-i-am: clamp(40px, 8vw, 90px);
+  --fs-section: clamp(30px, 5vw, 48px);
   --fs-overlay-link: 28px;
   --fs-logo: 22px;
   --fs-nav: 18px;
@@ -81,7 +78,7 @@ html {
 
   /* Layout */
   --max-width: 1440px;
-  --navbar-height: 109px;
+  --navbar-height: 72px;
   --navbar-pad-x: 100px;
   --navbar-pad-y: 37px;
 
@@ -101,11 +98,12 @@ html {
   /* Radius + controls */
   --radius-sm: 8px;
   --control-size: 36px;
+  --tap-target: 44px;
   --icon-size: 24px;
 
   /* Section spacing (desktop) */
-  --section-pad-y: 120px;
-  --section-pad-x: 100px;
+  --section-pad-y: clamp(48px, 10vw, 120px);
+  --section-pad-x: clamp(24px, 6vw, 100px);
 
   /* Surfaces + overlays */
   --color-overlay: rgba(0, 0, 0, 0.7);
@@ -115,6 +113,20 @@ html {
   /* Line heights */
   --lh-default: 1.2;
   --lh-body: 1.6;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --navbar-height: 109px;
+  }
+}
+
+/* Phones in landscape have little height: shrink the fixed chrome so content fits */
+@media (max-height: 560px) {
+  :root {
+    --navbar-height: 64px;
+    --section-pad-y: 64px;
+  }
 }
 
 *,
@@ -137,6 +149,7 @@ body {
   line-height: var(--lh-default);
   color: var(--color-white);
   background: var(--color-bg-dark);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

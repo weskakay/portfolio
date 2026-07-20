@@ -1,0 +1,19 @@
+<section #section id="gallery" class="gallery">
+  <div class="gallery__intro">
+    <h2 class="gallery__heading">{{ lang.dict().gallery.heading }}</h2>
+    <p class="gallery__subtitle">{{ lang.dict().gallery.subtitle }}</p>
+  </div>
+
+  <div class="gallery__viewport">
+    <div #track class="gallery__collage">
+      @for (shot of shots; track shot.id) {
+        <figure class="gallery__tile gallery__tile--{{ shot.ratio }}">
+          <figcaption class="gallery__caption">{{ shot.caption[lang.lang()] }}</figcaption>
+          <div class="gallery__frame">
+            <img class="gallery__img" [src]="shot.image" [alt]="shot.caption[lang.lang()]" loading="lazy" />
+          </div>
+        </figure>
+      }
+    </div>
+  </div>
+</section>

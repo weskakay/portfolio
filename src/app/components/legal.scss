@@ -6,6 +6,7 @@
   margin: 0 auto;
   padding: calc(var(--navbar-height) + var(--space-xl)) var(--space-lg) var(--space-xl);
   min-height: 70vh;
+  min-height: 70svh;
   color: var(--color-white);
 }
 
@@ -20,7 +21,7 @@
 }
 
 .legal__heading {
-  font-size: var(--fs-section-sm);
+  font-size: var(--fs-section);
   font-weight: var(--fw-bold);
 }
 

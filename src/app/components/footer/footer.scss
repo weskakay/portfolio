@@ -1,7 +1,7 @@
 .footer {
   position: relative;
   z-index: 1;
-  padding: var(--space-xl) var(--space-lg);
+  padding: var(--section-pad-y) var(--section-pad-x);
   color: var(--color-white);
   background: linear-gradient(135deg, var(--color-dark-green), var(--color-accent-purple));
   border-top: 2px solid var(--color-accent-lime);
@@ -88,10 +88,6 @@
 }
 
 @media (min-width: 900px) {
-  .footer {
-    padding: var(--space-xl) var(--section-pad-x);
-  }
-
   .footer__inner {
     flex-direction: row;
     justify-content: space-between;

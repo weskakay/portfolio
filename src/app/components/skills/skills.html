@@ -14,7 +14,7 @@
     <ul class="skills__grid">
       @for (skill of skills; track skill.name) {
         <li class="skills__item">
-          <img class="skills__icon" [src]="'/icons/' + skill.icon + '.svg'" [alt]="skill.name" />
+          <img class="skills__icon" [src]="'/tech-icons/' + skill.icon + '.svg'" [alt]="skill.name" />
           <span class="skills__name">{{ skill.name }}</span>
         </li>
       }

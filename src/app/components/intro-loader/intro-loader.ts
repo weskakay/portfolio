@@ -84,7 +84,9 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
 
   /** Size the drawing buffer to a capped DPR and rebuild the scene. */
   private readonly resize = (): void => {
-    const el = this.sky()!.nativeElement;
+    const sky = this.sky();
+    if (!sky) return;
+    const el = sky.nativeElement;
     const dpr = Math.min(window.devicePixelRatio, SCENE.dpiCap);
     el.width = Math.floor(el.clientWidth * dpr);
     el.height = Math.floor(el.clientHeight * dpr);
@@ -244,6 +246,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
   /** Stop rendering, release scrolling and remove the overlay. */
   private finish(): void {
     this.stopRender();
+    this.resizeObserver?.disconnect();
     document.body.style.overflow = '';
     this.done.set(true);
   }
