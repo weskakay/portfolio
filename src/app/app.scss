@@ -3,22 +3,16 @@
   display: block;
 }
 
-/* page-wide ambient colour glows, spread down the full page behind the content */
+/* ambient colour glows, fixed to the viewport so every section keeps the same wash */
 .bg-glow {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(42vw 42vw at 100% 5%, rgba(28, 218, 230, 0.26), transparent 60%),
-    radial-gradient(46vw 46vw at -8% 15%, rgba(151, 71, 255, 0.26), transparent 60%),
-    radial-gradient(40vw 40vw at 100% 24%, rgba(112, 230, 28, 0.18), transparent 60%),
-    radial-gradient(40vw 40vw at -8% 33%, rgba(251, 71, 255, 0.18), transparent 60%),
-    radial-gradient(42vw 42vw at 100% 42%, rgba(28, 218, 230, 0.22), transparent 60%),
-    radial-gradient(44vw 44vw at -8% 51%, rgba(151, 71, 255, 0.24), transparent 60%),
-    radial-gradient(40vw 40vw at 100% 60%, rgba(112, 230, 28, 0.18), transparent 60%),
-    radial-gradient(40vw 40vw at -8% 69%, rgba(251, 71, 255, 0.18), transparent 60%),
-    radial-gradient(42vw 42vw at 100% 80%, rgba(28, 218, 230, 0.22), transparent 60%),
-    radial-gradient(42vw 42vw at -5% 92%, rgba(151, 71, 255, 0.22), transparent 60%);
+    radial-gradient(42vw 42vw at 96% 8%, rgba(28, 218, 230, 0.30), transparent 60%),
+    radial-gradient(44vw 44vw at 2% 34%, rgba(151, 71, 255, 0.30), transparent 60%),
+    radial-gradient(38vw 38vw at 92% 60%, rgba(112, 230, 28, 0.24), transparent 60%),
+    radial-gradient(42vw 42vw at 4% 88%, rgba(251, 71, 255, 0.26), transparent 60%);
   background-repeat: no-repeat;
 }

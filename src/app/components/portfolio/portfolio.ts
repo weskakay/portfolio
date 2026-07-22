@@ -17,12 +17,12 @@ export class Portfolio {
   protected readonly projects = PROJECTS;
   protected readonly selected = signal<Project | null>(null);
 
-  /** Lock page scroll while the detail modal is open. */
+  /** Lock page scroll in place while the detail modal is open (no jump). */
   private readonly lockBodyScroll = effect((onCleanup) => {
     if (!this.selected()) return;
-    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflowY = 'hidden';
     onCleanup(() => {
-      document.body.style.overflow = '';
+      document.documentElement.style.overflowY = '';
     });
   });
 

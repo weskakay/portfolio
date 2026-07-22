@@ -21,6 +21,7 @@ html {
   background: var(--color-bg-dark);
   overscroll-behavior-y: none;
   overflow-x: clip;
+  scrollbar-gutter: stable;
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent-lime) transparent;
 }

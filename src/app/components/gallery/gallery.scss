@@ -1,12 +1,15 @@
 .gallery {
   position: relative;
   z-index: 1;
-  padding: var(--section-pad-y) 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-lg);
 }
 
 .gallery__intro {
   padding: 0 var(--section-pad-x);
-  margin-bottom: var(--space-xl);
 }
 
 .gallery__heading {
@@ -22,29 +25,39 @@
   color: var(--color-white);
 }
 
-/* Base (touch / reduced motion): a stacked masonry collage */
+.gallery__viewport {
+  overflow: hidden;
+}
+
+/* the row is wider than the screen and gets panned left by the scroll trigger */
 .gallery__collage {
-  columns: 2;
-  column-gap: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: max-content;
+  height: 72svh;
   padding: 0 var(--section-pad-x);
 }
 
 .gallery__tile {
-  break-inside: avoid;
-  margin: 0 0 var(--space-lg);
+  flex: 0 0 auto;
 }
 
-.gallery__caption {
-  margin-bottom: var(--space-sm);
-  font-size: var(--fs-small);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-white);
-  opacity: 0.7;
+.gallery__tile:nth-child(3n + 1) {
+  align-self: flex-start;
+}
+
+.gallery__tile:nth-child(3n + 2) {
+  align-self: center;
+}
+
+.gallery__tile:nth-child(3n) {
+  align-self: flex-end;
 }
 
 .gallery__frame {
   position: relative;
+  width: auto;
   overflow: hidden;
   border-radius: var(--btn-radius);
   border: 1px solid var(--color-border-subtle);
@@ -53,18 +66,22 @@
 
 /* tile shapes and heights below are collage layout, not shared tokens */
 .gallery__tile--portrait .gallery__frame {
+  height: 46svh;
   aspect-ratio: 3 / 4;
 }
 
 .gallery__tile--landscape .gallery__frame {
+  height: 34svh;
   aspect-ratio: 4 / 3;
 }
 
 .gallery__tile--square .gallery__frame {
+  height: 40svh;
   aspect-ratio: 1 / 1;
 }
 
 .gallery__tile--tall .gallery__frame {
+  height: 52svh;
   aspect-ratio: 2 / 3;
 }
 
@@ -76,61 +93,25 @@
   object-fit: cover;
 }
 
-/* Desktop mouse with motion: the collage pans horizontally on scroll */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .gallery {
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .gallery__viewport {
-    overflow: hidden;
-  }
-
+@media (min-width: 900px) {
   .gallery__collage {
-    columns: initial;
-    display: flex;
-    align-items: center;
     gap: var(--space-xl);
-    width: max-content;
-    height: 82svh;
-  }
-
-  .gallery__tile {
-    margin: 0;
-  }
-
-  .gallery__tile:nth-child(3n + 1) {
-    align-self: flex-start;
-  }
-
-  .gallery__tile:nth-child(3n + 2) {
-    align-self: center;
-  }
-
-  .gallery__tile:nth-child(3n) {
-    align-self: flex-end;
-  }
-
-  .gallery__frame {
-    width: auto;
+    height: 74svh;
   }
 
   .gallery__tile--portrait .gallery__frame {
-    height: 60svh;
+    height: 54svh;
   }
 
   .gallery__tile--landscape .gallery__frame {
-    height: 42svh;
+    height: 38svh;
   }
 
   .gallery__tile--square .gallery__frame {
-    height: 50svh;
+    height: 44svh;
   }
 
   .gallery__tile--tall .gallery__frame {
-    height: 66svh;
+    height: 60svh;
   }
 }

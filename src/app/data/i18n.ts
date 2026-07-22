@@ -5,6 +5,7 @@ export interface Dictionary {
     about: string;
     skills: string;
     portfolio: string;
+    gallery: string;
     contact: string;
   };
   hero: {
@@ -75,7 +76,13 @@ export interface Dictionary {
 
 export const TRANSLATIONS: Record<Lang, Dictionary> = {
   de: {
-    nav: { about: 'Über mich', skills: 'Fähigkeiten', portfolio: 'Portfolio', contact: 'Kontakt' },
+    nav: {
+      about: 'Über mich',
+      skills: 'Fähigkeiten',
+      portfolio: 'Portfolio',
+      gallery: 'Galerie',
+      contact: 'Kontakt',
+    },
     hero: {
       iam: 'Ich bin',
       role: 'FULLSTACK DEVELOPER',
@@ -112,7 +119,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
-      subtitle: 'Fußball ist mein Ausgleich. Ein paar Momente auf und neben dem Platz.',
+      subtitle: 'Sport ist mein Ausgleich. Ein paar Momente auf und neben dem Platz.',
     },
     contact: {
       heading: 'Kontakt',
@@ -145,7 +152,13 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
   },
   en: {
-    nav: { about: 'About me', skills: 'Skills', portfolio: 'Portfolio', contact: 'Contact' },
+    nav: {
+      about: 'About me',
+      skills: 'Skills',
+      portfolio: 'Portfolio',
+      gallery: 'Gallery',
+      contact: 'Contact',
+    },
     hero: {
       iam: 'I am',
       role: 'FULLSTACK DEVELOPER',
@@ -182,7 +195,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
-      subtitle: 'Football is my balance. A few moments on and off the pitch.',
+      subtitle: 'Sport is my balance. A few moments on and off the pitch.',
     },
     contact: {
       heading: 'Contact',

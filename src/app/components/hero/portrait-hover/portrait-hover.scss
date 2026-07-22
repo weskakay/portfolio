@@ -5,7 +5,7 @@
 /* portrait box: dimensions are component layout, not shared tokens */
 .ph {
   position: relative;
-  width: min(260px, 100%);
+  width: min(260px, 90vw);
   aspect-ratio: 4 / 5;
 }
 

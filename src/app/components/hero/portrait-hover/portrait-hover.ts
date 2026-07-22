@@ -12,9 +12,9 @@ import gsap from 'gsap';
 import { FRAGMENT_SHADER, VERTEX_SHADER } from './portrait-shaders';
 
 /**
- * Portrait with a cursor-following liquid reveal. The football photo is
- * unveiled around the pointer with a watery displacement (WebGL), plus an
- * automatic top-to-bottom wash. Falls back to a static photo without hover.
+ * Portrait with a liquid WebGL reveal that runs on every device: the football
+ * photo washes over the business photo automatically and follows the pointer
+ * on desktop. Falls back to a photo crossfade when WebGL is unavailable.
  */
 @Component({
   selector: 'app-portrait-hover',
@@ -45,16 +45,11 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
   private readonly mouseTarget = new THREE.Vector2(0.5, 0.5);
 
   ngAfterViewInit(): void {
-    if (this.canHover()) void this.initWebgl();
+    void this.initWebgl();
   }
 
   ngOnDestroy(): void {
     this.dispose();
-  }
-
-  /** True only on desktop with a real hovering fine pointer; touch uses the crossfade. */
-  private canHover(): boolean {
-    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   }
 
   /** Load textures, build the scene, wire events and start rendering. */

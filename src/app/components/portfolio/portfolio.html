@@ -46,7 +46,8 @@
       >
         ×
       </button>
-      <h3 class="modal__title">{{ titleFor(project) }}</h3>
+      <div class="modal__scroll">
+        <h3 class="modal__title">{{ titleFor(project) }}</h3>
 
       @if (project.story; as story) {
         <div class="modal__story">
@@ -146,6 +147,7 @@
           </div>
         </div>
       }
+      </div>
     </div>
   </div>
 }

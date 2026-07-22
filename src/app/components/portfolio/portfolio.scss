@@ -165,6 +165,13 @@
   z-index: 1;
   width: 100%;
   max-width: 820px;
+  overflow: hidden;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-dark);
+}
+
+.modal__scroll {
   max-height: 90vh;
   max-height: 90dvh;
   overflow-y: auto;
@@ -172,16 +179,13 @@
   flex-direction: column;
   gap: var(--space-sm);
   padding: var(--space-lg);
-  border-radius: var(--btn-radius);
-  border: 1px solid var(--color-border-subtle);
-  background: var(--color-bg-dark);
 }
 
 .modal__close {
-  position: sticky;
-  top: 0;
-  align-self: flex-end;
-  z-index: 1;
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,6 +296,9 @@
 
   .modal__panel {
     max-width: 700px;
+  }
+
+  .modal__scroll {
     max-height: 80vh;
     max-height: 80dvh;
   }
