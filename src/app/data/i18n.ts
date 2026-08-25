@@ -72,6 +72,10 @@ export interface Dictionary {
   legal: {
     back: string;
   };
+  rotate: {
+    title: string;
+    text: string;
+  };
 }
 
 export const TRANSLATIONS: Record<Lang, Dictionary> = {
@@ -150,6 +154,10 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     legal: {
       back: 'Zurück zur Startseite',
     },
+    rotate: {
+      title: 'Bitte dreh dein Handy',
+      text: 'Dieses Portfolio wirkt am besten im Hochformat.',
+    },
   },
   en: {
     nav: {
@@ -225,6 +233,10 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
     legal: {
       back: 'Back to home',
+    },
+    rotate: {
+      title: 'Please rotate your phone',
+      text: 'This portfolio looks best in portrait mode.',
     },
   },
 };

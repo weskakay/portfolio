@@ -1,0 +1,40 @@
+.rotate {
+  display: none;
+}
+
+/* Only phones in landscape (short height): cover the page and ask to rotate back */
+@media (orientation: landscape) and (max-height: 500px) {
+  .rotate {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    text-align: center;
+    background: var(--color-bg-dark);
+  }
+}
+
+/* icon size is component layout, not a shared token */
+.rotate__icon {
+  width: 56px;
+  height: 56px;
+  fill: var(--color-accent-lime);
+}
+
+.rotate__title {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
+}
+
+.rotate__text {
+  max-width: 22rem;
+  line-height: var(--lh-body);
+  color: var(--color-white);
+  opacity: 0.8;
+}

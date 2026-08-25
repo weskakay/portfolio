@@ -206,9 +206,11 @@
 }
 
 .modal__img {
+  align-self: center;
   width: 100%;
+  max-width: 70%;
   aspect-ratio: 16 / 10;
-  object-fit: cover;
+  object-fit: contain;
   margin-bottom: var(--space-sm);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
@@ -221,6 +223,7 @@
 }
 
 .modal__title {
+  margin-bottom: var(--space-md);
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
@@ -271,10 +274,9 @@
 }
 
 .modal__shot {
-  width: 100%;
-  max-height: 280px;
+  align-self: center;
+  width: 70%;
   border-radius: var(--radius-sm);
-  object-fit: cover;
 }
 
 @media (min-width: 900px) {
@@ -292,6 +294,10 @@
 
   .modal__aside {
     flex: 0 0 42%;
+  }
+
+  .modal__img {
+    max-width: 100%;
   }
 
   .modal__panel {
