@@ -129,11 +129,30 @@
   color: var(--color-white);
   background: transparent;
   cursor: pointer;
+  transition:
+    color 200ms,
+    border-color 200ms,
+    transform 200ms;
+}
+
+.card__btn:hover:not([disabled]) {
+  border-color: var(--color-accent-lime);
+  color: var(--color-accent-lime);
+  transform: scale(1.04);
+}
+
+.card__btn:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
 }
 
 .card__btn--primary {
   background: var(--color-accent-lime);
   border-color: var(--color-accent-lime);
+  color: var(--color-black);
+}
+
+.card__btn--primary:hover:not([disabled]) {
   color: var(--color-black);
 }
 
@@ -205,13 +224,33 @@
   transform: scale(1.08);
 }
 
+.modal__close:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 3px;
+}
+
+.modal__close-icon {
+  width: 60%;
+  height: 60%;
+  fill: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__btn,
+  .modal__close {
+    transition: none;
+  }
+
+  .card__btn:hover:not([disabled]),
+  .modal__close:hover {
+    transform: none;
+  }
+}
+
 .modal__img {
-  align-self: center;
   width: 100%;
-  max-width: 70%;
   aspect-ratio: 16 / 10;
   object-fit: contain;
-  margin-bottom: var(--space-sm);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
 }
@@ -239,12 +278,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-}
-
-.modal__aside {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
 }
 
 .modal__label {
@@ -275,29 +308,14 @@
 
 .modal__shot {
   align-self: center;
-  width: 70%;
+  max-width: 70%;
+  max-height: 380px;
   border-radius: var(--radius-sm);
 }
 
 @media (min-width: 900px) {
   .portfolio__grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .modal__body {
-    flex-direction: row;
-  }
-
-  .modal__info {
-    flex: 1;
-  }
-
-  .modal__aside {
-    flex: 0 0 42%;
-  }
-
-  .modal__img {
-    max-width: 100%;
   }
 
   .modal__panel {

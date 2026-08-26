@@ -7,9 +7,10 @@
       @for (project of projects; track project.id) {
         <li>
           <button
+            #card
             type="button"
             class="card"
-            (click)="openDetail(project)"
+            (click)="openDetail(project, card)"
             [attr.aria-label]="titleFor(project) + ': ' + lang.dict().portfolio.details"
           >
             <span class="card__media" [class.card__media--logo]="!!project.logo">
@@ -30,21 +31,31 @@
 </section>
 
 @if (selected(); as project) {
-  <div class="modal" role="dialog" aria-modal="true">
+  <div
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="titleFor(project)"
+    (keydown)="onModalKeydown($event)"
+  >
     <button
       type="button"
       class="modal__backdrop"
+      tabindex="-1"
+      aria-hidden="true"
       (click)="closeDetail()"
-      [attr.aria-label]="lang.dict().portfolio.close"
     ></button>
     <div class="modal__panel">
       <button
+        #closeButton
         type="button"
         class="modal__close"
         (click)="closeDetail()"
         [attr.aria-label]="lang.dict().portfolio.close"
       >
-        ×
+        <svg class="modal__close-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
       </button>
       <div class="modal__scroll">
         <h3 class="modal__title">{{ titleFor(project) }}</h3>
@@ -111,40 +122,39 @@
             }
           </div>
 
-          <div class="modal__aside">
-            <img
-              class="modal__img"
-              [class.modal__img--logo]="project.image.endsWith('.svg')"
-              [src]="project.image"
-              [alt]="titleFor(project)"
-            />
-            @if (project.type === 'web') {
-              <div class="modal__actions">
-                @if (project.repoUrl) {
-                  <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
-                    lang.dict().portfolio.code
-                  }}</a>
-                } @else {
-                  <button type="button" class="card__btn" disabled>
-                    {{ lang.dict().portfolio.code }}
-                  </button>
-                }
-                @if (project.liveUrl) {
-                  <a
-                    class="card__btn card__btn--primary"
-                    [href]="project.liveUrl"
-                    target="_blank"
-                    rel="noopener"
-                    >{{ lang.dict().portfolio.live }}</a
-                  >
-                } @else {
-                  <button type="button" class="card__btn card__btn--primary" disabled>
-                    {{ lang.dict().portfolio.live }}
-                  </button>
-                }
-              </div>
-            }
-          </div>
+          @if (project.type === 'web') {
+            <div class="modal__actions">
+              @if (project.repoUrl) {
+                <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
+                  lang.dict().portfolio.code
+                }}</a>
+              } @else {
+                <button type="button" class="card__btn" disabled>
+                  {{ lang.dict().portfolio.code }}
+                </button>
+              }
+              @if (project.liveUrl) {
+                <a
+                  class="card__btn card__btn--primary"
+                  [href]="project.liveUrl"
+                  target="_blank"
+                  rel="noopener"
+                  >{{ lang.dict().portfolio.live }}</a
+                >
+              } @else {
+                <button type="button" class="card__btn card__btn--primary" disabled>
+                  {{ lang.dict().portfolio.live }}
+                </button>
+              }
+            </div>
+          }
+
+          <img
+            class="modal__img"
+            [class.modal__img--logo]="project.image.endsWith('.svg')"
+            [src]="project.image"
+            [alt]="titleFor(project)"
+          />
         </div>
       }
       </div>
