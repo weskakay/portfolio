@@ -319,11 +319,42 @@
   }
 
   .modal__panel {
-    max-width: 700px;
+    max-width: clamp(700px, 75vw, 1440px);
+  }
+
+  /* Grow the panel with the screen, but keep lines at a readable length. */
+  .modal__info,
+  .modal__story .modal__label,
+  .modal__story .modal__text,
+  .modal__story .modal__tech {
+    max-width: 72ch;
   }
 
   .modal__scroll {
     max-height: 80vh;
     max-height: 80dvh;
+  }
+}
+
+/* Wide screens: text on the left, screenshot and its buttons on the right. */
+@media (min-width: 1400px) {
+  .modal__body {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    grid-template-rows: auto auto;
+    column-gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .modal__info {
+    grid-area: 1 / 1 / span 2;
+  }
+
+  .modal__img {
+    grid-area: 1 / 2;
+  }
+
+  .modal__actions {
+    grid-area: 2 / 2;
   }
 }

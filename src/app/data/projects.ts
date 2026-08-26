@@ -31,7 +31,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['Angular', 'TypeScript', 'PHP', 'MySQL', 'SCSS'],
     type: 'web',
     image: '/images/projects/poll-app.jpg',
-    logo: '/images/projects/logos/poll-app.png',
+    logo: '/images/projects/logos/poll-app.svg',
     liveUrl: 'https://poll.weskakay.de',
     repoUrl: 'https://github.com/weskakay/poll-app',
     highlight: {
@@ -80,7 +80,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['TypeScript', 'Vite', 'SCSS'],
     type: 'web',
     image: '/images/projects/memory.jpg',
-    logo: '/images/projects/logos/memory.png',
+    logo: '/images/projects/logos/memory.svg',
     liveUrl: 'https://memory.weskakay.de',
     repoUrl: 'https://github.com/weskakay/memory',
     highlight: {
@@ -98,7 +98,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['JavaScript', 'HTML', 'CSS'],
     type: 'web',
     image: '/images/projects/bestellapp.jpg',
-    logo: '/images/projects/logos/bestellapp.svg',
+    logo: '/images/projects/logos/bestellapp.png',
     liveUrl: 'https://bestell.weskakay.de',
     repoUrl: 'https://github.com/weskakay/BestellApp',
     highlight: {
