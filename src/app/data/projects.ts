@@ -59,16 +59,21 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     id: 'join',
-    title: 'Join',
+    title: 'J0IN',
     description: {
-      de: 'Ein Kanban-Board zum Planen von Aufgaben: anlegen, Personen zuweisen und per Drag-and-drop durch die Spalten ziehen.',
-      en: 'A Kanban board for planning tasks: create them, assign people and drag them across the columns.',
+      de: 'Ein Kanban-Board für eigene Aufgaben und Projekte. Spalten lassen sich umbenennen und ergänzen, Karten tragen Kategorie, Frist, Priorität, Teilaufgaben und zugewiesene Personen und wandern per Ziehen durch die Spalten, am Rechner wie am Handy. Angular vorn, eine eigene PHP-Schnittstelle auf MySQL dahinter.',
+      en: 'A Kanban board for my own tasks and projects. Columns can be renamed and added, cards carry a category, due date, priority, subtasks and assignees, and move through the columns by dragging, on a desktop as well as on a phone. Angular on the front, my own PHP API on MySQL behind it.',
     },
-    badges: ['JavaScript', 'Firebase'],
+    badges: ['Angular', 'TypeScript', 'SCSS', 'PHP', 'MySQL'],
     type: 'web',
-    image: '/images/projects/logos/join.svg',
-    logo: '/images/projects/logos/join.svg',
-    repoUrl: 'https://github.com/weskakay/join-415',
+    image: '/images/projects/j0in.jpg',
+    logo: '/images/projects/logos/j0in.svg',
+    liveUrl: 'https://j0in.weskakay.de',
+    repoUrl: 'https://github.com/weskakay/j0in',
+    highlight: {
+      de: 'Die Null im Namen ist das Ziel: keine offenen Aufgaben mehr. Beim Laden ist sie ein offener Ring, der sich dreht und erst zur Null wird, wenn das Board da ist. Das ganze Board kommt in einem einzigen Aufruf, samt Spalten, Karten, Teilaufgaben und Kontakten, statt in einem Aufruf je Teil.',
+      en: 'The zero in the name is the goal: no open tasks left. While loading it is an open ring that turns and only closes into a zero once the board has arrived. The whole board comes in a single request, columns, cards, subtasks and contacts together, instead of one call per part.',
+    },
   },
   {
     id: 'memory',
