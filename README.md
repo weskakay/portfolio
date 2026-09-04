@@ -6,7 +6,7 @@
 ![GSAP](https://img.shields.io/badge/GSAP-3.x-88ce02?style=flat-square&logo=greensock)
 ![Three.js](https://img.shields.io/badge/Three.js-r185-000000?style=flat-square&logo=threedotjs)
 
-The personal site of Kay Weska, fullstack and IoT developer. Projects, skills, gallery and contact, in German and English.
+The personal site of Kay Weska, full-stack and IoT developer. Projects, skills, gallery and contact, in German and English.
 
 **Live: [weskakay.de](https://weskakay.de)**
 

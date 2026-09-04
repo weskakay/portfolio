@@ -82,6 +82,7 @@ export interface Dictionary {
   };
 }
 
+/** Every visible string in both languages, keyed by section. */
 export const TRANSLATIONS: Record<Lang, Dictionary> = {
   de: {
     nav: {
@@ -177,7 +178,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
     hero: {
       iam: 'I am',
-      role: 'FULLSTACK DEVELOPER',
+      role: 'FULL-STACK DEVELOPER',
       cta: "Let's talk!",
       scroll: 'Scroll down',
       altBusiness: 'Kay Weska in a suit',
@@ -185,11 +186,11 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     about: {
       heading: 'About me',
       intro:
-        "I'm Kay, a fullstack developer from Dresden. For over six years I've built software that works together with hardware and the real world: from IoT devices to automated testing systems to customer-facing web apps. I like to see the whole picture, from the sensor to the interface.",
+        "I'm Kay, a full-stack developer from Dresden. For over six years I've built software that works together with hardware and the real world: from IoT devices to automated testing systems to customer-facing web apps. I like to see the whole picture, from the sensor to the interface.",
       location: 'Dresden, open to remote work and new directions.',
       learning: 'Curious about new technologies and always learning.',
       solving: 'Analytical and persistent: I look for the solution that actually works.',
-      team: 'Took ownership in agile teams: organized product and tickets, coordinated the work and made decisions close to the customer.',
+      team: 'Took ownership in agile teams: organized the product backlog and tickets, coordinated the work and made decisions close to the customer.',
     },
     skills: {
       heading: 'Skills',
@@ -213,7 +214,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
-      subtitle: 'Sport is my balance. A few moments on and off the pitch.',
+      subtitle: 'Sport keeps me balanced. A few moments on and off the pitch.',
     },
     contact: {
       heading: 'Contact',

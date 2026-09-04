@@ -23,6 +23,7 @@ export interface Project {
   highlight?: Record<Lang, string>;
 }
 
+/** Portfolio entries in the order they appear on the page. */
 export const PROJECTS: readonly Project[] = [
   {
     id: 'poll-app',

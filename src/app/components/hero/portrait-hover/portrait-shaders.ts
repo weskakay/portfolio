@@ -1,3 +1,4 @@
+/** Passes the UV through and draws the plane as a full screen quad. */
 export const VERTEX_SHADER = `
 varying vec2 vUv;
 
@@ -7,6 +8,7 @@ void main() {
 }
 `;
 
+/** Blends the two portraits and tints the result around the pointer. */
 export const FRAGMENT_SHADER = `
 varying vec2 vUv;
 uniform sampler2D uTexA;

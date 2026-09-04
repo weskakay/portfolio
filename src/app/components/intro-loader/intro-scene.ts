@@ -11,6 +11,7 @@ export interface Star {
   color: string;
 }
 
+/** A soft coloured cloud painted behind the stars. */
 export interface Nebula {
   x: number;
   y: number;
@@ -47,6 +48,7 @@ const LAYERS: Layer[] = [
 const STAR_COLORS = ['#ffffff', '#eaf1ff', '#d7e4ff', '#c6d8ff', '#ffe8cc', '#ffd3a6'];
 const NEBULA_COLORS = ['#4d4356', '#5a4d4a', '#3f4a6a', '#6a4a5a', '#514a63', '#5c5348'];
 
+/** Timing and density limits for the loader animation. */
 export const SCENE = {
   meteorGap: [1300, 2800] as const,
   maxMeteors: 2,
