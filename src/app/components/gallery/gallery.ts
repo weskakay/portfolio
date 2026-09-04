@@ -24,10 +24,12 @@ export class Gallery implements AfterViewInit, OnDestroy {
   private readonly track = viewChild.required<ElementRef<HTMLElement>>('track');
   private ctx?: gsap.Context;
 
+  /** Starts the marquee once the strip is in the DOM and can be measured. */
   ngAfterViewInit(): void {
     this.ctx = gsap.context(() => this.buildHorizontalScroll());
   }
 
+  /** Stops the animation so it does not keep running after the view is gone. */
   ngOnDestroy(): void {
     this.ctx?.revert();
   }

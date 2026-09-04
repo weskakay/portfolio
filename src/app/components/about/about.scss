@@ -18,8 +18,17 @@
   gap: var(--space-lg);
 }
 
+/* portrait box: the interactive version and its placeholder share this size */
 .about__portrait {
   align-self: center;
+  width: min(260px, 90vw);
+  aspect-ratio: 4 / 5;
+}
+
+.about__portrait--still {
+  display: block;
+  object-fit: contain;
+  object-position: bottom center;
 }
 
 .about__heading {
@@ -50,9 +59,9 @@
 
 .about__icon {
   flex-shrink: 0;
-  width: var(--icon-size);
-  height: var(--icon-size);
-  fill: var(--color-secundario);
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
+  fill: var(--color-accent-lime);
 }
 
 @media (min-width: 900px) {
@@ -69,5 +78,6 @@
 
   .about__portrait {
     align-self: auto;
+    width: 360px;
   }
 }

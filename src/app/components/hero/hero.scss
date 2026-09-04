@@ -80,6 +80,12 @@
 
 .hero__social a {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* The icon stays small, the area you can hit does not. */
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  margin: calc(var(--tap-target) / -4);
   color: var(--color-white);
   transition: color 200ms;
 }
@@ -95,7 +101,21 @@
 }
 
 .hero__scroll {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  writing-mode: vertical-rl;
+  font-size: var(--fs-small);
+  color: var(--color-white);
+}
+
+/* Upright inside the sideways text, so it points the way it means. */
+.hero__scroll-arrow {
+  flex: 0 0 auto;
+  writing-mode: horizontal-tb;
 }
 
 @media (min-width: 900px) {
@@ -110,15 +130,6 @@
     bottom: 0;
   }
 
-  .hero__scroll {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    writing-mode: vertical-rl;
-    font-size: var(--fs-small);
-    color: var(--color-white);
-  }
 }
 
 @media (max-height: 560px) {
@@ -129,4 +140,20 @@
   .hero__social {
     display: none;
   }
+}
+
+/* The mark stays as small as it looks, the area you can hit is a full
+   tap target. Nothing moves, the reach around it simply grows. */
+.hero__social a {
+  position: relative;
+}
+
+.hero__social a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--tap-target));
+  height: max(100%, var(--tap-target));
+  transform: translate(-50%, -50%);
 }

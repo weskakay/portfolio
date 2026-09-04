@@ -15,6 +15,7 @@
 .navbar__logo {
   display: inline-flex;
   align-items: center;
+  min-height: var(--tap-target);
   font-size: var(--fs-logo);
   font-weight: var(--fw-bold);
   color: var(--color-white);
@@ -47,6 +48,10 @@
 }
 
 .navbar__link {
+  display: inline-flex;
+  align-items: center;
+  /* A tablet in landscape gets the desktop bar and taps it with a finger. */
+  min-height: var(--tap-target);
   color: var(--color-white);
   font-size: var(--fs-nav);
   transition: color 200ms;
@@ -56,14 +61,38 @@
   color: var(--color-secundario);
 }
 
+/* Below the breakpoint the switch lives in the menu, as the template has it. */
 .navbar__lang {
-  display: flex;
+  display: none;
   gap: var(--space-xs);
 }
 
+.navbar__overlay-lang {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-white);
+  font-size: var(--fs-overlay-link);
+  font-weight: var(--fw-bold);
+}
+
+.navbar__overlay-lang-btn {
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  transition: color 200ms;
+}
+
+.navbar__overlay-lang-btn.is-active {
+  color: var(--color-accent-lime);
+}
+
 .navbar__lang-btn {
-  width: var(--control-size);
-  height: var(--control-size);
+  width: var(--tap-target);
+  height: var(--tap-target);
   border: 1px solid var(--color-white);
   border-radius: var(--radius-sm);
   background: transparent;
@@ -81,10 +110,11 @@
 .navbar__burger {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: var(--space-xs);
-  width: var(--control-size);
-  height: var(--control-size);
+  width: var(--tap-target);
+  height: var(--tap-target);
   border: 0;
   background: transparent;
 }
@@ -120,7 +150,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-xl);
-  background: var(--color-bg-dark);
+  background: var(--color-overlay-menu);
 }
 
 .navbar__overlay a {
@@ -134,7 +164,11 @@
   color: var(--color-secundario);
 }
 
-@media (min-width: 900px) {
+/* The links need 677px, the mark 140px and the bar 200px of padding, so they
+   only fit from about 1065px. The breakpoint sits above that, measured with
+   the German labels because they run longer than the English ones. Every
+   phone and every tablet in portrait stays below it and gets the burger. */
+@media (min-width: 1100px) {
   .navbar {
     padding: 0 var(--navbar-pad-x);
   }
@@ -144,7 +178,33 @@
     gap: var(--space-xl);
   }
 
+  .navbar__lang {
+    display: flex;
+  }
+
   .navbar__burger {
     display: none;
   }
+}
+
+/* The mark stays as small as it looks, the area you can hit is a full
+   tap target. Nothing moves, the reach around it simply grows. */
+.navbar__lang-btn,
+.navbar__burger,
+.navbar__logo,
+.navbar__link {
+  position: relative;
+}
+
+.navbar__lang-btn::after,
+.navbar__burger::after,
+.navbar__logo::after,
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--tap-target));
+  height: max(100%, var(--tap-target));
+  transform: translate(-50%, -50%);
 }

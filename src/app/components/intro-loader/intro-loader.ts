@@ -1,5 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, signal, viewChild } from '@angular/core';
 import gsap from 'gsap';
+
+/** How long one pass of the W takes, and how it accelerates. */
+const LINE_DURATION = 1.8;
+const LINE_EASE = 'power1.inOut';
+
+/** How much of the whole line the bright head covers. */
+const COMET_SHARE = 0.16;
 import {
   SCENE,
   clear,
@@ -33,6 +40,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
   private readonly sky = viewChild<ElementRef<HTMLCanvasElement>>('sky');
   private readonly stars = viewChild<ElementRef<SVGGElement>>('stars');
   private readonly line = viewChild<ElementRef<SVGPolylineElement>>('line');
+  private readonly comet = viewChild<ElementRef<SVGPolylineElement>>('comet');
 
   private ctx?: CanvasRenderingContext2D;
   private resizeObserver?: ResizeObserver;
@@ -41,11 +49,13 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
   private nextMeteorAt = 1200;
   private revealed = false;
   private lineTween?: gsap.core.Tween;
+  private cometTween?: gsap.core.Tween;
   private twinkleTween?: gsap.core.Tween;
   private starField: Star[] = [];
   private nebulae: Nebula[] = [];
   private meteors: Meteor[] = [];
 
+  /** Starts the loader once its canvas is on screen. */
   ngAfterViewInit(): void {
     if (this.done()) return;
     document.body.style.overflow = 'hidden';
@@ -53,9 +63,11 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     this.startSequence();
   }
 
+  /** Stops the loop and drops the tweens when the loader leaves. */
   ngOnDestroy(): void {
     this.stopRender();
     this.lineTween?.kill();
+    this.cometTween?.kill();
     this.twinkleTween?.kill();
     this.resizeObserver?.disconnect();
   }
@@ -153,7 +165,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
 
   /** Show the stars first (line hidden), then start twinkle and the loader. */
   private playIntro(): void {
-    gsap.set(this.line()!.nativeElement, { opacity: 0 });
+    gsap.set([this.line()!.nativeElement, this.comet()!.nativeElement], { opacity: 0 });
     this.addStars(gsap.timeline({ onComplete: () => this.startLoading() }));
   }
 
@@ -168,8 +180,27 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     const line = this.line()!.nativeElement;
     const len = line.getTotalLength();
     gsap.set(line, { opacity: 1, strokeDasharray: len, strokeDashoffset: len });
-    const to = { strokeDashoffset: 0, duration: 1.8, ease: 'power1.inOut', repeat: -1, repeatDelay: 0.5 };
+    const to = { strokeDashoffset: 0, duration: LINE_DURATION, ease: LINE_EASE, repeat: -1, repeatDelay: 0.5 };
     this.lineTween = gsap.to(line, to);
+    this.startCometLoop(len);
+  }
+
+  /**
+   * A short bright piece that rides at the head of the line, in step with it.
+   * Without it the drawn end is a flat cut; with it the line arrives at each
+   * star the way it left the one before.
+   */
+  private startCometLoop(len: number): void {
+    const comet = this.comet()!.nativeElement;
+    const head = len * COMET_SHARE;
+    gsap.set(comet, { opacity: 1, strokeDasharray: `${head} ${len}`, strokeDashoffset: head });
+    this.cometTween = gsap.to(comet, {
+      strokeDashoffset: head - len,
+      duration: LINE_DURATION,
+      ease: LINE_EASE,
+      repeat: -1,
+      repeatDelay: 0.5,
+    });
   }
 
   /** Gentle endless twinkle on the five constellation stars. */
@@ -189,8 +220,10 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     if (this.revealed) return;
     this.revealed = true;
     this.lineTween?.kill();
+    this.cometTween?.kill();
     this.twinkleTween?.kill();
     gsap.set(this.line()!.nativeElement, { opacity: 1, strokeDasharray: 'none', strokeDashoffset: 0 });
+    gsap.set(this.comet()!.nativeElement, { opacity: 0 });
     gsap.set(this.starGroups(), { opacity: 1 });
     this.addFlyToLogo(gsap.timeline({ onComplete: () => this.finish() }));
   }

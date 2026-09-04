@@ -1,5 +1,6 @@
 import type { Lang } from './i18n';
 
+/** One entry of the portfolio, shown as a card and in the detail dialog. */
 export interface Project {
   id: string;
   title: string;
@@ -16,6 +17,8 @@ export interface Project {
     afterHighlight?: string;
   };
   liveUrl?: string;
+  /** The live site speaks both languages and takes the choice from the link. */
+  followsLanguage?: boolean;
   repoUrl?: string;
   highlight?: Record<Lang, string>;
 }
@@ -44,7 +47,7 @@ export const PROJECTS: readonly Project[] = [
     title: 'El Pollo Loco',
     description: {
       de: 'Ein 2D-Jump-and-Run auf HTML5-Canvas. Pepe läuft durch die Wüste, sammelt Münzen und Flaschen, wehrt Hühner ab und stellt sich am Ende dem Endboss. Gebaut mit purem JavaScript, ohne Engine und ohne Framework.',
-      en: 'A 2D jump and run on HTML5 Canvas. Pepe runs through the desert, collects coins and bottles, fights off chickens and takes on the boss at the end. Built with plain JavaScript, no engine and no framework.',
+      en: 'A 2D platformer on HTML5 Canvas. Pepe runs through the desert, collects coins and bottles, fights off chickens and takes on the boss at the end. Built with plain JavaScript, no engine and no framework.',
     },
     badges: ['JavaScript', 'Canvas', 'OOP'],
     type: 'web',
@@ -69,6 +72,7 @@ export const PROJECTS: readonly Project[] = [
     image: '/images/projects/j0in.jpg',
     logo: '/images/projects/logos/j0in.svg',
     liveUrl: 'https://j0in.weskakay.de',
+    followsLanguage: true,
     repoUrl: 'https://github.com/weskakay/j0in',
     highlight: {
       de: 'Die Null im Namen ist das Ziel: keine offenen Aufgaben mehr. Beim Laden ist sie ein offener Ring, der sich dreht und erst zur Null wird, wenn das Board da ist. Das ganze Board kommt in einem einzigen Aufruf, samt Spalten, Karten, Teilaufgaben und Kontakten, statt in einem Aufruf je Teil.',
@@ -108,7 +112,7 @@ export const PROJECTS: readonly Project[] = [
     repoUrl: 'https://github.com/weskakay/BestellApp',
     highlight: {
       de: 'Ein Warenkorb gehört immer zu genau einem Restaurant. Wer mitten in einer Bestellung wechselt, bekommt erst eine Rückfrage. Lieferkosten und Mindestbestellwert werden bei jeder Änderung neu gerechnet, bis dahin bleibt der Bestellknopf gesperrt.',
-      en: 'A cart always belongs to exactly one restaurant, so switching mid order asks first. Delivery cost and minimum order value are recalculated on every change, and the order button stays locked until the total qualifies.',
+      en: 'A cart always belongs to exactly one restaurant, so switching mid-order asks first. Delivery cost and minimum order value are recalculated on every change, and the order button stays locked until the total qualifies.',
     },
   },
   {
@@ -166,7 +170,7 @@ export const PROJECTS: readonly Project[] = [
     },
     highlight: {
       de: 'Die Sensoren liefern laufend Rohwerte, interessant wird es erst danach. Die Werte werden umgerechnet, zusammengeführt und so aufbereitet, dass sie flüssig und in Echtzeit auf einem Display oder in der App stehen: Temperatur, Niederschlag, Wassertemperatur, Sonnenstunden und mehr, wahlweise als Tag, Woche, Monat oder Jahr mit Diagrammen. Wichtig war mir, dass man das ohne Erklärung versteht und gern draufschaut.',
-      en: 'The sensors deliver raw readings continuously, and the interesting part begins after that. The values are converted, combined and prepared so they appear smoothly and in real time on a display or in the app: temperature, precipitation, water temperature, hours of sunshine and more, as a day, week, month or year view with charts. What mattered to me was that you understand it without an explanation and enjoy looking at it.',
+      en: 'The sensors deliver raw readings continuously, and the interesting part begins after that. The values are converted, combined and prepared so they appear smoothly and in real time on a display or in the app: temperature, precipitation, water temperature, hours of sunshine and more, as a day, week, month or year view with charts. What mattered to me was that you can understand it without an explanation and enjoy looking at it.',
     },
   },
   {
@@ -225,7 +229,7 @@ export const PROJECTS: readonly Project[] = [
     },
     highlight: {
       de: 'Der eigentliche Wert liegt nicht im Testen selbst, sondern in dem, was danach passiert. Die Ergebnisse laufen so aufbereitet an die Entwicklung zurück, dass direkt ablesbar ist, was umgesetzt wurde, was davon läuft und was nicht. Aus einem Testlauf werden damit konkrete nächste Schritte statt einer langen Fehlerliste, und niemand muss einen Stand verwerfen und von vorn anfangen.',
-      en: 'The real value is not the testing itself but what happens afterwards. Results flow back to the development team prepared so that it is directly readable what was implemented, what of it runs and what does not. A test run therefore produces concrete next steps instead of a long list of errors, and nobody has to discard a state and start over.',
+      en: 'The real value is not the testing itself but what happens afterwards. Results flow back to the development team prepared so the team can read directly what was implemented, what of it runs and what does not. A test run therefore produces concrete next steps instead of a long list of errors, and nobody has to discard a state and start over.',
     },
   },
 ];

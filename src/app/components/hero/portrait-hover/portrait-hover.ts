@@ -44,10 +44,12 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
   private readonly mouse = new THREE.Vector2(0.5, 0.5);
   private readonly mouseTarget = new THREE.Vector2(0.5, 0.5);
 
+  /** Builds the scene once the canvas exists and has a size. */
   ngAfterViewInit(): void {
     void this.initWebgl();
   }
 
+  /** Frees the renderer and the textures, which the browser will not do. */
   ngOnDestroy(): void {
     this.dispose();
   }

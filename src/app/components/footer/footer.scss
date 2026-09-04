@@ -45,6 +45,10 @@
 }
 
 .footer__legal a {
+  display: inline-flex;
+  align-items: center;
+  /* Reaches the full tap height without pushing the row apart. */
+  min-height: var(--tap-target);
   font-size: var(--fs-small);
   color: var(--color-white);
   text-decoration: none;
@@ -67,6 +71,12 @@
 
 .footer__social a {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* The icon stays small, the area you can hit does not. */
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  margin: calc(var(--tap-target) / -4);
   color: var(--color-white);
   transition: color 200ms;
 }
@@ -98,4 +108,22 @@
   .footer__brand {
     align-items: flex-start;
   }
+}
+
+/* The mark stays as small as it looks, the area you can hit is a full
+   tap target. Nothing moves, the reach around it simply grows. */
+.footer__social a,
+.footer__legal a {
+  position: relative;
+}
+
+.footer__social a::after,
+.footer__legal a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--tap-target));
+  height: max(100%, var(--tap-target));
+  transform: translate(-50%, -50%);
 }

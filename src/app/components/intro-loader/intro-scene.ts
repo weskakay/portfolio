@@ -19,6 +19,7 @@ export interface Nebula {
   alpha: number;
 }
 
+/** One shooting star: where it is, where it goes and how far along it is. */
 export interface Meteor {
   x: number;
   y: number;

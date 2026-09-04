@@ -93,11 +93,23 @@
 
 .contact__input {
   font: inherit;
+  min-height: var(--tap-target);
   padding: var(--space-sm);
   color: var(--color-white);
   background: var(--color-surface);
   border: 1px solid var(--color-accent-purple);
   border-radius: var(--radius-sm);
+
+  /* Chrome paints its own pale background over a filled-in field. The inset
+     shadow is the only way to cover it, the background alone is ignored. */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-white);
+    box-shadow: inset 0 0 0 1000px var(--color-surface);
+    caret-color: var(--color-white);
+    transition: background-color 100000s ease-in-out 0s;
+  }
 }
 
 .contact__input:focus-visible {
@@ -125,6 +137,26 @@
   color: var(--color-accent-lime);
 }
 
+/* A checkbox at its browser size is far too small to hit on a phone. */
+.contact__privacy input[type='checkbox'] {
+  position: relative;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--color-accent-lime);
+}
+
+.contact__privacy input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  transform: translate(-50%, -50%);
+}
+
 .contact__error {
   min-height: var(--space-md);
   font-size: var(--fs-small);
@@ -133,6 +165,7 @@
 
 .contact__submit {
   align-self: flex-start;
+  min-height: var(--tap-target);
   margin-top: var(--space-sm);
   padding: var(--space-sm) var(--space-lg);
   font-weight: var(--fw-bold);

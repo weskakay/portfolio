@@ -2,11 +2,11 @@
   display: block;
 }
 
-/* portrait box: dimensions are component layout, not shared tokens */
+/* the box is sized by the host, so a placeholder can reserve the same space */
 .ph {
   position: relative;
-  width: min(260px, 90vw);
-  aspect-ratio: 4 / 5;
+  width: 100%;
+  height: 100%;
 }
 
 .ph__canvas {
@@ -46,6 +46,13 @@
   }
 }
 
+/* Someone who asked for less motion gets the business photo, held still */
+@media (prefers-reduced-motion: reduce) {
+  .ph__fallback--football {
+    animation: none;
+  }
+}
+
 @keyframes ph-crossfade {
   0%, 35% {
     opacity: 0;
@@ -58,8 +65,3 @@
   }
 }
 
-@media (min-width: 900px) {
-  .ph {
-    width: 360px;
-  }
-}

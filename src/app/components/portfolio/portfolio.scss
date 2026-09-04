@@ -313,11 +313,15 @@
   border-radius: var(--radius-sm);
 }
 
-@media (min-width: 900px) {
+/* Two cards side by side as soon as there is room, so eleven projects do not
+   turn into eleven screens of scrolling. */
+@media (min-width: 600px) {
   .portfolio__grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
 
+@media (min-width: 900px) {
   .modal__panel {
     max-width: clamp(700px, 75vw, 1440px);
   }
@@ -357,4 +361,15 @@
   .modal__actions {
     grid-area: 2 / 2;
   }
+}
+
+/* Says why a professional project carries no links, instead of leaving the
+   spot empty where the buttons sit on the other cards. */
+.modal__note {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--fs-small);
+  color: var(--color-cream);
+  opacity: 0.75;
 }

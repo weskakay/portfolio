@@ -97,6 +97,8 @@
           @if (story.afterHighlight) {
             <img class="modal__shot" [src]="story.afterHighlight" [alt]="titleFor(project)" loading="lazy" />
           }
+
+          <p class="modal__note">{{ lang.dict().portfolio.notPublic }}</p>
         </div>
       } @else {
         <div class="modal__body">
@@ -136,7 +138,7 @@
               @if (project.liveUrl) {
                 <a
                   class="card__btn card__btn--primary"
-                  [href]="project.liveUrl"
+                  [href]="liveHref(project)"
                   target="_blank"
                   rel="noopener"
                   >{{ lang.dict().portfolio.live }}</a

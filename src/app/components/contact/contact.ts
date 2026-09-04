@@ -10,7 +10,9 @@ type Status = 'idle' | 'sending' | 'success' | 'error';
 
 /**
  * Contact section with a reactive form (name, email, message, privacy).
- * Validates after the first touch and posts submissions to the mail endpoint.
+ * The three text fields are checked when they are left, not while typing;
+ * the checkbox is checked at once, otherwise the send button would stay
+ * disabled until focus moved away from it.
  */
 @Component({
   selector: 'app-contact',
@@ -25,13 +27,23 @@ export class Contact {
   protected readonly status = signal<Status>('idle');
 
   protected readonly form = this.fb.nonNullable.group({
-    name: ['', [Validators.required]],
-    email: [
-      '',
-      [Validators.required, Validators.email, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)],
-    ],
-    message: ['', [Validators.required, Validators.minLength(10)]],
-    privacy: [false, [Validators.requiredTrue]],
+    name: this.fb.nonNullable.control('', {
+      validators: [Validators.required],
+      updateOn: 'blur',
+    }),
+    email: this.fb.nonNullable.control('', {
+      validators: [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+      ],
+      updateOn: 'blur',
+    }),
+    message: this.fb.nonNullable.control('', {
+      validators: [Validators.required, Validators.minLength(10)],
+      updateOn: 'blur',
+    }),
+    privacy: this.fb.nonNullable.control(false, { validators: [Validators.requiredTrue] }),
   });
 
   /** Whether a control should show its error (invalid and already touched). */

@@ -66,7 +66,7 @@ html {
   --fs-hero-name: clamp(48px, 11vw, 128px);
   --fs-hero-sub: clamp(26px, 5.5vw, 64px);
   --fs-deco-i-am: clamp(40px, 8vw, 90px);
-  --fs-section: clamp(30px, 5vw, 48px);
+  --fs-section: clamp(30px, 11.5vw, 48px);
   --fs-overlay-link: 28px;
   --fs-logo: 22px;
   --fs-nav: 18px;
@@ -101,6 +101,8 @@ html {
   --control-size: 36px;
   --tap-target: 44px;
   --icon-size: 24px;
+  /* The three traits in About me carry a larger mark than the social row. */
+  --icon-size-lg: 30px;
 
   /* Section spacing (desktop) */
   --section-pad-y: clamp(48px, 10vw, 120px);
@@ -110,6 +112,8 @@ html {
   --color-overlay: rgba(0, 0, 0, 0.7);
   --color-surface: rgba(255, 255, 255, 0.05);
   --color-border-subtle: rgba(255, 255, 255, 0.12);
+  /* The mobile menu lifts off the page, per the Figma template. */
+  --color-overlay-menu: #414856;
 
   /* Line heights */
   --lh-default: 1.2;

@@ -68,6 +68,15 @@ export class Portfolio {
     return this.lang.lang() === 'en' && project.titleEn ? project.titleEn : project.title;
   }
 
+  /**
+   * Link to the live site. Sites that speak both languages get the current one
+   * handed over, so a visitor keeps reading in the language they started in.
+   */
+  liveHref(project: Project): string {
+    const url = project.liveUrl ?? '';
+    return project.followsLanguage ? `${url}/?lang=${this.lang.lang()}` : url;
+  }
+
   /** Open the detail modal and remember the card that opened it. */
   openDetail(project: Project, card: HTMLElement): void {
     this.trigger = card;

@@ -57,5 +57,27 @@
     <a routerLink="/" fragment="portfolio" (click)="closeMenu()">{{ lang.dict().nav.portfolio }}</a>
     <a routerLink="/" fragment="gallery" (click)="closeMenu()">{{ lang.dict().nav.gallery }}</a>
     <a routerLink="/" fragment="contact" (click)="closeMenu()">{{ lang.dict().nav.contact }}</a>
+
+    <p class="navbar__overlay-lang">
+      <button
+        type="button"
+        class="navbar__overlay-lang-btn"
+        [class.is-active]="lang.lang() === 'de'"
+        (click)="switchLang('de')"
+        aria-label="Auf Deutsch wechseln"
+      >
+        DE
+      </button>
+      <span aria-hidden="true">/</span>
+      <button
+        type="button"
+        class="navbar__overlay-lang-btn"
+        [class.is-active]="lang.lang() === 'en'"
+        (click)="switchLang('en')"
+        aria-label="Switch to English"
+      >
+        EN
+      </button>
+    </p>
   </nav>
 }

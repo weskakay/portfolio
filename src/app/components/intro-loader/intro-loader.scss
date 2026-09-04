@@ -40,6 +40,18 @@
   filter: drop-shadow(0 0 2px var(--color-accent-lime));
 }
 
+/* Rides at the front of the line, so the leading end reads as a streak
+   instead of a cut. The trail behind it is the line above. */
+.intro__comet {
+  fill: none;
+  stroke: var(--color-white);
+  stroke-width: 0.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 1.4px var(--color-white))
+    drop-shadow(0 0 4px var(--color-accent-lime));
+}
+
 .intro__star {
   transform-box: fill-box;
   transform-origin: center;

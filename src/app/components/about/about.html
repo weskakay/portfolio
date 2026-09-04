@@ -40,11 +40,19 @@
       </ul>
     </div>
 
-    <app-portrait-hover
-      class="about__portrait"
-      [business]="'/images/hero-business.png'"
-      [football]="'/images/hero-football.png'"
-      [altBusiness]="lang.dict().hero.altBusiness"
-    />
+    @defer (on viewport; prefetch on idle) {
+      <app-portrait-hover
+        class="about__portrait"
+        [business]="'/images/hero-business.png'"
+        [football]="'/images/hero-football.png'"
+        [altBusiness]="lang.dict().hero.altBusiness"
+      />
+    } @placeholder {
+      <img
+        class="about__portrait about__portrait--still"
+        src="/images/hero-business.png"
+        [alt]="lang.dict().hero.altBusiness"
+      />
+    }
   </div>
 </section>

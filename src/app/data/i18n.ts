@@ -1,5 +1,7 @@
+/** The two languages the site is offered in. */
 export type Lang = 'de' | 'en';
 
+/** Every piece of text on the site, in one shape per language. */
 export interface Dictionary {
   nav: {
     about: string;
@@ -7,6 +9,7 @@ export interface Dictionary {
     portfolio: string;
     gallery: string;
     contact: string;
+    toContact: string;
   };
   hero: {
     iam: string;
@@ -39,6 +42,7 @@ export interface Dictionary {
     aboutLabel: string;
     techLabel: string;
     highlightLabel: string;
+    notPublic: string;
   };
   gallery: {
     heading: string;
@@ -86,6 +90,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       portfolio: 'Portfolio',
       gallery: 'Galerie',
       contact: 'Kontakt',
+      toContact: 'Zum Kontaktformular',
     },
     hero: {
       iam: 'Ich bin',
@@ -120,6 +125,8 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       aboutLabel: 'Worum geht es?',
       techLabel: 'Eingesetzte Technologien',
       highlightLabel: 'Highlight',
+      notPublic:
+        'Berufliches Projekt: Quelltext und laufendes System gehören dem Auftraggeber. Die Beschreibung hier ist bewusst anonymisiert.',
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
@@ -166,6 +173,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       portfolio: 'Portfolio',
       gallery: 'Gallery',
       contact: 'Contact',
+      toContact: 'Go to the contact form',
     },
     hero: {
       iam: 'I am',
@@ -181,7 +189,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       location: 'Dresden, open to remote work and new directions.',
       learning: 'Curious about new technologies and always learning.',
       solving: 'Analytical and persistent: I look for the solution that actually works.',
-      team: 'Took ownership in agile teams: organized product and tickets, coordinated the work and decided close to the customer.',
+      team: 'Took ownership in agile teams: organized product and tickets, coordinated the work and made decisions close to the customer.',
     },
     skills: {
       heading: 'Skills',
@@ -192,14 +200,16 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     },
     portfolio: {
       heading: 'Portfolio',
-      intro: 'A selection of my work. Click in and try it out.',
-      live: 'Live Test',
+      intro: 'A selection of my work. Take a look and try them out.',
+      live: 'Live demo',
       code: 'GitHub',
       details: 'View details',
       close: 'Close',
       aboutLabel: 'About the project',
       techLabel: 'Technologies I used',
       highlightLabel: 'Highlight',
+      notPublic:
+        'Professional project: the source and the running system belong to the client. The description here is deliberately anonymized.',
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
@@ -210,7 +220,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       lead: 'Got a project?',
       intro:
         'Tell me about your project and the role you have in mind. I bring experience from the sensor to the interface.',
-      cta: 'Need a Fullstack developer?',
+      cta: 'Need a full-stack developer?',
       ctaContact: 'Contact me!',
       name: 'Name',
       email: 'Email',
