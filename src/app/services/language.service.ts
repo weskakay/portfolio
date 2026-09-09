@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, effect, signal } from '@angular/core';
 import { TRANSLATIONS, type Dictionary, type Lang } from '../data/i18n';
 
 /**
@@ -13,6 +13,11 @@ export class LanguageService {
 
   /** Translation dictionary for the active language. */
   readonly dict = computed<Dictionary>(() => TRANSLATIONS[this.lang()]);
+
+  /** Keeps the document language in step, so screen readers pick the right voice. */
+  private readonly syncDocumentLang = effect(() => {
+    document.documentElement.lang = this.lang();
+  });
 
   /** Switch the active UI language. */
   setLanguage(lang: Lang): void {

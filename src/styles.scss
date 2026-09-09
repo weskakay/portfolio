@@ -62,7 +62,8 @@ html {
   /* Font */
   --font-family: 'Poppins', sans-serif;
 
-  /* Font sizes: headings scale fluidly between mobile and desktop */
+  /* Font sizes: headings scale fluidly between mobile and desktop.
+     16px is the floor, nothing on the page goes below it. */
   --fs-hero-name: clamp(48px, 11vw, 128px);
   --fs-hero-sub: clamp(26px, 5.5vw, 64px);
   --fs-deco-i-am: clamp(40px, 8vw, 90px);
@@ -71,7 +72,6 @@ html {
   --fs-logo: 22px;
   --fs-nav: 18px;
   --fs-body: 16px;
-  --fs-small: 14px;
 
   /* Weights */
   --fw-regular: 400;
@@ -164,8 +164,15 @@ a {
   text-decoration: none;
 }
 
+/* Form controls keep their own small default font unless told otherwise. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
 button {
-  font-family: inherit;
   cursor: pointer;
 }
 

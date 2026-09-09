@@ -22,7 +22,10 @@
               />
               <span class="card__hint">{{ lang.dict().portfolio.details }}</span>
             </span>
-            <span class="card__title">{{ titleFor(project) }}</span>
+            <span class="card__meta">
+              <span class="card__title">{{ titleFor(project) }}</span>
+              <span class="card__action">{{ lang.dict().portfolio.details }}</span>
+            </span>
           </button>
         </li>
       }
@@ -98,6 +101,11 @@
             <img class="modal__shot" [src]="story.afterHighlight" [alt]="titleFor(project)" loading="lazy" />
           }
 
+          @if (project.demoNote) {
+            <h4 class="modal__label">{{ lang.dict().portfolio.demoLabel }}</h4>
+            <p class="modal__text">{{ project.demoNote[lang.lang()] }}</p>
+          }
+
           <p class="modal__note">{{ lang.dict().portfolio.notPublic }}</p>
         </div>
       } @else {
@@ -121,6 +129,11 @@
             @if (project.highlight) {
               <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
               <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
+            }
+
+            @if (project.demoNote) {
+              <h4 class="modal__label">{{ lang.dict().portfolio.demoLabel }}</h4>
+              <p class="modal__text">{{ project.demoNote[lang.lang()] }}</p>
             }
           </div>
 

@@ -27,11 +27,6 @@
   color: var(--color-white);
 }
 
-.contact__heading::before {
-  content: '';
-  flex: 1;
-}
-
 .contact__heading::after {
   content: '';
   flex: 1;
@@ -87,7 +82,7 @@
 }
 
 .contact__label {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--color-white);
 }
 
@@ -129,7 +124,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--space-sm);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--color-white);
 }
 
@@ -159,7 +154,7 @@
 
 .contact__error {
   min-height: var(--space-md);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--color-error);
 }
 

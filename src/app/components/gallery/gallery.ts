@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, inject, viewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LanguageService } from '../../services/language.service';
@@ -12,11 +13,14 @@ gsap.registerPlugin(ScrollTrigger);
  */
 @Component({
   selector: 'app-gallery',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './gallery.html',
   styleUrl: './gallery.scss',
 })
 export class Gallery implements AfterViewInit, OnDestroy {
+  /** Scroll distance relative to the pan width, so the row passes faster. */
+  private static readonly PAN_FACTOR = 0.55;
+
   protected readonly lang = inject(LanguageService);
   protected readonly shots = GALLERY;
 
@@ -48,9 +52,9 @@ export class Gallery implements AfterViewInit, OnDestroy {
       scrollTrigger: {
         trigger: this.section().nativeElement,
         start: 'top top',
-        end: () => '+=' + (track.scrollWidth - window.innerWidth),
+        end: () => '+=' + (track.scrollWidth - window.innerWidth) * Gallery.PAN_FACTOR,
         pin: true,
-        scrub: 1,
+        scrub: 0.4,
         invalidateOnRefresh: true,
       },
     };

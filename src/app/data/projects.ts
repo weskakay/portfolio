@@ -21,6 +21,8 @@ export interface Project {
   followsLanguage?: boolean;
   repoUrl?: string;
   highlight?: Record<Lang, string>;
+  /** What a visitor may expect from the live demo before signing up. */
+  demoNote?: Record<Lang, string>;
 }
 
 /** Portfolio entries in the order they appear on the page. */
@@ -78,6 +80,10 @@ export const PROJECTS: readonly Project[] = [
     highlight: {
       de: 'Die Null im Namen ist das Ziel: keine offenen Aufgaben mehr. Beim Laden ist sie ein offener Ring, der sich dreht und erst zur Null wird, wenn das Board da ist. Das ganze Board kommt in einem einzigen Aufruf, samt Spalten, Karten, Teilaufgaben und Kontakten, statt in einem Aufruf je Teil.',
       en: 'The zero in the name is the goal: no open tasks left. While loading it is an open ring that turns and only closes into a zero once the board has arrived. The whole board comes in a single request, columns, cards, subtasks and contacts together, instead of one call per part.',
+    },
+    demoNote: {
+      de: 'Der Gast landet auf einem gemeinsamen Demo-Board. Alle Besucher arbeiten gleichzeitig darauf, jede Karte erklärt einen Handgriff, und um Mitternacht steht wieder der Anfangszustand da. Kalender und Tagesplaner bleiben dem eigenen Konto vorbehalten, weil dahinter ein echter Google-Kalender hängt.',
+      en: 'A guest lands on a shared demo board. Every visitor works on it at the same time, each card explains one thing you can do, and at midnight it is back to how it started. The calendar and the day planner stay with a real account, because a real Google calendar sits behind them.',
     },
   },
   {

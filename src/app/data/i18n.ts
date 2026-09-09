@@ -42,11 +42,13 @@ export interface Dictionary {
     aboutLabel: string;
     techLabel: string;
     highlightLabel: string;
+    demoLabel: string;
     notPublic: string;
   };
   gallery: {
     heading: string;
     subtitle: string;
+    skip: string;
   };
   contact: {
     heading: string;
@@ -126,12 +128,14 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       aboutLabel: 'Worum geht es?',
       techLabel: 'Eingesetzte Technologien',
       highlightLabel: 'Highlight',
+      demoLabel: 'Im Gastzugang',
       notPublic:
         'Berufliches Projekt: Quelltext und laufendes System gehören dem Auftraggeber. Die Beschreibung hier ist bewusst anonymisiert.',
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
       subtitle: 'Sport ist mein Ausgleich. Ein paar Momente auf und neben dem Platz.',
+      skip: 'Galerie überspringen',
     },
     contact: {
       heading: 'Kontakt',
@@ -209,12 +213,14 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       aboutLabel: 'About the project',
       techLabel: 'Technologies I used',
       highlightLabel: 'Highlight',
+      demoLabel: 'In the guest area',
       notPublic:
         'Professional project: the source and the running system belong to the client. The description here is deliberately anonymized.',
     },
     gallery: {
       heading: 'ON AND OFF THE PITCH',
       subtitle: 'Sport keeps me balanced. A few moments on and off the pitch.',
+      skip: 'Skip the gallery',
     },
     contact: {
       heading: 'Contact',

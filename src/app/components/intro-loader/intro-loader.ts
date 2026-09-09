@@ -1,12 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, signal, viewChild } from '@angular/core';
 import gsap from 'gsap';
-
-/** How long one pass of the W takes, and how it accelerates. */
-const LINE_DURATION = 1.8;
-const LINE_EASE = 'power1.inOut';
-
-/** How much of the whole line the bright head covers. */
-const COMET_SHARE = 0.16;
 import {
   SCENE,
   clear,
@@ -20,11 +13,22 @@ import {
 } from './intro-scene';
 import type { Meteor, Nebula, Star } from './intro-scene';
 
+/** How long one pass of the W takes, and how it accelerates. */
+const LINE_DURATION = 0.85;
+const LINE_EASE = 'power1.inOut';
+
+/** How much of the whole line the bright head covers. */
+const COMET_SHARE = 0.16;
+
+/** Remembers within this tab that the intro already played. */
+const SEEN_KEY = 'intro-seen';
+
 /**
  * First-load intro. A canvas universe (parallax stars, nebulae, meteors) fills
  * the screen; the Cassiopeia "W" twinkles and its line draws while the page
  * loads, then the W flies into the navbar logo and the overlay clears. Stays
- * until the page is loaded (min ~2.7s); skipped when reduced motion is set.
+ * until the page is loaded (min ~1.5s, so the line draws once in full). Runs
+ * once per tab; skipped when reduced motion is set.
  */
 @Component({
   selector: 'app-intro-loader',
@@ -72,9 +76,28 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  /** Skip only when reduced motion is requested. */
+  /** Skip on reduced motion, or when the intro already ran in this tab. */
   private shouldSkip(): boolean {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+    return this.readSeen();
+  }
+
+  /** Session flag, tolerant of browsers that block storage. */
+  private readSeen(): boolean {
+    try {
+      return sessionStorage.getItem(SEEN_KEY) === '1';
+    } catch {
+      return false;
+    }
+  }
+
+  /** Remember for this tab that the intro has played. */
+  private markSeen(): void {
+    try {
+      sessionStorage.setItem(SEEN_KEY, '1');
+    } catch {
+      // storage blocked: the intro simply plays again
+    }
   }
 
   /** Grab the 2D context, size the canvas, build the scene and start the loop. */
@@ -172,7 +195,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
   /** Twinkle right away; start the line loader a beat later, so stars lead. */
   private startLoading(): void {
     this.startTwinkle();
-    gsap.delayedCall(0.5, () => this.startLineLoop());
+    gsap.delayedCall(0.1, () => this.startLineLoop());
   }
 
   /** Draw the full W line first to last star, hold, then restart from front. */
@@ -180,7 +203,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     const line = this.line()!.nativeElement;
     const len = line.getTotalLength();
     gsap.set(line, { opacity: 1, strokeDasharray: len, strokeDashoffset: len });
-    const to = { strokeDashoffset: 0, duration: LINE_DURATION, ease: LINE_EASE, repeat: -1, repeatDelay: 0.5 };
+    const to = { strokeDashoffset: 0, duration: LINE_DURATION, ease: LINE_EASE, repeat: -1, repeatDelay: 0.3 };
     this.lineTween = gsap.to(line, to);
     this.startCometLoop(len);
   }
@@ -199,7 +222,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
       duration: LINE_DURATION,
       ease: LINE_EASE,
       repeat: -1,
-      repeatDelay: 0.5,
+      repeatDelay: 0.3,
     });
   }
 
@@ -234,27 +257,27 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     return new Promise((resolve) => window.addEventListener('load', () => resolve(), { once: true }));
   }
 
-  /** Minimum time the intro stays visible so the sequence completes. */
+  /** Minimum time the intro stays visible so the line draws once in full. */
   private minDelay(): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, 3000));
+    return new Promise((resolve) => setTimeout(resolve, 1500));
   }
 
   /** Safety cap so the intro never hangs on a stalled load. */
   private maxTimeout(): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, 8000));
+    return new Promise((resolve) => setTimeout(resolve, 5000));
   }
 
   /** Pop the five stars into view with a slight overshoot. */
   private addStars(tl: gsap.core.Timeline): void {
-    tl.from(this.starGroups(), { opacity: 0, scale: 0, duration: 0.5, ease: 'back.out(2)', stagger: 0.12 });
+    tl.from(this.starGroups(), { opacity: 0, scale: 0, duration: 0.3, ease: 'back.out(2)', stagger: 0.06 });
   }
 
   /** Shrink and fly the W onto the navbar logo while the universe clears. */
   private addFlyToLogo(tl: gsap.core.Timeline): void {
-    const fly = { ...this.logoTransform(), transformOrigin: '0 0', duration: 0.9, ease: 'power3.inOut' };
+    const fly = { ...this.logoTransform(), transformOrigin: '0 0', duration: 0.7, ease: 'power3.inOut' };
     tl.to(this.w()!.nativeElement, fly, '+=0.2');
-    tl.to(this.bg()!.nativeElement, { opacity: 0, duration: 0.7 }, '<');
-    tl.to(this.sky()!.nativeElement, { opacity: 0, duration: 0.7 }, '<');
+    tl.to(this.bg()!.nativeElement, { opacity: 0, duration: 0.55 }, '<');
+    tl.to(this.sky()!.nativeElement, { opacity: 0, duration: 0.55 }, '<');
     tl.to(this.w()!.nativeElement, { opacity: 0, duration: 0.25 }, '-=0.2');
   }
 
@@ -281,6 +304,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     this.stopRender();
     this.resizeObserver?.disconnect();
     document.body.style.overflow = '';
+    this.markSeen();
     this.done.set(true);
   }
 }

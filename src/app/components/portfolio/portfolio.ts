@@ -13,7 +13,7 @@ const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1
   selector: 'app-portfolio',
   imports: [],
   templateUrl: './portfolio.html',
-  styleUrl: './portfolio.scss',
+  styleUrls: ['./portfolio.scss', './portfolio-modal.scss'],
 })
 export class Portfolio {
   protected readonly lang = inject(LanguageService);

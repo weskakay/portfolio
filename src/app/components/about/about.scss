@@ -21,7 +21,7 @@
 /* portrait box: the interactive version and its placeholder share this size */
 .about__portrait {
   align-self: center;
-  width: min(260px, 90vw);
+  width: min(320px, 88vw);
   aspect-ratio: 4 / 5;
 }
 
@@ -78,6 +78,6 @@
 
   .about__portrait {
     align-self: auto;
-    width: 360px;
+    width: 440px;
   }
 }

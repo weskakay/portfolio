@@ -49,7 +49,7 @@
   align-items: center;
   /* Reaches the full tap height without pushing the row apart. */
   min-height: var(--tap-target);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--color-white);
   text-decoration: none;
 }
@@ -59,7 +59,7 @@
 }
 
 .footer__rights {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
 }
 
 .footer__social {
