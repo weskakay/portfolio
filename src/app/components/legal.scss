@@ -1,10 +1,12 @@
+/* Same content box and padding as every section, so the heading lines up with
+   the logo above it. The reading measure is capped on the text itself. */
 .legal {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  max-width: 50rem;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: calc(var(--navbar-height) + var(--space-xl)) var(--space-lg) var(--space-xl);
+  padding: calc(var(--navbar-height) + var(--space-xl)) var(--section-pad-x) var(--space-xl);
   min-height: 70vh;
   min-height: 70svh;
   color: var(--color-white);
@@ -29,6 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  max-width: var(--max-width-text);
   line-height: var(--lh-body);
   overflow-wrap: break-word;
 }

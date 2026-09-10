@@ -1,52 +1,56 @@
 <header class="navbar">
-  <a class="navbar__logo" routerLink="/" fragment="hero" (click)="closeMenu()">
-    <span><span class="navbar__logo-k">K</span>ay</span>
-    <img class="navbar__logo-w" src="/logo-w.svg" alt="W" />
-    <span>eska</span>
-  </a>
+  <div class="navbar__inner">
+    <a class="navbar__logo" routerLink="/" fragment="hero" (click)="closeMenu()">
+      <span><span class="navbar__logo-k">K</span>ay</span>
+      <img class="navbar__logo-w" src="/logo-w.svg" alt="W" />
+      <span>eska</span>
+    </a>
 
-  <div class="navbar__right">
-    <nav class="navbar__nav" aria-label="Hauptnavigation">
-      <a class="navbar__link" routerLink="/" fragment="about">{{ lang.dict().nav.about }}</a>
-      <a class="navbar__link" routerLink="/" fragment="skills">{{ lang.dict().nav.skills }}</a>
-      <a class="navbar__link" routerLink="/" fragment="portfolio">{{ lang.dict().nav.portfolio }}</a>
-      <a class="navbar__link" routerLink="/" fragment="gallery">{{ lang.dict().nav.gallery }}</a>
-      <a class="navbar__link" routerLink="/" fragment="contact">{{ lang.dict().nav.contact }}</a>
-    </nav>
+    <div class="navbar__right">
+      <nav class="navbar__nav" aria-label="Hauptnavigation">
+        <a class="navbar__link" routerLink="/" fragment="about">{{ lang.dict().nav.about }}</a>
+        <a class="navbar__link" routerLink="/" fragment="skills">{{ lang.dict().nav.skills }}</a>
+        <a class="navbar__link" routerLink="/" fragment="portfolio">{{
+          lang.dict().nav.portfolio
+        }}</a>
+        <a class="navbar__link" routerLink="/" fragment="gallery">{{ lang.dict().nav.gallery }}</a>
+        <a class="navbar__link" routerLink="/" fragment="contact">{{ lang.dict().nav.contact }}</a>
+      </nav>
 
-    <div class="navbar__lang" role="group" aria-label="Sprache wählen">
+      <div class="navbar__lang" role="group" aria-label="Sprache wählen">
+        <button
+          type="button"
+          class="navbar__lang-btn"
+          [class.is-active]="lang.lang() === 'de'"
+          (click)="switchLang('de')"
+          aria-label="Auf Deutsch wechseln"
+        >
+          DE
+        </button>
+        <button
+          type="button"
+          class="navbar__lang-btn"
+          [class.is-active]="lang.lang() === 'en'"
+          (click)="switchLang('en')"
+          aria-label="Switch to English"
+        >
+          EN
+        </button>
+      </div>
+
       <button
         type="button"
-        class="navbar__lang-btn"
-        [class.is-active]="lang.lang() === 'de'"
-        (click)="switchLang('de')"
-        aria-label="Auf Deutsch wechseln"
+        class="navbar__burger"
+        [class.is-open]="menuOpen()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Menü öffnen oder schließen"
+        (click)="toggleMenu()"
       >
-        DE
-      </button>
-      <button
-        type="button"
-        class="navbar__lang-btn"
-        [class.is-active]="lang.lang() === 'en'"
-        (click)="switchLang('en')"
-        aria-label="Switch to English"
-      >
-        EN
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
-
-    <button
-      type="button"
-      class="navbar__burger"
-      [class.is-open]="menuOpen()"
-      [attr.aria-expanded]="menuOpen()"
-      aria-label="Menü öffnen oder schließen"
-      (click)="toggleMenu()"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </div>
 </header>
 

@@ -2,6 +2,8 @@
   position: relative;
   z-index: 1;
   padding: var(--section-pad-y) var(--section-pad-x);
+  /* clips the accent rule where it runs past the edge, without a scroll box */
+  overflow-x: clip;
 }
 
 .contact__inner {
@@ -19,19 +21,16 @@
 }
 
 .contact__heading {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
+  --rule-gradient: var(--color-accent-lime);
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
 }
 
-.contact__heading::after {
-  content: '';
-  flex: 1;
-  height: 2px;
-  background: var(--color-accent-lime);
+@media (min-width: 900px) {
+  .contact__heading {
+    margin: 0 auto;
+  }
 }
 
 .contact__lead-col {
@@ -89,7 +88,7 @@
 .contact__input {
   font: inherit;
   min-height: var(--tap-target);
-  padding: var(--space-sm);
+  padding: var(--space-md);
   color: var(--color-white);
   background: var(--color-surface);
   border: 1px solid var(--color-accent-purple);
@@ -116,7 +115,9 @@
   border-color: var(--color-error);
 }
 
+/* Clearly taller than the single line fields, so a long message has room. */
 .contact__textarea {
+  min-height: 12rem;
   resize: vertical;
 }
 

@@ -1,15 +1,23 @@
+/* Padding outside the content box, max-width inside, exactly like a section:
+   that is what makes the logo line up with the headings below it. */
 .navbar {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
   height: var(--navbar-height);
+  padding: 0 var(--section-pad-x);
+  padding-left: max(var(--section-pad-x), env(safe-area-inset-left));
+  padding-right: max(var(--section-pad-x), env(safe-area-inset-right));
+  background: var(--color-bg-dark);
+}
+
+.navbar__inner {
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-lg);
-  padding-left: max(var(--space-lg), env(safe-area-inset-left));
-  padding-right: max(var(--space-lg), env(safe-area-inset-right));
-  background: var(--color-bg-dark);
 }
 
 .navbar__logo {
@@ -29,7 +37,9 @@
   height: 1.2em;
   width: auto;
   margin: 0 0.05em 0 0.3em;
-  transition: transform 250ms, filter 250ms;
+  transition:
+    transform 250ms,
+    filter 250ms;
 }
 
 .navbar__logo:hover .navbar__logo-w {
@@ -98,7 +108,9 @@
   background: transparent;
   color: var(--color-white);
   font-size: var(--fs-body);
-  transition: background 200ms, color 200ms;
+  transition:
+    background 200ms,
+    color 200ms;
 }
 
 .navbar__lang-btn.is-active {
@@ -126,7 +138,9 @@
   height: 3px;
   border-radius: 2px;
   background: var(--color-white);
-  transition: transform 200ms, opacity 200ms;
+  transition:
+    transform 200ms,
+    opacity 200ms;
 }
 
 .navbar__burger.is-open span:nth-child(1) {
@@ -169,10 +183,6 @@
    the German labels because they run longer than the English ones. Every
    phone and every tablet in portrait stays below it and gets the burger. */
 @media (min-width: 1100px) {
-  .navbar {
-    padding: 0 var(--navbar-pad-x);
-  }
-
   .navbar__nav {
     display: flex;
     gap: var(--space-xl);

@@ -1,6 +1,8 @@
 .about {
   position: relative;
   z-index: 1;
+  /* clips the accent rule where it runs past the edge */
+  overflow-x: clip;
   padding: var(--section-pad-y) var(--section-pad-x);
 }
 
@@ -59,8 +61,8 @@
 
 .about__icon {
   flex-shrink: 0;
-  width: var(--icon-size-lg);
-  height: var(--icon-size-lg);
+  width: var(--icon-size);
+  height: var(--icon-size);
   fill: var(--color-accent-lime);
 }
 

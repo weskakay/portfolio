@@ -1,21 +1,37 @@
 .gallery {
   position: relative;
   z-index: 1;
-  height: 100svh;
+  /* control row: 40 + 20 + 220 + 20 + 40. The design file has a 64px dot block,
+     but five dots need 44px each to be hit with a thumb. */
+  --gallery-control-gap: 20px;
+  --gallery-arrow-size: 40px;
+  --gallery-dots-width: 220px;
+  --gallery-dot-size: 8px;
+  /* clips the accent rule where it runs past the edge */
+  overflow-x: clip;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--space-lg);
+  padding: var(--section-pad-y) 0;
 }
 
-/* Sits above the photo row, so the skip link is not covered when it appears. */
+/* Same content box as every section; the photo row below may still bleed out. */
 .gallery__intro {
   position: relative;
   z-index: 2;
+  width: 100%;
+  /* The section carries no side padding, so the photo row can bleed out. The
+     padding lives here instead and the box grows by it, which lands the text
+     on the same edge as the headings in every other section. */
+  max-width: calc(var(--max-width) + 2 * var(--section-pad-x));
+  margin: 0 auto;
   padding: 0 var(--section-pad-x);
 }
 
 .gallery__heading {
+  /* cyan rule, so the gallery does not read as a second portfolio */
+  --rule-gradient: var(--color-secundario);
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
@@ -28,49 +44,28 @@
   color: var(--color-white);
 }
 
-/* A way past the pinned row for anyone arriving by keyboard. Out of the way
-   until it is focused, then it sits under the subtitle. */
-.gallery__skip {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  color: var(--color-accent-lime);
-}
-
-/* Stays out of the flow while visible, so the pinned section does not reflow. */
-.gallery__skip:focus,
-.gallery__skip:focus-visible {
-  top: 100%;
-  left: var(--section-pad-x);
-  width: auto;
-  height: auto;
-  margin-top: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
-  clip-path: none;
-  background: var(--color-bg-dark);
-  border-radius: var(--radius-sm);
-  outline: 2px solid var(--color-accent-lime);
-  outline-offset: 2px;
-}
-
+/* The row is moved by hand: arrows, a swipe or a sideways trackpad gesture. */
 .gallery__viewport {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--section-pad-x);
 }
 
-/* the row is wider than the screen and gets panned left by the scroll trigger */
+/* the row is wider than the screen, so it scrolls sideways inside the viewport */
 .gallery__collage {
   display: flex;
   align-items: center;
   gap: var(--space-md);
   width: max-content;
-  height: 72svh;
+  height: 56svh;
   padding: 0 var(--section-pad-x);
 }
 
 .gallery__tile {
   flex: 0 0 auto;
+  scroll-snap-align: center;
 }
 
 .gallery__tile:nth-child(3n + 1) {
@@ -124,9 +119,20 @@
 }
 
 @media (min-width: 900px) {
+  /* The block sits on the other side than the portfolio above it, so the two
+     sections are told apart at a glance. */
+  .gallery__heading {
+    margin-left: auto;
+  }
+
+  .gallery__subtitle {
+    margin-left: auto;
+    text-align: right;
+  }
+
   .gallery__collage {
     gap: var(--space-xl);
-    height: 74svh;
+    height: 60svh;
   }
 
   .gallery__tile--portrait .gallery__frame {
@@ -143,5 +149,116 @@
 
   .gallery__tile--tall .gallery__frame {
     height: 60svh;
+  }
+}
+
+/* Arrows and progress dots, so the row reads as something you can operate. */
+.gallery__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gallery-control-gap);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+.gallery__arrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  /* plain arrow like the design template, no filled disc behind it */
+  width: var(--gallery-arrow-size);
+  height: var(--gallery-arrow-size);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent-lime);
+  cursor: pointer;
+  transition: transform 200ms;
+}
+
+/* the mark stays at its 40px size while the finger still gets the full target */
+.gallery__arrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  transform: translate(-50%, -50%);
+}
+
+.gallery__arrow:hover {
+  transform: scale(1.15);
+}
+
+.gallery__arrow:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.gallery__arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery__dots {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  width: var(--gallery-dots-width);
+  height: var(--tap-target);
+}
+
+/* Each dot is a tall strip so it is easy to hit; only the small mark shows. */
+.gallery__dot {
+  position: relative;
+  width: var(--tap-target);
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.gallery__dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--gallery-dot-size);
+  height: var(--gallery-dot-size);
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: var(--color-border-subtle);
+  transition: background 200ms;
+}
+
+.gallery__dot.is-active::before {
+  background: var(--rule-gradient);
+}
+
+.gallery__dot:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery__arrow {
+    transition: none;
+  }
+
+  .gallery__arrow:hover {
+    transform: none;
+  }
+
+  .gallery__dot::before {
+    transition: none;
   }
 }

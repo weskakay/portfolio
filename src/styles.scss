@@ -79,9 +79,9 @@ html {
 
   /* Layout */
   --max-width: 1440px;
+  /* Reading measure for long copy, narrower than the content box on purpose. */
+  --max-width-text: 50rem;
   --navbar-height: 72px;
-  --navbar-pad-x: 100px;
-  --navbar-pad-y: 37px;
 
   /* Button */
   --btn-radius: 10px;
@@ -101,12 +101,17 @@ html {
   --control-size: 36px;
   --tap-target: 44px;
   --icon-size: 24px;
-  /* The three traits in About me carry a larger mark than the social row. */
-  --icon-size-lg: 30px;
 
   /* Section spacing (desktop) */
   --section-pad-y: clamp(48px, 10vw, 120px);
   --section-pad-x: clamp(24px, 6vw, 100px);
+
+  /* Accent rules beside the section headings, per the design template */
+  --rule-size: 4px;
+  /* On a phone the side padding is all the room a rule has, so the gap has to
+     stay small or the rule would not show at all on its own side. */
+  --rule-gap: var(--space-sm);
+  --rule-gradient: linear-gradient(90deg, var(--color-accent-lime), var(--color-accent-purple));
 
   /* Surfaces + overlays */
   --color-overlay: rgba(0, 0, 0, 0.7);
@@ -123,6 +128,7 @@ html {
 @media (min-width: 900px) {
   :root {
     --navbar-height: 109px;
+    --rule-gap: var(--space-lg);
   }
 }
 
@@ -144,7 +150,7 @@ html {
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -179,4 +185,28 @@ button {
 img {
   display: block;
   max-width: 100%;
+}
+
+/* Section heading with its accent rule. */
+.section-head {
+  position: relative;
+  width: fit-content;
+}
+
+/* The rule leaves the heading towards the nearer edge of the screen and runs
+   off it; the section clips the rest. */
+.section-head::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(100% + var(--rule-gap));
+  width: 100vw;
+  height: var(--rule-size);
+  background: var(--rule-gradient);
+}
+
+/* Headings that sit on the left send their rule the other way, on every width. */
+.section-head--left::after {
+  left: auto;
+  right: calc(100% + var(--rule-gap));
 }

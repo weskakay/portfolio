@@ -48,7 +48,10 @@ export interface Dictionary {
   gallery: {
     heading: string;
     subtitle: string;
-    skip: string;
+    prev: string;
+    next: string;
+    /** Label of a position dot. `%1` is the position, `%2` how many there are. */
+    goTo: string;
   };
   contact: {
     heading: string;
@@ -135,7 +138,9 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     gallery: {
       heading: 'ON AND OFF THE PITCH',
       subtitle: 'Sport ist mein Ausgleich. Ein paar Momente auf und neben dem Platz.',
-      skip: 'Galerie überspringen',
+      prev: 'Vorheriges Bild',
+      next: 'Nächstes Bild',
+      goTo: 'Zu Abschnitt %1 von %2 springen',
     },
     contact: {
       heading: 'Kontakt',
@@ -220,7 +225,9 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
     gallery: {
       heading: 'ON AND OFF THE PITCH',
       subtitle: 'Sport keeps me balanced. A few moments on and off the pitch.',
-      skip: 'Skip the gallery',
+      prev: 'Previous photo',
+      next: 'Next photo',
+      goTo: 'Go to section %1 of %2',
     },
     contact: {
       heading: 'Contact',

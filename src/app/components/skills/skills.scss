@@ -1,6 +1,8 @@
 .skills {
   position: relative;
   z-index: 1;
+  /* clips the accent rule where it runs past the edge */
+  overflow-x: clip;
   padding: var(--section-pad-y) var(--section-pad-x);
 }
 
@@ -18,7 +20,9 @@
   gap: var(--space-md);
 }
 
+/* turquoise rule here, so the sections are told apart at a glance */
 .skills__heading {
+  --rule-gradient: linear-gradient(90deg, var(--color-secundario), var(--color-accent-lime));
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);

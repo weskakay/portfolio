@@ -99,6 +99,11 @@
   color: var(--color-accent-lime);
 }
 
+.hero__social a:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
+}
+
 .hero__social svg {
   width: var(--icon-size);
   height: var(--icon-size);
@@ -106,20 +111,45 @@
 }
 
 .hero__scroll {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
   position: absolute;
   right: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
   writing-mode: vertical-rl;
   font-size: var(--fs-body);
   color: var(--color-white);
+  transition: color 200ms;
+}
+
+/* The hit area grows without the mark growing, so the narrow hero keeps its
+   room. Same trick as the navbar controls. */
+.hero__scroll::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--tap-target));
+  height: max(100%, var(--tap-target));
+  transform: translate(-50%, -50%);
+}
+
+.hero__scroll:hover {
+  color: var(--color-accent-lime);
+}
+
+.hero__scroll:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
 /* Upright inside the sideways text, so it points the way it means. */
 .hero__scroll-arrow {
   flex: 0 0 auto;
+  width: var(--icon-size);
+  height: var(--icon-size);
   writing-mode: horizontal-tb;
 }
 
@@ -129,12 +159,20 @@
     min-height: 70vh;
   }
 
+  /* Only here is there room to make it bigger, which is what the review asked
+     for. On a phone the headline needs that space. */
+  .hero__scroll {
+    right: var(--section-pad-x);
+    min-height: 160px;
+    justify-content: center;
+    font-size: var(--fs-logo);
+  }
+
   .hero__social {
     position: absolute;
     left: 0;
     bottom: 0;
   }
-
 }
 
 @media (max-height: 560px) {
@@ -145,20 +183,4 @@
   .hero__social {
     display: none;
   }
-}
-
-/* The mark stays as small as it looks, the area you can hit is a full
-   tap target. Nothing moves, the reach around it simply grows. */
-.hero__social a {
-  position: relative;
-}
-
-.hero__social a::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: max(100%, var(--tap-target));
-  height: max(100%, var(--tap-target));
-  transform: translate(-50%, -50%);
 }

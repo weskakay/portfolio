@@ -1,6 +1,8 @@
 .portfolio {
   position: relative;
   z-index: 1;
+  /* clips the accent rule where it runs past the edge */
+  overflow-x: clip;
   padding: var(--section-pad-y) var(--section-pad-x);
 }
 

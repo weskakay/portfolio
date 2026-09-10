@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, signal, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { Router } from '@angular/router';
 import gsap from 'gsap';
 import {
   SCENE,
@@ -39,6 +49,9 @@ const SEEN_KEY = 'intro-seen';
 export class IntroLoader implements AfterViewInit, OnDestroy {
   protected readonly done = signal(this.shouldSkip());
 
+  private readonly router = inject(Router);
+  private readonly scroller = inject(ViewportScroller);
+
   private readonly w = viewChild<ElementRef<SVGSVGElement>>('w');
   private readonly bg = viewChild<ElementRef<HTMLElement>>('bg');
   private readonly sky = viewChild<ElementRef<HTMLCanvasElement>>('sky');
@@ -62,7 +75,7 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
   /** Starts the loader once its canvas is on screen. */
   ngAfterViewInit(): void {
     if (this.done()) return;
-    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflowY = 'hidden';
     this.initCanvas();
     this.startSequence();
   }
@@ -203,7 +216,13 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     const line = this.line()!.nativeElement;
     const len = line.getTotalLength();
     gsap.set(line, { opacity: 1, strokeDasharray: len, strokeDashoffset: len });
-    const to = { strokeDashoffset: 0, duration: LINE_DURATION, ease: LINE_EASE, repeat: -1, repeatDelay: 0.3 };
+    const to = {
+      strokeDashoffset: 0,
+      duration: LINE_DURATION,
+      ease: LINE_EASE,
+      repeat: -1,
+      repeatDelay: 0.3,
+    };
     this.lineTween = gsap.to(line, to);
     this.startCometLoop(len);
   }
@@ -245,16 +264,27 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     this.lineTween?.kill();
     this.cometTween?.kill();
     this.twinkleTween?.kill();
-    gsap.set(this.line()!.nativeElement, { opacity: 1, strokeDasharray: 'none', strokeDashoffset: 0 });
+    this.settleLine();
+    this.addFlyToLogo(gsap.timeline({ onComplete: () => this.finish() }));
+  }
+
+  /** Snap the constellation to its finished state before it flies away. */
+  private settleLine(): void {
+    gsap.set(this.line()!.nativeElement, {
+      opacity: 1,
+      strokeDasharray: 'none',
+      strokeDashoffset: 0,
+    });
     gsap.set(this.comet()!.nativeElement, { opacity: 0 });
     gsap.set(this.starGroups(), { opacity: 1 });
-    this.addFlyToLogo(gsap.timeline({ onComplete: () => this.finish() }));
   }
 
   /** Resolve when the page has finished loading (or already has). */
   private loadPromise(): Promise<void> {
     if (document.readyState === 'complete') return Promise.resolve();
-    return new Promise((resolve) => window.addEventListener('load', () => resolve(), { once: true }));
+    return new Promise((resolve) =>
+      window.addEventListener('load', () => resolve(), { once: true }),
+    );
   }
 
   /** Minimum time the intro stays visible so the line draws once in full. */
@@ -269,12 +299,23 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
 
   /** Pop the five stars into view with a slight overshoot. */
   private addStars(tl: gsap.core.Timeline): void {
-    tl.from(this.starGroups(), { opacity: 0, scale: 0, duration: 0.3, ease: 'back.out(2)', stagger: 0.06 });
+    tl.from(this.starGroups(), {
+      opacity: 0,
+      scale: 0,
+      duration: 0.3,
+      ease: 'back.out(2)',
+      stagger: 0.06,
+    });
   }
 
   /** Shrink and fly the W onto the navbar logo while the universe clears. */
   private addFlyToLogo(tl: gsap.core.Timeline): void {
-    const fly = { ...this.logoTransform(), transformOrigin: '0 0', duration: 0.7, ease: 'power3.inOut' };
+    const fly = {
+      ...this.logoTransform(),
+      transformOrigin: '0 0',
+      duration: 0.7,
+      ease: 'power3.inOut',
+    };
     tl.to(this.w()!.nativeElement, fly, '+=0.2');
     tl.to(this.bg()!.nativeElement, { opacity: 0, duration: 0.55 }, '<');
     tl.to(this.sky()!.nativeElement, { opacity: 0, duration: 0.55 }, '<');
@@ -303,8 +344,15 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
   private finish(): void {
     this.stopRender();
     this.resizeObserver?.disconnect();
-    document.body.style.overflow = '';
+    document.documentElement.style.overflowY = '';
+    this.restoreFragment();
     this.markSeen();
     this.done.set(true);
+  }
+
+  /** The scroll lock swallowed any deep link, so aim at the fragment again. */
+  private restoreFragment(): void {
+    const id = this.router.parseUrl(this.router.url).fragment;
+    if (id) this.scroller.scrollToAnchor(id);
   }
 }

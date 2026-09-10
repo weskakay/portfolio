@@ -57,7 +57,9 @@ void main() {
   float edge = rev * (1.0 - rev) * 4.0;
   vec2 d = (vec2(noise(vUv * 6.0 + uTime), noise(vUv * 6.0 - uTime)) - 0.5) * uStrength * edge;
 
-  vec4 colorA = texture2D(uTexA, vUv + d * 0.5);
+  // both faces take the same displacement, otherwise they slide against each
+  // other by a few pixels exactly where they are half blended
+  vec4 colorA = texture2D(uTexA, vUv + d);
   vec4 colorB = texture2D(uTexB, vUv + uOffsetB + d);
   vec4 color = mix(colorA, colorB, rev);
 

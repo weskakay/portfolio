@@ -1,7 +1,7 @@
 <section id="skills" class="skills">
   <div class="skills__inner">
     <div class="skills__text">
-      <h2 class="skills__heading">{{ lang.dict().skills.heading }}</h2>
+      <h2 class="section-head skills__heading">{{ lang.dict().skills.heading }}</h2>
       <p class="skills__intro">{{ lang.dict().skills.intro }}</p>
       <ul class="skills__methods">
         @for (method of lang.dict().skills.methods; track method) {
@@ -14,7 +14,11 @@
     <ul class="skills__grid">
       @for (skill of skills; track skill.name) {
         <li class="skills__item">
-          <img class="skills__icon" [src]="'/tech-icons/' + skill.icon + '.svg'" [alt]="skill.name" />
+          <img
+            class="skills__icon"
+            [src]="'/tech-icons/' + skill.icon + '.svg'"
+            [alt]="skill.name"
+          />
           <span class="skills__name">{{ skill.name }}</span>
         </li>
       }

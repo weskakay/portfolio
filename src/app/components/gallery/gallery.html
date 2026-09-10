@@ -1,19 +1,74 @@
-<section #section id="gallery" class="gallery">
+<section id="gallery" class="gallery">
   <div class="gallery__intro">
-    <h2 class="gallery__heading">{{ lang.dict().gallery.heading }}</h2>
+    <h2 class="section-head gallery__heading">{{ lang.dict().gallery.heading }}</h2>
     <p class="gallery__subtitle">{{ lang.dict().gallery.subtitle }}</p>
-    <a class="gallery__skip" routerLink="/" fragment="contact">{{ lang.dict().gallery.skip }}</a>
   </div>
 
-  <div class="gallery__viewport">
-    <div #track class="gallery__collage">
+  <div #viewport class="gallery__viewport" (scroll)="measure()">
+    <div class="gallery__collage">
       @for (shot of shots; track shot.id) {
         <figure class="gallery__tile gallery__tile--{{ shot.ratio }}">
           <div class="gallery__frame">
-            <img class="gallery__img" [src]="shot.image" [alt]="shot.alt[lang.lang()]" loading="lazy" />
+            <img
+              class="gallery__img"
+              [src]="shot.image"
+              [alt]="shot.alt[lang.lang()]"
+              loading="lazy"
+            />
           </div>
         </figure>
       }
     </div>
+  </div>
+
+  <div class="gallery__controls">
+    <button
+      type="button"
+      class="gallery__arrow"
+      [attr.aria-label]="lang.dict().gallery.prev"
+      (click)="step(-1)"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M15 4l-8 8 8 8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <div class="gallery__dots">
+      @for (dot of dots; track dot) {
+        <button
+          type="button"
+          class="gallery__dot"
+          [class.is-active]="dot === active()"
+          [attr.aria-current]="dot === active() ? 'true' : null"
+          [attr.aria-label]="dotLabel(dot)"
+          (click)="goToDot(dot)"
+        ></button>
+      }
+    </div>
+
+    <button
+      type="button"
+      class="gallery__arrow"
+      [attr.aria-label]="lang.dict().gallery.next"
+      (click)="step(1)"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M9 4l8 8-8 8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
   </div>
 </section>

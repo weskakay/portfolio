@@ -1,62 +1,82 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, inject, viewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { GALLERY } from '../../data/gallery';
 
-gsap.registerPlugin(ScrollTrigger);
-
 /**
- * Sport gallery: the section pins and the photo row pans sideways while the
- * visitor scrolls, driven by the wheel on desktop and by touch on mobile.
+ * Sport gallery: a horizontal row the visitor moves with the arrows, a swipe
+ * or a sideways trackpad gesture. The section keeps a normal height, so the
+ * page scrolls past it in one go instead of holding on to the scroll for a
+ * few thousand pixels.
  */
 @Component({
   selector: 'app-gallery',
-  imports: [RouterLink],
   templateUrl: './gallery.html',
   styleUrl: './gallery.scss',
 })
 export class Gallery implements AfterViewInit, OnDestroy {
-  /** Scroll distance relative to the pan width, so the row passes faster. */
-  private static readonly PAN_FACTOR = 0.55;
+  /** Always the same number of dots, whatever the screen width. */
+  private static readonly DOTS = 5;
 
   protected readonly lang = inject(LanguageService);
   protected readonly shots = GALLERY;
+  protected readonly dots = Array.from({ length: Gallery.DOTS }, (_, i) => i);
+  protected readonly active = signal(0);
 
-  private readonly section = viewChild.required<ElementRef<HTMLElement>>('section');
-  private readonly track = viewChild.required<ElementRef<HTMLElement>>('track');
-  private ctx?: gsap.Context;
+  private readonly viewport = viewChild.required<ElementRef<HTMLElement>>('viewport');
+  private observer?: ResizeObserver;
 
-  /** Starts the marquee once the strip is in the DOM and can be measured. */
+  /** Read the starting position, and read it again whenever the row resizes. */
   ngAfterViewInit(): void {
-    this.ctx = gsap.context(() => this.buildHorizontalScroll());
+    this.measure();
+    this.observer = new ResizeObserver(() => this.measure());
+    this.observer.observe(this.viewport().nativeElement);
   }
 
-  /** Stops the animation so it does not keep running after the view is gone. */
+  /** Stop watching the row when the view goes. */
   ngOnDestroy(): void {
-    this.ctx?.revert();
+    this.observer?.disconnect();
   }
 
-  /** Pin the section and slide the photo row left across its full overflow width. */
-  private buildHorizontalScroll(): void {
-    const track = this.track().nativeElement;
-    gsap.to(track, this.scrollVars(track));
+  /** Which fifth of the row is showing. */
+  protected measure(): void {
+    const el = this.viewport().nativeElement;
+    const max = el.scrollWidth - el.clientWidth;
+    const share = max > 0 ? el.scrollLeft / max : 0;
+    this.active.set(Math.round(share * (Gallery.DOTS - 1)));
   }
 
-  /** GSAP config: translate the row by its overflow while pinning the section. */
-  private scrollVars(track: HTMLElement): gsap.TweenVars {
-    return {
-      x: () => -(track.scrollWidth - window.innerWidth),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: this.section().nativeElement,
-        start: 'top top',
-        end: () => '+=' + (track.scrollWidth - window.innerWidth) * Gallery.PAN_FACTOR,
-        pin: true,
-        scrub: 0.4,
-        invalidateOnRefresh: true,
-      },
-    };
+  /** Move the row one fifth in either direction, the same step the dots take. */
+  protected step(direction: number): void {
+    const el = this.viewport().nativeElement;
+    const max = el.scrollWidth - el.clientWidth;
+    el.scrollBy({ left: (direction * max) / (Gallery.DOTS - 1), behavior: this.behavior() });
+  }
+
+  /** What a screen reader reads out on a position dot. */
+  protected dotLabel(i: number): string {
+    return this.lang
+      .dict()
+      .gallery.goTo.replace('%1', String(i + 1))
+      .replace('%2', String(Gallery.DOTS));
+  }
+
+  /** Jump to one fifth of the row from its dot. */
+  protected goToDot(i: number): void {
+    const el = this.viewport().nativeElement;
+    const max = el.scrollWidth - el.clientWidth;
+    el.scrollTo({ left: (i / (Gallery.DOTS - 1)) * max, behavior: this.behavior() });
+  }
+
+  /** Glide, unless the visitor asked for less motion. */
+  private behavior(): ScrollBehavior {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   }
 }
