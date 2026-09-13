@@ -1,12 +1,16 @@
 /* Same content box and padding as every section, so the heading lines up with
-   the logo above it. The reading measure is capped on the text itself. */
+   the logo above it. The box grows by its own padding, otherwise the text would
+   sit one padding further in than every section heading. The reading measure is
+   capped on the text itself. */
 .legal {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  max-width: var(--max-width);
+  max-width: calc(var(--max-width) + 2 * var(--section-pad-x));
   margin: 0 auto;
   padding: calc(var(--navbar-height) + var(--space-xl)) var(--section-pad-x) var(--space-xl);
+  padding-left: max(var(--section-pad-x), env(safe-area-inset-left));
+  padding-right: max(var(--section-pad-x), env(safe-area-inset-right));
   min-height: 70vh;
   min-height: 70svh;
   color: var(--color-white);

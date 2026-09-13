@@ -54,6 +54,8 @@ html {
   --color-accent-lime: #70e61c;
   --color-accent-purple: #9747ff;
   --color-secundario: #00bc8f;
+  /* "Blue" from the design file, for the skills rule and the contact lead rule */
+  --color-accent-blue: #1cdae6;
   --color-magenta: #fb47ff;
   --color-yellow: #ff9900;
   --color-dark-green: #4d7e67;
@@ -63,12 +65,19 @@ html {
   --font-family: 'Poppins', sans-serif;
 
   /* Font sizes: headings scale fluidly between mobile and desktop.
-     16px is the floor, nothing on the page goes below it. */
-  --fs-hero-name: clamp(48px, 11vw, 128px);
-  --fs-hero-sub: clamp(26px, 5.5vw, 64px);
-  --fs-deco-i-am: clamp(40px, 8vw, 90px);
+     16px is the floor, nothing on the page goes below it.
+     The hero pair keeps the 2:1 ratio it has on desktop and climbs steeply
+     enough that a 375px phone lands on the 45px from the design, while 320px
+     still fits name and role on one line each. */
+  --fs-hero-name: clamp(38px, 12.2vw, 128px);
+  --fs-hero-sub: clamp(19px, 6.1vw, 64px);
+  --fs-deco-i-am: clamp(28px, 8vw, 90px);
   --fs-section: clamp(30px, 11.5vw, 48px);
   --fs-overlay-link: 28px;
+  /* Contact lead line (grows on desktop, see below) and the send button label,
+     per the design file */
+  --fs-lead: 23px;
+  --fs-subtitle: 23px;
   --fs-logo: 22px;
   --fs-nav: 18px;
   --fs-body: 16px;
@@ -81,6 +90,8 @@ html {
   --max-width: 1440px;
   /* Reading measure for long copy, narrower than the content box on purpose. */
   --max-width-text: 50rem;
+  /* Width of the text column that sits beside a block, e.g. the skills copy. */
+  --side-column: 38%;
   --navbar-height: 72px;
 
   /* Button */
@@ -98,9 +109,16 @@ html {
 
   /* Radius + controls */
   --radius-sm: 8px;
+  --radius-md: 10px;
   --control-size: 36px;
   --tap-target: 44px;
   --icon-size: 24px;
+
+  /* Contact form fields from the design file */
+  --field-pad-x: 25px;
+  --field-message-height: 162px;
+  /* Gap between the contact lead rule and its text: phone / desktop */
+  --lead-rule-gap: var(--space-xs);
 
   /* Section spacing (desktop) */
   --section-pad-y: clamp(48px, 10vw, 120px);
@@ -108,6 +126,13 @@ html {
 
   /* Accent rules beside the section headings, per the design template */
   --rule-size: 4px;
+  /* The short rules that break out into the margin keep this length on every
+     screen, as in the design file. */
+  --rule-length: 100px;
+  /* Hero bottom row from the design file: rule, 42px gap, then the icons.
+     64px on the phone frame, 100px on desktop. */
+  --hero-rule-length: 64px;
+  --hero-rule-gap: 42px;
   /* On a phone the side padding is all the room a rule has, so the gap has to
      stay small or the rule would not show at all on its own side. */
   --rule-gap: var(--space-sm);
@@ -129,6 +154,14 @@ html {
   :root {
     --navbar-height: 109px;
     --rule-gap: var(--space-lg);
+    --hero-rule-length: 100px;
+    /* Section headings grow to the design file's 90px at 1440. */
+    --fs-section: clamp(48px, 6.25vw, 90px);
+    /* At that size "Fähigkeiten" needs about 550px plus room for its rule. */
+    --side-column: 52%;
+    --fs-lead: 32px;
+    --field-message-height: 202px;
+    --lead-rule-gap: 32px;
   }
 }
 
@@ -193,12 +226,14 @@ img {
   width: fit-content;
 }
 
-/* The rule leaves the heading towards the nearer edge of the screen and runs
-   off it; the section clips the rest. */
+/* The rule leaves the heading towards the nearer edge of the screen. Inside a
+   .rule-box it stops one side margin past the content box, otherwise the
+   section clips it at the screen edge. */
 .section-head::after {
   content: '';
   position: absolute;
   top: 50%;
+  transform: translateY(-50%);
   left: calc(100% + var(--rule-gap));
   width: 100vw;
   height: var(--rule-size);
@@ -209,4 +244,19 @@ img {
 .section-head--left::after {
   left: auto;
   right: calc(100% + var(--rule-gap));
+  width: var(--rule-length);
+}
+
+/* Content box of a section whose heading rule should stop one side margin past
+   the content, the way the design file draws it at 1440. The box reaches out by
+   one margin on each side and pads it back in, so the clip edge sits exactly
+   there. Up to 1440 that is the screen edge; wider screens centre the box. Used
+   instead of max-width + margin: auto on the section's inner element. */
+.rule-box {
+  margin-inline: max(
+    calc(-1 * var(--section-pad-x)),
+    calc((100% - var(--max-width)) / 2 - var(--section-pad-x))
+  );
+  padding-inline: var(--section-pad-x);
+  overflow-x: clip;
 }

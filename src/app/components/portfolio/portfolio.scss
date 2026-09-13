@@ -15,6 +15,7 @@
 }
 
 .portfolio__heading {
+  --rule-gradient: var(--color-accent-purple);
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);

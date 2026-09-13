@@ -6,9 +6,8 @@
   overflow-x: clip;
 }
 
+/* width and centring come from .rule-box */
 .contact__inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
@@ -20,17 +19,13 @@
   gap: var(--space-lg);
 }
 
+/* Centred on the page on every width, as in the design file. */
 .contact__heading {
   --rule-gradient: var(--color-accent-lime);
+  margin: 0 auto;
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
-}
-
-@media (min-width: 900px) {
-  .contact__heading {
-    margin: 0 auto;
-  }
 }
 
 .contact__lead-col {
@@ -39,20 +34,24 @@
   gap: var(--space-lg);
 }
 
+/* The text sits on the content edge, the rule fills the margin to its left. */
 .contact__lead {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: var(--fs-overlay-link);
+  position: relative;
+  font-size: var(--fs-lead);
   font-weight: var(--fw-bold);
   color: var(--color-white);
 }
 
+/* Centred on the first line, so it stays put when the text wraps. */
 .contact__lead::before {
   content: '';
-  width: 2rem;
-  height: 2px;
-  background: var(--color-secundario);
+  position: absolute;
+  top: calc(var(--fs-lead) * var(--lh-default) / 2);
+  transform: translateY(-50%);
+  right: calc(100% + var(--lead-rule-gap));
+  width: calc(var(--section-pad-x) - var(--lead-rule-gap));
+  height: var(--rule-size);
+  background: var(--color-accent-blue);
 }
 
 .contact__intro {
@@ -88,11 +87,11 @@
 .contact__input {
   font: inherit;
   min-height: var(--tap-target);
-  padding: var(--space-md);
+  padding: var(--space-sm) var(--field-pad-x);
   color: var(--color-white);
-  background: var(--color-surface);
+  background: var(--color-bg-dark);
   border: 1px solid var(--color-accent-purple);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
 
   /* Chrome paints its own pale background over a filled-in field. The inset
      shadow is the only way to cover it, the background alone is ignored. */
@@ -100,7 +99,7 @@
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus {
     -webkit-text-fill-color: var(--color-white);
-    box-shadow: inset 0 0 0 1000px var(--color-surface);
+    box-shadow: inset 0 0 0 1000px var(--color-bg-dark);
     caret-color: var(--color-white);
     transition: background-color 100000s ease-in-out 0s;
   }
@@ -117,7 +116,7 @@
 
 /* Clearly taller than the single line fields, so a long message has room. */
 .contact__textarea {
-  min-height: 12rem;
+  min-height: var(--field-message-height);
   resize: vertical;
 }
 
@@ -160,10 +159,10 @@
 }
 
 .contact__submit {
-  align-self: flex-start;
+  align-self: center;
   min-height: var(--tap-target);
   margin-top: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--btn-pad-y) var(--btn-pad-x);
   font-weight: var(--fw-bold);
   color: var(--color-black);
   background: var(--color-accent-lime);
@@ -201,7 +200,18 @@
     flex: 0 0 35%;
   }
 
+  /* Half the row, pushed to the right so it ends on the content edge. */
   .contact__form {
-    flex: 1;
+    flex: 0 0 50%;
+    max-width: none;
+    margin-left: auto;
+  }
+
+  .contact__input {
+    padding-block: var(--btn-pad-y);
+  }
+
+  .contact__submit {
+    font-size: var(--fs-subtitle);
   }
 }

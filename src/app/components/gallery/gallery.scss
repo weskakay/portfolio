@@ -27,11 +27,14 @@
   max-width: calc(var(--max-width) + 2 * var(--section-pad-x));
   margin: 0 auto;
   padding: 0 var(--section-pad-x);
+  /* The box already reaches one side margin past the content, which is where
+     the heading rule stops on every other section too. */
+  overflow-x: clip;
 }
 
 .gallery__heading {
-  /* cyan rule, so the gallery does not read as a second portfolio */
-  --rule-gradient: var(--color-secundario);
+  /* green, the colour the design file gives the section in this spot */
+  --rule-gradient: var(--color-accent-lime);
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
@@ -44,13 +47,31 @@
   color: var(--color-white);
 }
 
-/* The row is moved by hand: arrows, a swipe or a sideways trackpad gesture. */
+/* The row is moved by hand: arrows, a swipe or a sideways trackpad gesture.
+   Up to 1440 it runs to the screen edges. Wider screens show the same band a
+   1440 screen would, and the photos fade out into the margin at both ends. */
 .gallery__viewport {
+  width: min(100%, calc(var(--max-width) + 2 * var(--section-pad-x)));
+  margin: 0 auto;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   scroll-padding-inline: var(--section-pad-x);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-black) var(--section-pad-x),
+    var(--color-black) calc(100% - var(--section-pad-x)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-black) var(--section-pad-x),
+    var(--color-black) calc(100% - var(--section-pad-x)),
+    transparent
+  );
 }
 
 /* the row is wider than the screen, so it scrolls sideways inside the viewport */
@@ -119,15 +140,15 @@
 }
 
 @media (min-width: 900px) {
-  /* The block sits on the other side than the portfolio above it, so the two
-     sections are told apart at a glance. */
-  .gallery__heading {
-    margin-left: auto;
+  /* Heading and subtitle start on the same edge as the skills text column and
+     read left to right, so the rule runs out towards the screen edge. */
+  .gallery__heading,
+  .gallery__subtitle {
+    margin-left: calc(100% - var(--side-column));
   }
 
   .gallery__subtitle {
-    margin-left: auto;
-    text-align: right;
+    max-width: var(--side-column);
   }
 
   .gallery__collage {

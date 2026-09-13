@@ -11,14 +11,20 @@
   overflow: hidden;
 }
 
+/* Fills the hero box so the bottom row can sit on its lower edge instead of
+   floating in the middle of the screen. The headline stays centred in what is
+   left over, the padding keeps the two apart on short phones. */
 .hero__inner {
   position: relative;
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding-bottom: calc(var(--icon-size) + var(--space-xl));
   gap: var(--space-xl);
 }
 
@@ -64,22 +70,27 @@
 }
 
 .hero__social {
-  position: relative;
+  position: absolute;
+  /* The rule starts one side margin left of the content, so the icons follow
+     after the rule and its gap, as in the design file. */
+  left: calc(var(--hero-rule-length) + var(--hero-rule-gap) - var(--section-pad-x));
+  bottom: 0;
   display: flex;
-  align-self: flex-start;
   align-items: center;
   gap: var(--space-md);
   list-style: none;
 }
 
-/* The rule runs off to the left edge of the screen; .hero clips the rest. */
+/* The rule runs off to the left edge of the screen; .hero clips the rest. Its
+   length is fixed, so a wide screen does not stretch it into a bar. */
 .hero__social::before {
   content: '';
   position: absolute;
   top: 50%;
-  right: calc(100% + var(--space-md));
-  width: 100vw;
-  height: 2px;
+  transform: translateY(-50%);
+  right: calc(100% + var(--hero-rule-gap));
+  width: var(--hero-rule-length);
+  height: var(--rule-size);
   background: var(--color-accent-lime);
 }
 
@@ -154,24 +165,22 @@
 }
 
 @media (min-width: 900px) {
+  /* Wide enough for the old proportions: the block keeps its own height and
+     sits centred, rather than filling the screen the way a phone needs. */
   .hero__inner {
-    justify-content: center;
+    align-self: center;
+    padding-bottom: 0;
     min-height: 70vh;
   }
 
   /* Only here is there room to make it bigger, which is what the review asked
-     for. On a phone the headline needs that space. */
+     for. On a phone the headline needs that space. The right edge stays on the
+     content edge: .hero__inner already sits inside the section padding, so
+     padding it again would push the mark a whole margin inwards. */
   .hero__scroll {
-    right: var(--section-pad-x);
     min-height: 160px;
     justify-content: center;
     font-size: var(--fs-logo);
-  }
-
-  .hero__social {
-    position: absolute;
-    left: 0;
-    bottom: 0;
   }
 }
 

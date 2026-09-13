@@ -136,8 +136,8 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
         'Berufliches Projekt: Quelltext und laufendes System gehören dem Auftraggeber. Die Beschreibung hier ist bewusst anonymisiert.',
     },
     gallery: {
-      heading: 'ON AND OFF THE PITCH',
-      subtitle: 'Sport ist mein Ausgleich. Ein paar Momente auf und neben dem Platz.',
+      heading: 'Galerie',
+      subtitle: 'Ein paar Momente auf und neben dem Platz.',
       prev: 'Vorheriges Bild',
       next: 'Nächstes Bild',
       goTo: 'Zu Abschnitt %1 von %2 springen',
@@ -223,8 +223,8 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
         'Professional project: the source and the running system belong to the client. The description here is deliberately anonymized.',
     },
     gallery: {
-      heading: 'ON AND OFF THE PITCH',
-      subtitle: 'Sport keeps me balanced. A few moments on and off the pitch.',
+      heading: 'Gallery',
+      subtitle: 'A few moments on and off the pitch.',
       prev: 'Previous photo',
       next: 'Next photo',
       goTo: 'Go to section %1 of %2',
