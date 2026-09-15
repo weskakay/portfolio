@@ -1,5 +1,5 @@
 <section id="contact" class="contact">
-  <div class="contact__inner rule-box">
+  <div class="contact__inner">
     <h2 class="section-head contact__heading">{{ lang.dict().contact.heading }}</h2>
 
     <div class="contact__body">
@@ -87,7 +87,7 @@
 
         <button
           type="submit"
-          class="contact__submit"
+          class="btn-primary contact__submit"
           [disabled]="form.invalid || status() === 'sending'"
         >
           {{ status() === 'sending' ? lang.dict().contact.sending : lang.dict().contact.submit }}

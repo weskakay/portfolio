@@ -1,5 +1,5 @@
 <section id="skills" class="skills">
-  <div class="skills__inner rule-box">
+  <div class="skills__inner">
     <div class="skills__text">
       <h2 class="section-head skills__heading">{{ lang.dict().skills.heading }}</h2>
       <p class="skills__intro">{{ lang.dict().skills.intro }}</p>
@@ -11,17 +11,34 @@
       <p class="skills__more">{{ lang.dict().skills.more }}</p>
     </div>
 
-    <ul class="skills__grid">
-      @for (skill of skills; track skill.name) {
-        <li class="skills__item">
-          <img
-            class="skills__icon"
-            [src]="'/tech-icons/' + skill.icon + '.svg'"
-            [alt]="skill.name"
-          />
-          <span class="skills__name">{{ skill.name }}</span>
-        </li>
+    <div class="skills__shelf">
+      <app-record-row [items]="records()" [label]="lang.dict().skills.browse" [(active)]="active">
+        <ng-template let-index>
+          @let group = groups[index];
+          <span
+            class="sleeve"
+            [class]="'sleeve--' + group.accent"
+            [class.sleeve--leaning]="index !== active()"
+          >
+            <app-blueprint-art class="sleeve__art" [category]="group.id" [plot]="index === active()" />
+            <span class="sleeve__name">{{ categoryName(group) }}</span>
+            <span class="sleeve__title-block" aria-hidden="true">
+              {{ sheet(index) }}
+            </span>
+          </span>
+        </ng-template>
+      </app-record-row>
+
+      @for (group of [activeGroup()]; track group.id) {
+        <ul class="skills__grid" [attr.aria-label]="categoryName(group)">
+          @for (skill of group.skills; track skill.name) {
+            <li class="skills__item">
+              <img class="skills__icon" [src]="'/tech-icons/' + skill.icon + '.svg'" alt="" />
+              <span class="skills__name">{{ skill.name }}</span>
+            </li>
+          }
+        </ul>
       }
-    </ul>
+    </div>
   </div>
 </section>

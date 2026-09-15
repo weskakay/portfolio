@@ -1,0 +1,75 @@
+<div
+  class="records"
+  role="region"
+  [attr.aria-label]="label()"
+  [style.--count]="items().length"
+  (keydown)="onKeydown($event)"
+>
+  <div
+    class="records__stage"
+    (pointerdown)="onPointerDown($event)"
+    (pointerup)="onPointerUp($event)"
+    (pointercancel)="onPointerCancel()"
+    (wheel)="onWheel($event)"
+  >
+    <div class="records__row" [style.--active]="active()">
+      @for (item of items(); track item.id; let i = $index) {
+        <button
+          #card
+          type="button"
+          class="records__card"
+          [class.records__card--active]="i === active()"
+          [style.--i]="i"
+          [style.--side]="side(i)"
+          [style.--depth]="depth(i)"
+          [style.--delay]="delay(i)"
+          [attr.tabindex]="i === active() ? 0 : -1"
+          [attr.aria-current]="i === active()"
+          [attr.aria-label]="item.label"
+          (click)="onCardClick(i)"
+        >
+          <span class="records__media">
+            <ng-container *ngTemplateOutlet="cover(); context: { $implicit: i }" />
+          </span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="arrow-btn records__arrow--prev"
+    [attr.aria-label]="lang.dict().records.prev"
+    (click)="step(-1)"
+  >
+    <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 4l-8 8 8 8" />
+    </svg>
+  </button>
+
+  <div class="dot-nav records__dots">
+    @for (item of items(); track item.id; let i = $index) {
+      <button
+        type="button"
+        class="dot-nav__dot"
+        [class.is-active]="i === active()"
+        [attr.aria-current]="i === active() ? 'true' : null"
+        [attr.aria-label]="item.title"
+        (click)="active.set(i)"
+      ></button>
+    }
+  </div>
+
+  <p class="records__sr" aria-live="polite">{{ position() }}</p>
+
+  <button
+    type="button"
+    class="arrow-btn records__arrow--next"
+    [attr.aria-label]="lang.dict().records.next"
+    (click)="step(1)"
+  >
+    <svg class="arrow-icon arrow-icon--next" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 4l-8 8 8 8" />
+    </svg>
+  </button>
+</div>

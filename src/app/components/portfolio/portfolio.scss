@@ -44,11 +44,12 @@
   background: transparent;
   text-align: left;
   cursor: pointer;
-  transition: transform 200ms;
 }
 
-.card:hover {
-  transform: translateY(-4px);
+.card:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 4px;
+  border-radius: var(--btn-radius);
 }
 
 .card__media {
@@ -64,11 +65,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 300ms;
 }
 
-.card:hover .card__img {
-  transform: scale(1.04);
+.card:hover .card__media,
+.card:focus-visible .card__media {
+  box-shadow: var(--glow-lime);
 }
 
 /* logo images: show the whole logo on the dark surface, framed and not cropped */
@@ -120,6 +121,32 @@
 /* Decoration, so it stays out of the translated string. */
 .card__action::after {
   content: ' \2192';
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate 200ms;
+  }
+
+  .card__media {
+    transition: box-shadow 200ms;
+  }
+
+  .card__img {
+    transition: transform 300ms;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover,
+  .card:focus-visible {
+    translate: 0 calc(-1 * var(--lift-lg));
+  }
+
+  .card:hover .card__img,
+  .card:focus-visible .card__img {
+    transform: scale(1.04);
+  }
 }
 
 @media (hover: none) {

@@ -1,0 +1,210 @@
+/* Design tokens: colours, type, spacing and the breakpoints that retune them */
+
+:root {
+  /* Colors */
+  --color-bg-dark: #141d2f;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-cream: #fffcf3;
+
+  --color-accent-lime: #70e61c;
+  --color-accent-purple: #9747ff;
+  --color-secundario: #00bc8f;
+  /* "Blue" from the design file, for the skills rule and the contact lead rule */
+  --color-accent-blue: #1cdae6;
+  --color-magenta: #fb47ff;
+  --color-yellow: #ff9900;
+  --color-dark-green: #4d7e67;
+  --color-error: #ff6b6b;
+
+  /* Font */
+  --font-family: 'Poppins', sans-serif;
+
+  /* Font sizes: headings scale fluidly between mobile and desktop.
+     16px is the floor, nothing on the page goes below it.
+     The hero pair keeps the 2:1 ratio it has on desktop and climbs steeply
+     enough that a 375px phone lands on the 45px from the design, while 320px
+     still fits name and role on one line each. */
+  --fs-hero-name: clamp(38px, 12.2vw, 128px);
+  --fs-hero-sub: clamp(19px, 6.1vw, 64px);
+  --fs-deco-i-am: clamp(28px, 8vw, 90px);
+  --fs-section: clamp(30px, 11.5vw, 48px);
+  --fs-overlay-link: 28px;
+  /* Contact lead line (grows on desktop, see below) and the send button label,
+     per the design file */
+  --fs-lead: 23px;
+  --fs-subtitle: 23px;
+  --fs-logo: 22px;
+  --fs-nav: 18px;
+  --fs-body: 16px;
+
+  /* Weights */
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  /* Layout */
+  /* Big screens zoom the whole page (tiers below). Zoom scales viewport units
+     as well, so anything sized by the screen divides it back out with these. */
+  --zoom: 1;
+  --svh: calc(1svh / var(--zoom));
+  --dvh: calc(1dvh / var(--zoom));
+  --vw: calc(1vw / var(--zoom));
+  --max-width: 1440px;
+  /* Reading measure for long copy, narrower than the content box on purpose. */
+  --max-width-text: 50rem;
+  /* Width of the text column that sits beside a block, e.g. the skills copy. */
+  --side-column: 38%;
+  --navbar-height: 72px;
+
+  /* Button */
+  --btn-radius: 10px;
+  --btn-pad-y: 15px;
+  --btn-pad-x: 30px;
+  --btn-gap: 10px;
+
+  /* Spacing scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Radius + controls */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --control-size: 36px;
+  --tap-target: 44px;
+  --icon-size: 24px;
+  /* Skill icons in the list under the records */
+  --skill-icon-size: 40px;
+  /* Blueprint sleeves: grid pitch, line tints (mixed into the accent), timing */
+  --blueprint-grid: 8px;
+  --blueprint-grid-major: 40px;
+  --blueprint-tint-minor: 8%;
+  --blueprint-tint-major: 18%;
+  --blueprint-tint-frame: 45%;
+  --blueprint-tint-scan: 22%;
+  --blueprint-backing: rgba(20, 29, 47, 0.82);
+  --blueprint-dash: 1;
+  --blueprint-plot-time: 1.2s;
+  --blueprint-scan-time: 6s;
+  /* Plain lime chevron from the gallery in the design template */
+  --arrow-size: 40px;
+  --dot-size: 8px;
+  --arrow-stroke: 1.5;
+  --arrow-stroke-hover: 2.5;
+
+  /* Contact form fields from the design file */
+  --field-pad-x: 25px;
+  --field-message-height: 162px;
+  /* Gap between the contact lead rule and its text: phone / desktop */
+  --lead-rule-gap: var(--space-xs);
+
+  /* Section spacing (desktop) */
+  --section-pad-y: clamp(48px, 10vw, 120px);
+  --section-pad-x: clamp(24px, 6vw, 100px);
+  /* Room between two columns side by side, e.g. the skills text and records */
+  --column-gap: clamp(40px, 8vw, 160px);
+  /* Skills columns: "Fähigkeiten" at 90px needs about 550px */
+  --skills-text-width: 36rem;
+  --skills-shelf-width: 30rem;
+
+  /* Accent rules beside the section headings, per the design template */
+  --rule-size: 4px;
+  /* Hero bottom row from the design file: rule, 42px gap, then the icons.
+     The icons sit where a 64px (phone) or 100px (desktop) rule would end at
+     1440; wider screens let the rule run on to the screen edge. */
+  --hero-rule-length: 64px;
+  --hero-rule-gap: 42px;
+  /* On a phone the side padding is all the room a rule has, so the gap has to
+     stay small or the rule would not show at all on its own side. */
+  --rule-gap: var(--space-sm);
+  --rule-gradient: linear-gradient(90deg, var(--color-accent-lime), var(--color-accent-purple));
+
+  /* Surfaces + overlays */
+  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-border-subtle: rgba(255, 255, 255, 0.12);
+
+  /* Hover: lime glow, tints and lifts */
+  --color-accent-lime-bright: #8ef04f;
+  --color-secundario-bright: #3fe3b8;
+  --color-secundario-tint: rgba(0, 188, 143, 0.28);
+  --glow-secundario: 0 0 18px rgba(0, 188, 143, 0.6);
+  --glow-secundario-text: 0 0 12px rgba(63, 227, 184, 0.65);
+  --glow-lime: 0 0 24px rgba(112, 230, 28, 0.55);
+  --glow-lime-soft: 0 0 14px rgba(112, 230, 28, 0.35);
+  --glow-lime-drop: drop-shadow(0 0 6px rgba(112, 230, 28, 0.8));
+  /* The shimmering W mark: resting and peak light */
+  --logo-glow-low: drop-shadow(0 0 3px var(--color-accent-lime)) drop-shadow(0 0 10px rgba(112, 230, 28, 0.5)) brightness(1.15);
+  --logo-glow-high: drop-shadow(0 0 6px var(--color-white)) drop-shadow(0 0 16px var(--color-accent-lime)) drop-shadow(0 0 36px rgba(112, 230, 28, 0.8)) brightness(1.6);
+  /* Purple from the design file for the language switch; the light tone keeps
+     text readable on the dark menu background */
+  --color-accent-purple-light: #b98cff;
+  --glow-purple: 0 0 24px rgba(151, 71, 255, 0.55);
+  --lift-sm: 2px;
+  --lift-md: 3px;
+  --lift-lg: 8px;
+  --icon-grow: 1.25;
+  --underline-size: 2px;
+  /* The mobile menu lifts off the page, per the Figma template. */
+  --color-overlay-menu: #414856;
+  /* Ambient glows behind the page */
+  --color-glow-blue: rgba(28, 218, 230, 0.3);
+  --color-glow-purple: rgba(151, 71, 255, 0.3);
+  --color-glow-lime: rgba(112, 230, 28, 0.24);
+  --color-glow-magenta: rgba(251, 71, 255, 0.26);
+
+  /* Line heights */
+  --lh-default: 1.2;
+  --lh-body: 1.6;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --navbar-height: 109px;
+    --rule-gap: var(--space-lg);
+    --hero-rule-length: 100px;
+    /* Section headings grow to the design file's 90px at 1440. */
+    --fs-section: clamp(48px, 6.25vw, 90px);
+    /* At that size "Fähigkeiten" needs about 550px plus room for its rule. */
+    --side-column: 52%;
+    --fs-lead: 32px;
+    --field-message-height: 202px;
+    --lead-rule-gap: 32px;
+  }
+}
+
+/* Wide screens show the 1600px layout scaled up instead of a small box in
+   the middle. Media queries still see the real screen width. */
+@media (min-width: 1920px) {
+  :root {
+    --zoom: 1.2;
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --zoom: 1.6;
+  }
+}
+
+@media (min-width: 3200px) {
+  :root {
+    --zoom: 2;
+  }
+}
+
+@media (min-width: 3840px) {
+  :root {
+    --zoom: 2.4;
+  }
+}
+
+/* Phones in landscape have little height: shrink the fixed chrome so content fits */
+@media (max-height: 560px) {
+  :root {
+    --navbar-height: 64px;
+    --section-pad-y: 64px;
+  }
+}

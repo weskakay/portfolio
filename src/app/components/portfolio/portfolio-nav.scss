@@ -1,0 +1,93 @@
+/* Project bar at the foot of the dialog */
+.modal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border-top: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-dark);
+}
+
+/* The shared arrow with its label beside it; the whole button is the target. */
+.modal__step.arrow-btn {
+  justify-content: flex-start;
+  gap: var(--space-xs);
+  width: auto;
+  height: auto;
+  min-height: var(--tap-target);
+  color: var(--color-white);
+  text-align: left;
+}
+
+.modal__step:hover,
+.modal__step:focus-visible {
+  color: var(--color-accent-lime);
+}
+
+.modal__step--next {
+  text-align: right;
+}
+
+.modal__step-long {
+  display: none;
+}
+
+.modal__step-label {
+  font-size: var(--fs-body);
+  opacity: 0.75;
+}
+
+.modal__step-title {
+  overflow: hidden;
+  font-weight: var(--fw-bold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.modal__counter {
+  flex: 0 0 auto;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
+}
+
+/* Read out, but not shown */
+.modal__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+  .modal {
+    padding: var(--space-lg);
+  }
+
+  .modal__nav {
+    padding: var(--space-sm) var(--space-lg);
+  }
+
+  .modal__step.arrow-btn {
+    flex: 0 1 40%;
+    min-width: 0;
+    gap: var(--space-sm);
+  }
+
+  .modal__step--next.arrow-btn {
+    justify-content: flex-end;
+  }
+
+  .modal__step-short {
+    display: none;
+  }
+
+  .modal__step-long {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+}

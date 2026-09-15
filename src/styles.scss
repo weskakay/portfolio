@@ -1,4 +1,6 @@
-/* Global design tokens and base styles */
+/* Global base styles; the tokens live in styles/_tokens.scss */
+
+@use 'styles/tokens';
 
 @font-face {
   font-family: 'Poppins';
@@ -17,6 +19,7 @@
 }
 
 html {
+  zoom: var(--zoom);
   scroll-padding-top: var(--navbar-height);
   background: var(--color-bg-dark);
   overscroll-behavior-y: none;
@@ -41,135 +44,6 @@ html {
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
-  }
-}
-
-:root {
-  /* Colors */
-  --color-bg-dark: #141d2f;
-  --color-white: #ffffff;
-  --color-black: #000000;
-  --color-cream: #fffcf3;
-
-  --color-accent-lime: #70e61c;
-  --color-accent-purple: #9747ff;
-  --color-secundario: #00bc8f;
-  /* "Blue" from the design file, for the skills rule and the contact lead rule */
-  --color-accent-blue: #1cdae6;
-  --color-magenta: #fb47ff;
-  --color-yellow: #ff9900;
-  --color-dark-green: #4d7e67;
-  --color-error: #ff6b6b;
-
-  /* Font */
-  --font-family: 'Poppins', sans-serif;
-
-  /* Font sizes: headings scale fluidly between mobile and desktop.
-     16px is the floor, nothing on the page goes below it.
-     The hero pair keeps the 2:1 ratio it has on desktop and climbs steeply
-     enough that a 375px phone lands on the 45px from the design, while 320px
-     still fits name and role on one line each. */
-  --fs-hero-name: clamp(38px, 12.2vw, 128px);
-  --fs-hero-sub: clamp(19px, 6.1vw, 64px);
-  --fs-deco-i-am: clamp(28px, 8vw, 90px);
-  --fs-section: clamp(30px, 11.5vw, 48px);
-  --fs-overlay-link: 28px;
-  /* Contact lead line (grows on desktop, see below) and the send button label,
-     per the design file */
-  --fs-lead: 23px;
-  --fs-subtitle: 23px;
-  --fs-logo: 22px;
-  --fs-nav: 18px;
-  --fs-body: 16px;
-
-  /* Weights */
-  --fw-regular: 400;
-  --fw-bold: 700;
-
-  /* Layout */
-  --max-width: 1440px;
-  /* Reading measure for long copy, narrower than the content box on purpose. */
-  --max-width-text: 50rem;
-  /* Width of the text column that sits beside a block, e.g. the skills copy. */
-  --side-column: 38%;
-  --navbar-height: 72px;
-
-  /* Button */
-  --btn-radius: 10px;
-  --btn-pad-y: 15px;
-  --btn-pad-x: 30px;
-  --btn-gap: 10px;
-
-  /* Spacing scale */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 40px;
-
-  /* Radius + controls */
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --control-size: 36px;
-  --tap-target: 44px;
-  --icon-size: 24px;
-
-  /* Contact form fields from the design file */
-  --field-pad-x: 25px;
-  --field-message-height: 162px;
-  /* Gap between the contact lead rule and its text: phone / desktop */
-  --lead-rule-gap: var(--space-xs);
-
-  /* Section spacing (desktop) */
-  --section-pad-y: clamp(48px, 10vw, 120px);
-  --section-pad-x: clamp(24px, 6vw, 100px);
-
-  /* Accent rules beside the section headings, per the design template */
-  --rule-size: 4px;
-  /* The short rules that break out into the margin keep this length on every
-     screen, as in the design file. */
-  --rule-length: 100px;
-  /* Hero bottom row from the design file: rule, 42px gap, then the icons.
-     64px on the phone frame, 100px on desktop. */
-  --hero-rule-length: 64px;
-  --hero-rule-gap: 42px;
-  /* On a phone the side padding is all the room a rule has, so the gap has to
-     stay small or the rule would not show at all on its own side. */
-  --rule-gap: var(--space-sm);
-  --rule-gradient: linear-gradient(90deg, var(--color-accent-lime), var(--color-accent-purple));
-
-  /* Surfaces + overlays */
-  --color-overlay: rgba(0, 0, 0, 0.7);
-  --color-surface: rgba(255, 255, 255, 0.05);
-  --color-border-subtle: rgba(255, 255, 255, 0.12);
-  /* The mobile menu lifts off the page, per the Figma template. */
-  --color-overlay-menu: #414856;
-
-  /* Line heights */
-  --lh-default: 1.2;
-  --lh-body: 1.6;
-}
-
-@media (min-width: 900px) {
-  :root {
-    --navbar-height: 109px;
-    --rule-gap: var(--space-lg);
-    --hero-rule-length: 100px;
-    /* Section headings grow to the design file's 90px at 1440. */
-    --fs-section: clamp(48px, 6.25vw, 90px);
-    /* At that size "Fähigkeiten" needs about 550px plus room for its rule. */
-    --side-column: 52%;
-    --fs-lead: 32px;
-    --field-message-height: 202px;
-    --lead-rule-gap: 32px;
-  }
-}
-
-/* Phones in landscape have little height: shrink the fixed chrome so content fits */
-@media (max-height: 560px) {
-  :root {
-    --navbar-height: 64px;
-    --section-pad-y: 64px;
   }
 }
 
@@ -220,15 +94,27 @@ img {
   max-width: 100%;
 }
 
+/* Breathing light for the W mark in the navbar and the footer: it never goes
+   dark, and at its peak it throws a wide lime halo. */
+@keyframes logo-shimmer {
+  0%,
+  100% {
+    filter: var(--logo-glow-low);
+  }
+
+  50% {
+    filter: var(--logo-glow-high);
+  }
+}
+
 /* Section heading with its accent rule. */
 .section-head {
   position: relative;
   width: fit-content;
 }
 
-/* The rule leaves the heading towards the nearer edge of the screen. Inside a
-   .rule-box it stops one side margin past the content box, otherwise the
-   section clips it at the screen edge. */
+/* The rule leaves the heading towards the nearer edge of the screen and runs
+   all the way to it on every width. The section clips it there. */
 .section-head::after {
   content: '';
   position: absolute;
@@ -244,19 +130,170 @@ img {
 .section-head--left::after {
   left: auto;
   right: calc(100% + var(--rule-gap));
-  width: var(--rule-length);
 }
 
-/* Content box of a section whose heading rule should stop one side margin past
-   the content, the way the design file draws it at 1440. The box reaches out by
-   one margin on each side and pads it back in, so the clip edge sits exactly
-   there. Up to 1440 that is the screen edge; wider screens centre the box. Used
-   instead of max-width + margin: auto on the section's inner element. */
-.rule-box {
-  margin-inline: max(
-    calc(-1 * var(--section-pad-x)),
-    calc((100% - var(--max-width)) / 2 - var(--section-pad-x))
-  );
-  padding-inline: var(--section-pad-x);
-  overflow-x: clip;
+/* The one arrow of the site: gallery, record row, image slider, project bar.
+   Only the chevron shows, the hit area still gets the full tap target. */
+.arrow-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: var(--arrow-size);
+  height: var(--arrow-size);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent-lime);
+}
+
+.arrow-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, var(--tap-target));
+  height: max(100%, var(--tap-target));
+  transform: translate(-50%, -50%);
+}
+
+.arrow-btn:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* One path for both directions, the next arrow is the mirror image. */
+.arrow-icon {
+  flex: 0 0 auto;
+  width: var(--arrow-size);
+  height: var(--arrow-size);
+  fill: none;
+  stroke: var(--color-accent-lime);
+  stroke-width: var(--arrow-stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.arrow-icon--next {
+  transform: scaleX(-1);
+}
+
+/* Hover and keyboard focus look the same: a bolder, glowing chevron, grown when motion is fine. */
+.arrow-btn:hover .arrow-icon,
+.arrow-btn:focus-visible .arrow-icon {
+  stroke-width: var(--arrow-stroke-hover);
+  filter: var(--glow-lime-drop);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .arrow-icon {
+    transition:
+      scale 200ms,
+      stroke-width 200ms,
+      filter 200ms;
+  }
+
+  .arrow-btn:hover .arrow-icon,
+  .arrow-btn:focus-visible .arrow-icon {
+    scale: 1.15;
+  }
+}
+
+/* Position dots between two arrows: gallery and skill records. Each dot is a
+   full tap target, only the small mark shows. */
+.dot-nav {
+  display: flex;
+  align-items: center;
+  height: var(--tap-target);
+}
+
+.dot-nav__dot {
+  position: relative;
+  width: var(--tap-target);
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dot-nav__dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: var(--color-border-subtle);
+}
+
+.dot-nav__dot.is-active::before {
+  background: var(--rule-gradient);
+}
+
+.dot-nav__dot:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dot-nav__dot::before {
+    transition: background 200ms;
+  }
+}
+
+/* The lime button: hero call to action, send button, live demo link.
+   Size comes from the component, the look lives here. */
+.btn-primary {
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border: 0 solid var(--color-accent-lime);
+  border-radius: var(--btn-radius);
+  background: var(--color-accent-lime);
+  color: var(--color-black);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled),
+.btn-primary:focus-visible {
+  border-color: var(--color-accent-lime-bright);
+  background: var(--color-accent-lime-bright);
+  box-shadow: var(--glow-lime);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 3px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn-primary {
+    transition:
+      background-color 200ms,
+      border-color 200ms,
+      box-shadow 200ms,
+      translate 200ms;
+  }
+}
+
+/* The lift sticks after a tap on touch screens, so it waits for a real pointer. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-primary:hover:not(:disabled),
+  .btn-primary:focus-visible {
+    translate: 0 calc(-1 * var(--lift-md));
+  }
+
+  .btn-primary:active:not(:disabled) {
+    translate: 0;
+    box-shadow: var(--glow-lime-soft);
+  }
 }

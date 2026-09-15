@@ -1,6 +1,9 @@
 /** The two languages the site is offered in. */
 export type Lang = 'de' | 'en';
 
+/** The groups the skills are sorted into, one record each. */
+export type SkillCategory = 'frontend' | 'backend' | 'databases' | 'devops' | 'tools';
+
 /** Every piece of text on the site, in one shape per language. */
 export interface Dictionary {
   nav: {
@@ -31,6 +34,17 @@ export interface Dictionary {
     intro: string;
     more: string;
     methods: string[];
+    /** Label of the record row. */
+    browse: string;
+    /** Sleeve label. `%1` is the category, `%2` how many skills it holds. */
+    sleeve: string;
+    categories: Record<SkillCategory, string>;
+  };
+  records: {
+    prev: string;
+    next: string;
+    /** Announced on every flip. `%1` position, `%2` count, `%3` title. */
+    position: string;
   };
   portfolio: {
     heading: string;
@@ -44,6 +58,18 @@ export interface Dictionary {
     highlightLabel: string;
     demoLabel: string;
     notPublic: string;
+    projectNav: string;
+    prevProject: string;
+    nextProject: string;
+    prevShort: string;
+    nextShort: string;
+    /** Announced on every flip. `%1` position, `%2` count, `%3` title. */
+    position: string;
+    images: string;
+    prevImage: string;
+    nextImage: string;
+    /** Alt text and dot label of a slide. `%1` is the position, `%2` the total. */
+    imageOf: string;
   };
   gallery: {
     heading: string;
@@ -120,6 +146,20 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
         'Von Frontend bis Backend, von Datenbanken bis DevOps. Ich bleibe neugierig und arbeite mich schnell in neue Technologien ein.',
       more: 'Du suchst eine andere Technologie? Kein Problem, ich lerne schnell dazu.',
       methods: ['Scrum', 'Kanban', 'REST API', 'Testautomatisierung', 'IoT', 'OOP'],
+      browse: 'Fähigkeiten nach Bereich',
+      sleeve: '%1, %2 Skills',
+      categories: {
+        frontend: 'Frontend',
+        backend: 'Backend',
+        databases: 'Datenbanken',
+        devops: 'DevOps & Cloud',
+        tools: 'Werkzeuge',
+      },
+    },
+    records: {
+      prev: 'Vorherige Platte',
+      next: 'Nächste Platte',
+      position: 'Platte %1 von %2: %3',
     },
     portfolio: {
       heading: 'Portfolio',
@@ -134,6 +174,16 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       demoLabel: 'Im Gastzugang',
       notPublic:
         'Berufliches Projekt: Quelltext und laufendes System gehören dem Auftraggeber. Die Beschreibung hier ist bewusst anonymisiert.',
+      projectNav: 'Projekte durchblättern',
+      prevProject: 'Vorheriges Projekt',
+      nextProject: 'Nächstes Projekt',
+      prevShort: 'Zurück',
+      nextShort: 'Weiter',
+      position: 'Projekt %1 von %2: %3',
+      images: 'Bilder',
+      prevImage: 'Vorheriges Bild',
+      nextImage: 'Nächstes Bild',
+      imageOf: 'Bild %1 von %2',
     },
     gallery: {
       heading: 'Galerie',
@@ -207,6 +257,20 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
         'From frontend to backend, from databases to DevOps. I stay curious and pick up new technologies quickly.',
       more: 'Looking for another technology? No problem, I learn fast.',
       methods: ['Scrum', 'Kanban', 'REST API', 'Test automation', 'IoT', 'OOP'],
+      browse: 'Skills by area',
+      sleeve: '%1, %2 skills',
+      categories: {
+        frontend: 'Frontend',
+        backend: 'Backend',
+        databases: 'Databases',
+        devops: 'DevOps & Cloud',
+        tools: 'Tools',
+      },
+    },
+    records: {
+      prev: 'Previous record',
+      next: 'Next record',
+      position: 'Record %1 of %2: %3',
     },
     portfolio: {
       heading: 'Portfolio',
@@ -221,6 +285,16 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       demoLabel: 'In the guest area',
       notPublic:
         'Professional project: the source and the running system belong to the client. The description here is deliberately anonymized.',
+      projectNav: 'Browse the projects',
+      prevProject: 'Previous project',
+      nextProject: 'Next project',
+      prevShort: 'Back',
+      nextShort: 'Next',
+      position: 'Project %1 of %2: %3',
+      images: 'Images',
+      prevImage: 'Previous image',
+      nextImage: 'Next image',
+      imageOf: 'Image %1 of %2',
     },
     gallery: {
       heading: 'Gallery',

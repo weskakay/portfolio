@@ -24,27 +24,20 @@
   <div class="gallery__controls">
     <button
       type="button"
-      class="gallery__arrow"
+      class="arrow-btn"
       [attr.aria-label]="lang.dict().gallery.prev"
       (click)="step(-1)"
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M15 4l-8 8 8 8"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+      <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 4l-8 8 8 8" />
       </svg>
     </button>
 
-    <div class="gallery__dots">
+    <div class="dot-nav">
       @for (dot of dots; track dot) {
         <button
           type="button"
-          class="gallery__dot"
+          class="dot-nav__dot"
           [class.is-active]="dot === active()"
           [attr.aria-current]="dot === active() ? 'true' : null"
           [attr.aria-label]="dotLabel(dot)"
@@ -55,19 +48,12 @@
 
     <button
       type="button"
-      class="gallery__arrow"
+      class="arrow-btn"
       [attr.aria-label]="lang.dict().gallery.next"
       (click)="step(1)"
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M9 4l8 8-8 8"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+      <svg class="arrow-icon arrow-icon--next" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 4l-8 8 8 8" />
       </svg>
     </button>
   </div>

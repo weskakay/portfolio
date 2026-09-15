@@ -31,12 +31,20 @@
 .footer__logo {
   height: 3em;
   width: auto;
+  filter: var(--logo-glow-low);
   transition: transform 250ms, filter 250ms;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .footer__logo {
+    animation: logo-shimmer 3s ease-in-out infinite;
+  }
+}
+
 .footer__logo-link:hover .footer__logo {
+  animation: none;
   transform: scale(1.12);
-  filter: drop-shadow(0 0 5px var(--color-accent-lime));
+  filter: var(--logo-glow-high);
 }
 
 .footer__legal {
@@ -54,8 +62,27 @@
   text-decoration: none;
 }
 
-.footer__legal a:hover {
+/* Lime text and an underline that grows from the left, like the navbar. */
+.footer__legal a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-sm);
+  height: var(--underline-size);
+  background: var(--color-accent-lime);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.footer__legal a:hover,
+.footer__legal a:focus-visible {
   color: var(--color-accent-lime);
+}
+
+.footer__legal a:hover::before,
+.footer__legal a:focus-visible::before {
+  transform: scaleX(1);
 }
 
 .footer__rights {
@@ -78,11 +105,12 @@
   min-height: var(--tap-target);
   margin: calc(var(--tap-target) / -4);
   color: var(--color-white);
-  transition: color 200ms;
 }
 
-.footer__social a:hover {
+.footer__social a:hover,
+.footer__social a:focus-visible {
   color: var(--color-accent-lime);
+  filter: var(--glow-lime-drop);
 }
 
 .footer__social svg {
@@ -95,6 +123,36 @@
 .footer__legal a:focus-visible {
   outline: 2px solid var(--color-accent-lime);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .footer__legal a,
+  .footer__social a {
+    transition:
+      color 200ms,
+      filter 200ms,
+      translate 200ms;
+  }
+
+  .footer__legal a::before {
+    transition: transform 250ms ease-out;
+  }
+
+  .footer__social svg {
+    transition: scale 200ms;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .footer__social a:hover,
+  .footer__social a:focus-visible {
+    translate: 0 calc(-1 * var(--lift-md));
+  }
+
+  .footer__social a:hover svg,
+  .footer__social a:focus-visible svg {
+    scale: var(--icon-grow);
+  }
 }
 
 @media (min-width: 900px) {

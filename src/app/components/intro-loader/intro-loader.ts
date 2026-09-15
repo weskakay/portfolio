@@ -22,6 +22,7 @@ import {
   spawnMeteor,
 } from './intro-scene';
 import type { Meteor, Nebula, Star } from './intro-scene';
+import { pageZoom } from '../../page-zoom';
 
 /** How long one pass of the W takes, and how it accelerates. */
 const LINE_DURATION = 0.85;
@@ -327,7 +328,10 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     const svg = this.w()!.nativeElement.getBoundingClientRect();
     const logo = document.querySelector('.navbar__logo-w')?.getBoundingClientRect();
     if (!logo) return { x: 0, y: 0, scale: 0.15 };
-    return { x: logo.left - svg.left, y: logo.top - svg.top, scale: logo.width / svg.width };
+    // rects are zoomed, the transform is not
+    const zoom = pageZoom();
+    const x = (logo.left - svg.left) / zoom;
+    return { x, y: (logo.top - svg.top) / zoom, scale: logo.width / svg.width };
   }
 
   /** The five star groups (glow plus core) inside the SVG. */

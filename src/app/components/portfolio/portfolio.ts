@@ -1,28 +1,50 @@
-import { Component, ElementRef, effect, inject, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Injector,
+  afterNextRender,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+  viewChildren,
+} from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { PROJECTS, type Project } from '../../data/projects';
+import { PROJECTS, projectImages, type Project } from '../../data/projects';
+import { ProjectSlider } from './project-slider/project-slider';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const KEY_STEPS: Record<string, number> = { ArrowLeft: -1, ArrowRight: 1 };
 
 /**
  * Portfolio section: a grid of project cards. Every card opens a detail modal
- * on the same page; web projects additionally offer links to their live demo
- * and their code. The modal traps focus and closes on Escape.
+ * with an image slider, and a project bar at its foot flips on to the
+ * neighbours without closing. Web projects offer links to their live demo and
+ * their code. The modal traps focus and closes on Escape.
  */
 @Component({
   selector: 'app-portfolio',
-  imports: [],
+  imports: [ProjectSlider],
   templateUrl: './portfolio.html',
-  styleUrls: ['./portfolio.scss', './portfolio-modal.scss'],
+  styleUrls: ['./portfolio.scss', './portfolio-modal.scss', './portfolio-nav.scss'],
 })
 export class Portfolio {
   protected readonly lang = inject(LanguageService);
   protected readonly projects = PROJECTS;
-  protected readonly selected = signal<Project | null>(null);
+  protected readonly active = signal(0);
+  protected readonly isOpen = signal(false);
+  protected readonly selected = computed(() => (this.isOpen() ? this.projects[this.active()] : null));
+  protected readonly titles = computed(() => this.projects.map((project) => this.titleFor(project)));
+  protected readonly images = computed(() => projectImages(this.projects[this.active()]));
+  protected readonly prevProject = computed(() => this.projects[this.neighbour(-1)]);
+  protected readonly nextProject = computed(() => this.projects[this.neighbour(1)]);
+  /** Only filled on a project switch, so opening the dialog is not read out twice. */
+  protected readonly announcement = signal('');
+  private readonly injector = inject(Injector);
+  private readonly cards = viewChildren<ElementRef<HTMLButtonElement>>('card');
   private readonly closeButton = viewChild<ElementRef<HTMLButtonElement>>('closeButton');
-
-  /** Card that opened the modal, so focus can return to it on close. */
-  private trigger: HTMLElement | null = null;
+  private readonly scroller = viewChild<ElementRef<HTMLElement>>('scroller');
 
   /** Move focus into the dialog as soon as it is rendered. */
   private readonly focusDialog = effect(() => {
@@ -77,26 +99,66 @@ export class Portfolio {
     return project.followsLanguage ? `${url}/?lang=${this.lang.lang()}` : url;
   }
 
-  /** Open the detail modal and remember the card that opened it. */
-  openDetail(project: Project, card: HTMLElement): void {
-    this.trigger = card;
-    this.selected.set(project);
+  /** Open the detail modal at the given project. */
+  openDetail(index: number): void {
+    this.active.set(index);
+    this.announcement.set('');
+    this.isOpen.set(true);
   }
 
-  /** Close the detail modal and hand focus back to the card. */
+  /** Close the detail modal and focus the card of the project it ended on. */
   closeDetail(): void {
-    this.selected.set(null);
-    this.trigger?.focus();
-    this.trigger = null;
+    this.isOpen.set(false);
+    this.cards()[this.active()]?.nativeElement.focus();
   }
 
-  /** Escape closes the dialog, Tab keeps focus inside it. */
+  /** Switch to the previous (-1) or next (1) project, wrapping around. */
+  switchProject(direction: number): void {
+    this.active.set(this.neighbour(direction));
+    this.announcement.set(this.positionLabel());
+    this.resetScroll();
+  }
+
+  /** Screen reader text like "Project 3 of 8: Poll-App". */
+  positionLabel(): string {
+    return this.lang
+      .dict()
+      .portfolio.position.replace('%1', String(this.active() + 1))
+      .replace('%2', String(this.projects.length))
+      .replace('%3', this.titles()[this.active()]);
+  }
+
+  /** Escape closes, the arrow keys switch project, Tab keeps focus inside. */
   onModalKeydown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      this.closeDetail();
-      return;
-    }
-    if (event.key === 'Tab') this.trapFocus(event);
+    if (event.key === 'Escape') return this.closeDetail();
+    if (event.key === 'Tab') return this.trapFocus(event);
+    const direction = KEY_STEPS[event.key];
+    if (!direction) return;
+    event.preventDefault();
+    const dialog = event.currentTarget as HTMLElement;
+    this.switchProject(direction);
+    afterNextRender(() => this.keepFocusIn(dialog), { injector: this.injector });
+  }
+
+  /** The next project may lack the link that had focus, so catch focus on the close button. */
+  private keepFocusIn(dialog: HTMLElement): void {
+    if (dialog.contains(document.activeElement)) return;
+    this.closeButton()?.nativeElement.focus();
+  }
+
+  /** Index of the project next to the active one, wrapping at the ends. */
+  private neighbour(direction: number): number {
+    const count = this.projects.length;
+    return (this.active() + direction + count) % count;
+  }
+
+  /** Back to the top of the new project, with a short fade unless motion is reduced. */
+  private resetScroll(): void {
+    const el = this.scroller()?.nativeElement;
+    if (!el) return;
+    el.scrollTop = 0;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
   }
 
   /** Wrap Tab and Shift+Tab around the ends of the dialog. */

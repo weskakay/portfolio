@@ -9,11 +9,12 @@ import { ViewportScroller } from '@angular/common';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
+import { pageZoom } from './page-zoom';
 
-/** Height of the fixed navbar, read from the token so both stay in step. */
+/** On-screen height of the fixed navbar, read from the token so both stay in step. */
 function navbarHeight(): number {
   const raw = getComputedStyle(document.documentElement).getPropertyValue('--navbar-height');
-  return parseFloat(raw) || 0;
+  return (parseFloat(raw) || 0) * pageZoom();
 }
 
 /** Root providers: fetch based HTTP, the router and anchor scrolling. */

@@ -1,0 +1,135 @@
+:host {
+  display: block;
+}
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.slider__frame {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Native scroll-snap handles the swipe on touch screens. */
+.slider__track {
+  list-style: none;
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent-lime);
+    outline-offset: -2px;
+  }
+}
+
+/* The slot keeps one height for every shape, the image itself carries the
+   rounded corners so no empty frame shows beside a portrait photo. */
+.slider__slide {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 10;
+  max-height: calc(50 * var(--dvh));
+  scroll-snap-align: start;
+}
+
+.slider__img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: var(--radius-sm);
+}
+
+/* Same chevron as everywhere, only a dark disc behind it for contrast on photos. */
+.slider__arrow {
+  position: absolute;
+  top: calc(50% - var(--arrow-size) / 2);
+  border-radius: 999px;
+  background: var(--color-overlay);
+
+  &:focus-visible {
+    border-radius: 999px;
+  }
+}
+
+.slider__arrow--prev {
+  left: var(--space-sm);
+}
+
+.slider__arrow--next {
+  right: var(--space-sm);
+}
+
+.slider__count {
+  position: absolute;
+  right: var(--space-sm);
+  bottom: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--color-overlay);
+  font-size: var(--fs-body);
+  color: var(--color-white);
+}
+
+.slider__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Full tap target, only the small mark shows. */
+.slider__dot {
+  position: relative;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--space-sm);
+    height: var(--space-sm);
+    border-radius: 999px;
+    background: var(--color-border-subtle);
+    transform: translate(-50%, -50%);
+    transition:
+      background 200ms,
+      transform 200ms;
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    background: var(--color-white);
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+
+  &.is-active::before {
+    background: var(--color-accent-lime);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent-lime);
+    outline-offset: -4px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider__dot::before {
+    transition: none;
+  }
+}

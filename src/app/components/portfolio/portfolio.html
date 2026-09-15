@@ -4,13 +4,13 @@
     <p class="portfolio__intro">{{ lang.dict().portfolio.intro }}</p>
 
     <ul class="portfolio__grid">
-      @for (project of projects; track project.id) {
+      @for (project of projects; track project.id; let i = $index) {
         <li>
           <button
             #card
             type="button"
             class="card"
-            (click)="openDetail(project, card)"
+            (click)="openDetail(i)"
             [attr.aria-label]="titleFor(project) + ': ' + lang.dict().portfolio.details"
           >
             <span class="card__media" [class.card__media--logo]="!!project.logo">
@@ -60,21 +60,16 @@
           <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
         </svg>
       </button>
-      <div class="modal__scroll">
+      <p class="modal__sr" aria-live="polite">{{ announcement() }}</p>
+
+      <div #scroller class="modal__scroll">
         <h3 class="modal__title">{{ titleFor(project) }}</h3>
 
-      @if (project.story; as story) {
-        <div class="modal__story">
-          @if (story.afterHeading) {
-            <img class="modal__shot" [src]="story.afterHeading" [alt]="titleFor(project)" loading="lazy" />
-          }
+        <app-project-slider [images]="images()" [title]="titleFor(project)" />
 
+        <div class="modal__info">
           <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
           <p class="modal__text">{{ project.description[lang.lang()] }}</p>
-
-          @if (story.afterAbout) {
-            <img class="modal__shot" [src]="story.afterAbout" [alt]="titleFor(project)" loading="lazy" />
-          }
 
           <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
           <ul class="modal__tech">
@@ -88,17 +83,9 @@
             }
           </ul>
 
-          @if (story.afterTech) {
-            <img class="modal__shot" [src]="story.afterTech" [alt]="titleFor(project)" loading="lazy" />
-          }
-
           @if (project.highlight) {
             <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
             <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
-          }
-
-          @if (story.afterHighlight) {
-            <img class="modal__shot" [src]="story.afterHighlight" [alt]="titleFor(project)" loading="lazy" />
           }
 
           @if (project.demoNote) {
@@ -106,73 +93,75 @@
             <p class="modal__text">{{ project.demoNote[lang.lang()] }}</p>
           }
 
-          <p class="modal__note">{{ lang.dict().portfolio.notPublic }}</p>
-        </div>
-      } @else {
-        <div class="modal__body">
-          <div class="modal__info">
-            <h4 class="modal__label">{{ lang.dict().portfolio.aboutLabel }}</h4>
-            <p class="modal__text">{{ project.description[lang.lang()] }}</p>
-
-            <h4 class="modal__label">{{ lang.dict().portfolio.techLabel }}</h4>
-            <ul class="modal__tech">
-              @for (badge of project.badges; track badge) {
-                <li class="modal__tech-item">
-                  @if (iconFor(badge); as icon) {
-                    <img class="modal__tech-icon" [src]="icon" alt="" />
-                  }
-                  {{ badge }}
-                </li>
-              }
-            </ul>
-
-            @if (project.highlight) {
-              <h4 class="modal__label">{{ lang.dict().portfolio.highlightLabel }}</h4>
-              <p class="modal__text">{{ project.highlight[lang.lang()] }}</p>
-            }
-
-            @if (project.demoNote) {
-              <h4 class="modal__label">{{ lang.dict().portfolio.demoLabel }}</h4>
-              <p class="modal__text">{{ project.demoNote[lang.lang()] }}</p>
-            }
-          </div>
-
           @if (project.type === 'web') {
             <div class="modal__actions">
               @if (project.repoUrl) {
-                <a class="card__btn" [href]="project.repoUrl" target="_blank" rel="noopener">{{
+                <a class="card__btn card__btn--outline" [href]="project.repoUrl" target="_blank" rel="noopener">{{
                   lang.dict().portfolio.code
                 }}</a>
               } @else {
-                <button type="button" class="card__btn" disabled>
+                <button type="button" class="card__btn card__btn--outline" disabled>
                   {{ lang.dict().portfolio.code }}
                 </button>
               }
               @if (project.liveUrl) {
                 <a
-                  class="card__btn card__btn--primary"
+                  class="card__btn btn-primary"
                   [href]="liveHref(project)"
                   target="_blank"
                   rel="noopener"
                   >{{ lang.dict().portfolio.live }}</a
                 >
               } @else {
-                <button type="button" class="card__btn card__btn--primary" disabled>
+                <button type="button" class="card__btn btn-primary" disabled>
                   {{ lang.dict().portfolio.live }}
                 </button>
               }
             </div>
+          } @else {
+            <p class="modal__note">{{ lang.dict().portfolio.notPublic }}</p>
           }
-
-          <img
-            class="modal__img"
-            [class.modal__img--logo]="project.image.endsWith('.svg')"
-            [src]="project.image"
-            [alt]="titleFor(project)"
-          />
         </div>
-      }
       </div>
+
+      <nav class="modal__nav" [attr.aria-label]="lang.dict().portfolio.projectNav">
+        <button
+          type="button"
+          class="arrow-btn modal__step"
+          [attr.aria-label]="lang.dict().portfolio.prevProject + ': ' + titleFor(prevProject())"
+          (click)="switchProject(-1)"
+        >
+          <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 4l-8 8 8 8" />
+          </svg>
+          <span class="modal__step-short">{{ lang.dict().portfolio.prevShort }}</span>
+          <span class="modal__step-long">
+            <span class="modal__step-label">{{ lang.dict().portfolio.prevProject }}</span>
+            <span class="modal__step-title">{{ titleFor(prevProject()) }}</span>
+          </span>
+        </button>
+
+        <p class="modal__counter">
+          <span aria-hidden="true">{{ active() + 1 }} / {{ projects.length }}</span>
+          <span class="modal__sr">{{ positionLabel() }}</span>
+        </p>
+
+        <button
+          type="button"
+          class="arrow-btn modal__step modal__step--next"
+          [attr.aria-label]="lang.dict().portfolio.nextProject + ': ' + titleFor(nextProject())"
+          (click)="switchProject(1)"
+        >
+          <span class="modal__step-short">{{ lang.dict().portfolio.nextShort }}</span>
+          <span class="modal__step-long">
+            <span class="modal__step-label">{{ lang.dict().portfolio.nextProject }}</span>
+            <span class="modal__step-title">{{ titleFor(nextProject()) }}</span>
+          </span>
+          <svg class="arrow-icon arrow-icon--next" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 4l-8 8 8 8" />
+          </svg>
+        </button>
+      </nav>
     </div>
   </div>
 }

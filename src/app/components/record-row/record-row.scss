@@ -1,0 +1,170 @@
+/* All records stand in one row. Each sleeve is placed from its index, and
+   records right of the gap move two gaps further, records left of it none:
+   x = i * strip + (side + 1) * gap. The row is as wide as that sum, no
+   matter which record is active. */
+.records {
+  /* component geometry: sleeve size, the strip every record shows, the gap */
+  --records-cover: min(52vw, 240px);
+  --records-strip: var(--tap-target);
+  --records-gap: var(--space-md);
+  --records-lean: 35deg;
+  --records-lift: var(--space-sm);
+  --records-raise: var(--space-md);
+  --records-perspective: 900px;
+  --records-speed: 400ms;
+  /* slight overshoot, so a record settles like it fell against the next one */
+  --records-ease: cubic-bezier(0.34, 1.4, 0.64, 1);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas:
+    'stage stage stage'
+    'prev dots next';
+  align-items: center;
+  gap: var(--space-md) var(--space-md);
+}
+
+.records__stage {
+  grid-area: stage;
+  position: relative;
+  height: calc(var(--records-cover) + 2 * var(--space-lg));
+  /* phone: runs out to the screen edges instead of stopping at the padding */
+  margin-inline: calc(-1 * var(--section-pad-x));
+  overflow-x: clip;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.records__row {
+  --active-centre: calc(var(--active) * var(--records-strip) + var(--records-gap) + var(--records-cover) / 2);
+  position: absolute;
+  top: var(--space-lg);
+  left: 50%;
+  width: calc((var(--count) - 1) * var(--records-strip) + var(--records-cover) + 2 * var(--records-gap));
+  height: var(--records-cover);
+  perspective: var(--records-perspective);
+  perspective-origin: var(--active-centre) 50%;
+  /* phone: the active record sits in the middle, the rest runs off screen */
+  transform: translateX(calc(-1 * var(--active-centre)));
+  transition: transform var(--records-speed) var(--records-ease);
+}
+
+.records__card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* the record next to the gap on top, each one further out a layer lower */
+  z-index: calc(20 - var(--depth));
+  width: var(--records-cover);
+  height: var(--records-cover);
+  padding: 0;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--btn-radius);
+  background: var(--color-bg-dark);
+  box-shadow: 0 var(--space-sm) var(--space-lg) var(--color-overlay);
+  cursor: pointer;
+  filter: brightness(0.7);
+  /* leaning records pivot on their outer edge, the active one on its centre */
+  transform-origin: calc(50% + var(--side) * 50%) 50%;
+  transform: translateX(calc(var(--i) * var(--records-strip) + (var(--side) + 1) * var(--records-gap)))
+    rotateY(calc(var(--side) * -1 * var(--records-lean)));
+  transition:
+    transform var(--records-speed) var(--records-ease) var(--delay),
+    filter var(--records-speed) var(--delay),
+    translate var(--records-speed) var(--records-ease);
+}
+
+.records__card:hover,
+.records__card:focus-visible {
+  translate: 0 calc(-1 * var(--records-lift));
+  filter: brightness(0.9);
+  box-shadow:
+    0 var(--space-sm) var(--space-lg) var(--color-overlay),
+    var(--glow-lime-soft);
+}
+
+.records__card:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 4px;
+}
+
+.records__card--active {
+  z-index: 30;
+  filter: none;
+  translate: 0 calc(-1 * var(--records-raise));
+  cursor: default;
+}
+
+.records__card--active:hover,
+.records__card--active:focus-visible {
+  filter: none;
+  translate: 0 calc(-1 * var(--records-raise) - var(--records-lift));
+}
+
+.records__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--btn-radius);
+  pointer-events: none;
+}
+
+.records__arrow--prev {
+  grid-area: prev;
+  justify-self: end;
+}
+
+.records__dots {
+  grid-area: dots;
+}
+
+.records__arrow--next {
+  grid-area: next;
+  justify-self: start;
+}
+
+/* Read out, not shown: the sleeve itself carries the name and number. */
+.records__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Wide screens: the row sits in a column, so the sleeves take what the column
+   leaves after the strips and gaps, and the whole row stays centred. */
+@media (min-width: 900px) {
+  .records {
+    --records-cover: clamp(
+      160px,
+      100cqi - (var(--count) - 1) * var(--records-strip) - 2 * var(--records-gap),
+      280px
+    );
+    --records-gap: var(--space-lg);
+    --records-lean: 50deg;
+    --records-perspective: 1200px;
+    container-type: inline-size;
+  }
+
+  .records__stage {
+    margin-inline: 0;
+  }
+
+  .records__row {
+    transform: translateX(-50%);
+  }
+}
+
+/* No lean, no stagger, no slide: the gap just jumps. */
+@media (prefers-reduced-motion: reduce) {
+  .records {
+    --records-lean: 0deg;
+  }
+
+  .records__row,
+  .records__card {
+    transition: none;
+  }
+}

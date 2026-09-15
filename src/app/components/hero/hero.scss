@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  min-height: 100svh;
+  min-height: calc(100 * var(--svh));
   display: flex;
   align-items: center;
   padding: calc(var(--navbar-height) + var(--space-xl)) var(--section-pad-x) var(--space-xl);
@@ -61,12 +61,30 @@
   color: var(--color-accent-purple);
 }
 
+/* On hover the label steps left and an arrow slides in behind it. The arrow
+   is decoration, so it stays out of the translated string. */
 .hero__cta {
-  background: var(--color-accent-lime);
-  color: var(--color-black);
-  border-radius: var(--btn-radius);
-  padding: var(--btn-pad-y) var(--btn-pad-x);
-  font-weight: var(--fw-bold);
+  position: relative;
+}
+
+.hero__cta::after {
+  content: '\2192' / '';
+  position: absolute;
+  top: 50%;
+  right: var(--space-md);
+  opacity: 0;
+  translate: 0 -50%;
+}
+
+.hero__cta:hover,
+.hero__cta:focus-visible {
+  padding-left: calc(var(--btn-pad-x) - var(--space-sm));
+  padding-right: calc(var(--btn-pad-x) + var(--space-sm));
+}
+
+.hero__cta:hover::after,
+.hero__cta:focus-visible::after {
+  opacity: 1;
 }
 
 .hero__social {
@@ -81,15 +99,14 @@
   list-style: none;
 }
 
-/* The rule runs off to the left edge of the screen; .hero clips the rest. Its
-   length is fixed, so a wide screen does not stretch it into a bar. */
+/* The rule runs off to the left edge of the screen; .hero clips the rest. */
 .hero__social::before {
   content: '';
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   right: calc(100% + var(--hero-rule-gap));
-  width: var(--hero-rule-length);
+  width: 100vw;
   height: var(--rule-size);
   background: var(--color-accent-lime);
 }
@@ -103,11 +120,14 @@
   min-height: var(--tap-target);
   margin: calc(var(--tap-target) / -4);
   color: var(--color-white);
-  transition: color 200ms;
 }
 
-.hero__social a:hover {
+.hero__social a:hover,
+.hero__social a:focus-visible,
+.hero__scroll:hover,
+.hero__scroll:focus-visible {
   color: var(--color-accent-lime);
+  filter: var(--glow-lime-drop);
 }
 
 .hero__social a:focus-visible {
@@ -131,7 +151,6 @@
   writing-mode: vertical-rl;
   font-size: var(--fs-body);
   color: var(--color-white);
-  transition: color 200ms;
 }
 
 /* The hit area grows without the mark growing, so the narrow hero keeps its
@@ -144,10 +163,6 @@
   width: max(100%, var(--tap-target));
   height: max(100%, var(--tap-target));
   transform: translate(-50%, -50%);
-}
-
-.hero__scroll:hover {
-  color: var(--color-accent-lime);
 }
 
 .hero__scroll:focus-visible {
@@ -164,13 +179,62 @@
   writing-mode: horizontal-tb;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .hero__cta {
+    transition:
+      background-color 200ms,
+      box-shadow 200ms,
+      translate 200ms,
+      padding 200ms;
+  }
+
+  .hero__cta::after {
+    translate: calc(-1 * var(--space-sm)) -50%;
+    transition:
+      opacity 200ms,
+      translate 200ms;
+  }
+
+  .hero__cta:hover::after,
+  .hero__cta:focus-visible::after {
+    translate: 0 -50%;
+  }
+
+  .hero__social a,
+  .hero__scroll {
+    transition:
+      color 200ms,
+      filter 200ms,
+      translate 200ms;
+  }
+
+  .hero__social svg {
+    transition: scale 200ms;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero__social a:hover,
+  .hero__social a:focus-visible,
+  .hero__scroll:hover,
+  .hero__scroll:focus-visible {
+    translate: 0 calc(-1 * var(--lift-md));
+  }
+
+  /* Only the mark grows, so the focus ring keeps its size. */
+  .hero__social a:hover svg,
+  .hero__social a:focus-visible svg {
+    scale: var(--icon-grow);
+  }
+}
+
 @media (min-width: 900px) {
   /* Wide enough for the old proportions: the block keeps its own height and
      sits centred, rather than filling the screen the way a phone needs. */
   .hero__inner {
     align-self: center;
     padding-bottom: 0;
-    min-height: 70vh;
+    min-height: calc(70 * var(--svh));
   }
 
   /* Only here is there room to make it bigger, which is what the review asked

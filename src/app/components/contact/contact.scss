@@ -6,8 +6,9 @@
   overflow-x: clip;
 }
 
-/* width and centring come from .rule-box */
 .contact__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
@@ -34,7 +35,7 @@
   gap: var(--space-lg);
 }
 
-/* The text sits on the content edge, the rule fills the margin to its left. */
+/* The text sits on the content edge, the rule runs from it to the screen edge. */
 .contact__lead {
   position: relative;
   font-size: var(--fs-lead);
@@ -49,7 +50,7 @@
   top: calc(var(--fs-lead) * var(--lh-default) / 2);
   transform: translateY(-50%);
   right: calc(100% + var(--lead-rule-gap));
-  width: calc(var(--section-pad-x) - var(--lead-rule-gap));
+  width: 100vw;
   height: var(--rule-size);
   background: var(--color-accent-blue);
 }
@@ -162,18 +163,6 @@
   align-self: center;
   min-height: var(--tap-target);
   margin-top: var(--space-sm);
-  padding: var(--btn-pad-y) var(--btn-pad-x);
-  font-weight: var(--fw-bold);
-  color: var(--color-black);
-  background: var(--color-accent-lime);
-  border: 0;
-  border-radius: var(--btn-radius);
-  cursor: pointer;
-}
-
-.contact__submit[disabled] {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 
 .contact__status {

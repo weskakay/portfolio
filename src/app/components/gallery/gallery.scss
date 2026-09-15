@@ -1,12 +1,9 @@
 .gallery {
   position: relative;
   z-index: 1;
-  /* control row: 40 + 20 + 220 + 20 + 40. The design file has a 64px dot block,
-     but five dots need 44px each to be hit with a thumb. */
+  /* control row: arrow + 20 + 220 + 20 + arrow. The design file has a 64px dot
+     block, but five dots need 44px each to be hit with a thumb. */
   --gallery-control-gap: 20px;
-  --gallery-arrow-size: 40px;
-  --gallery-dots-width: 220px;
-  --gallery-dot-size: 8px;
   /* clips the accent rule where it runs past the edge */
   overflow-x: clip;
   display: flex;
@@ -27,9 +24,6 @@
   max-width: calc(var(--max-width) + 2 * var(--section-pad-x));
   margin: 0 auto;
   padding: 0 var(--section-pad-x);
-  /* The box already reaches one side margin past the content, which is where
-     the heading rule stops on every other section too. */
-  overflow-x: clip;
 }
 
 .gallery__heading {
@@ -48,10 +42,10 @@
 }
 
 /* The row is moved by hand: arrows, a swipe or a sideways trackpad gesture.
-   Up to 1440 it runs to the screen edges. Wider screens show the same band a
-   1440 screen would, and the photos fade out into the margin at both ends. */
+   It runs to the screen edges on every width, like the section rules, and the
+   photos fade out into the margin at both ends. */
 .gallery__viewport {
-  width: min(100%, calc(var(--max-width) + 2 * var(--section-pad-x)));
+  width: 100%;
   margin: 0 auto;
   overflow-x: auto;
   overflow-y: hidden;
@@ -80,7 +74,7 @@
   align-items: center;
   gap: var(--space-md);
   width: max-content;
-  height: 56svh;
+  height: calc(56 * var(--svh));
   padding: 0 var(--section-pad-x);
 }
 
@@ -112,22 +106,22 @@
 
 /* tile shapes and heights below are collage layout, not shared tokens */
 .gallery__tile--portrait .gallery__frame {
-  height: 46svh;
+  height: calc(46 * var(--svh));
   aspect-ratio: 3 / 4;
 }
 
 .gallery__tile--landscape .gallery__frame {
-  height: 34svh;
+  height: calc(34 * var(--svh));
   aspect-ratio: 4 / 3;
 }
 
 .gallery__tile--square .gallery__frame {
-  height: 40svh;
+  height: calc(40 * var(--svh));
   aspect-ratio: 1 / 1;
 }
 
 .gallery__tile--tall .gallery__frame {
-  height: 52svh;
+  height: calc(52 * var(--svh));
   aspect-ratio: 2 / 3;
 }
 
@@ -153,23 +147,23 @@
 
   .gallery__collage {
     gap: var(--space-xl);
-    height: 60svh;
+    height: calc(60 * var(--svh));
   }
 
   .gallery__tile--portrait .gallery__frame {
-    height: 54svh;
+    height: calc(54 * var(--svh));
   }
 
   .gallery__tile--landscape .gallery__frame {
-    height: 38svh;
+    height: calc(38 * var(--svh));
   }
 
   .gallery__tile--square .gallery__frame {
-    height: 44svh;
+    height: calc(44 * var(--svh));
   }
 
   .gallery__tile--tall .gallery__frame {
-    height: 60svh;
+    height: calc(60 * var(--svh));
   }
 }
 
@@ -185,101 +179,3 @@
   padding: 0 var(--section-pad-x);
 }
 
-.gallery__arrow {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  /* plain arrow like the design template, no filled disc behind it */
-  width: var(--gallery-arrow-size);
-  height: var(--gallery-arrow-size);
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--color-accent-lime);
-  cursor: pointer;
-  transition: transform 200ms;
-}
-
-/* the mark stays at its 40px size while the finger still gets the full target */
-.gallery__arrow::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--tap-target);
-  height: var(--tap-target);
-  transform: translate(-50%, -50%);
-}
-
-.gallery__arrow:hover {
-  transform: scale(1.15);
-}
-
-.gallery__arrow:focus-visible {
-  outline: 2px solid var(--color-accent-lime);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-
-.gallery__arrow svg {
-  width: 100%;
-  height: 100%;
-}
-
-.gallery__dots {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 0 0 auto;
-  width: var(--gallery-dots-width);
-  height: var(--tap-target);
-}
-
-/* Each dot is a tall strip so it is easy to hit; only the small mark shows. */
-.gallery__dot {
-  position: relative;
-  width: var(--tap-target);
-  height: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.gallery__dot::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--gallery-dot-size);
-  height: var(--gallery-dot-size);
-  transform: translate(-50%, -50%);
-  border-radius: 999px;
-  background: var(--color-border-subtle);
-  transition: background 200ms;
-}
-
-.gallery__dot.is-active::before {
-  background: var(--rule-gradient);
-}
-
-.gallery__dot:focus-visible {
-  outline: 2px solid var(--color-accent-lime);
-  border-radius: var(--radius-sm);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gallery__arrow {
-    transition: none;
-  }
-
-  .gallery__arrow:hover {
-    transform: none;
-  }
-
-  .gallery__dot::before {
-    transition: none;
-  }
-}

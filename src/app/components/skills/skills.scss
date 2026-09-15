@@ -6,8 +6,9 @@
   padding: var(--section-pad-y) var(--section-pad-x);
 }
 
-/* width and centring come from .rule-box */
 .skills__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
@@ -16,7 +17,7 @@
 .skills__text {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-lg);
 }
 
 /* blue rule, the colour the design file gives this section */
@@ -48,16 +49,54 @@
   color: var(--color-secundario);
 }
 
+/* Plain list items, not controls: no focus to mirror, and a tap on a phone
+   would leave the fill stuck, so only a real pointer gets it. */
+@media (hover: hover) {
+  .skills__badge:hover {
+    border-color: var(--color-secundario-bright);
+    background: var(--color-secundario-tint);
+    color: var(--color-secundario-bright);
+    box-shadow: var(--glow-secundario);
+    text-shadow: var(--glow-secundario-text);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .skills__badge {
+    transition:
+      background-color 200ms,
+      border-color 200ms,
+      box-shadow 200ms,
+      color 200ms,
+      translate 200ms,
+      scale 200ms;
+  }
+
+  .skills__badge:hover {
+    translate: 0 calc(-1 * var(--lift-md));
+    scale: 1.06;
+  }
+}
+
 .skills__more {
   font-size: var(--fs-body);
   color: var(--color-white);
 }
 
+.skills__shelf {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  min-width: 0;
+}
+
+/* Only the skills of the active record, faded in on every flip. */
 .skills__grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: var(--space-lg) var(--space-md);
+  animation: skills-fade 250ms ease-out;
 }
 
 .skills__item {
@@ -68,15 +107,9 @@
   text-align: center;
 }
 
-/* icon display box, component-internal size */
 .skills__icon {
-  width: 48px;
-  height: 48px;
-  transition: transform 200ms;
-}
-
-.skills__item:hover .skills__icon {
-  transform: scale(1.15);
+  width: var(--skill-icon-size);
+  height: var(--skill-icon-size);
 }
 
 .skills__name {
@@ -84,32 +117,191 @@
   color: var(--color-white);
 }
 
-@media (min-width: 900px) {
-  .skills__inner {
-    flex-direction: row-reverse;
-    align-items: center;
+@keyframes skills-fade {
+  from {
+    opacity: 0;
+    translate: 0 var(--space-sm);
+  }
+}
+
+/* Sleeve cover, drawn here and placed into the record row: a drawing sheet
+   with a fine grid, a major line every five squares. */
+.sleeve {
+  --sleeve-accent: var(--color-accent-lime);
+  --grid-minor: color-mix(in srgb, var(--sleeve-accent) var(--blueprint-tint-minor), transparent);
+  --grid-major: color-mix(in srgb, var(--sleeve-accent) var(--blueprint-tint-major), transparent);
+  position: relative;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-md);
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(90deg, var(--grid-major) 0 1px, transparent 1px var(--blueprint-grid-major)),
+    repeating-linear-gradient(0deg, var(--grid-major) 0 1px, transparent 1px var(--blueprint-grid-major)),
+    repeating-linear-gradient(90deg, var(--grid-minor) 0 1px, transparent 1px var(--blueprint-grid)),
+    repeating-linear-gradient(0deg, var(--grid-minor) 0 1px, transparent 1px var(--blueprint-grid)),
+    linear-gradient(160deg, var(--color-surface), transparent 70%),
+    var(--color-bg-dark);
+  background-position: var(--space-xs) var(--space-xs);
+  border-top: var(--rule-size) solid var(--sleeve-accent);
+  text-align: left;
+}
+
+/* Inner frame of the sheet */
+.sleeve::before {
+  content: '';
+  position: absolute;
+  inset: var(--space-xs);
+  border: 1px solid color-mix(in srgb, var(--sleeve-accent) var(--blueprint-tint-frame), transparent);
+  pointer-events: none;
+}
+
+/* Scan line, only on the sleeve in front */
+.sleeve::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 20%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--sleeve-accent) var(--blueprint-tint-scan), transparent),
+    transparent
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sleeve--blue {
+  --sleeve-accent: var(--color-accent-blue);
+}
+
+.sleeve--purple {
+  --sleeve-accent: var(--color-accent-purple);
+}
+
+.sleeve--magenta {
+  --sleeve-accent: var(--color-magenta);
+}
+
+.sleeve--yellow {
+  --sleeve-accent: var(--color-yellow);
+}
+
+/* The drawing is the whole cover now, centred a bit above the name */
+.sleeve__art {
+  position: absolute;
+  top: 8%;
+  left: 8%;
+  width: 84%;
+  aspect-ratio: 5 / 4;
+}
+
+.sleeve__name {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 80%;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-default);
+  color: var(--color-white);
+  background: var(--blueprint-backing);
+  padding: var(--space-xs) var(--space-sm);
+  margin: calc(-1 * var(--space-xs)) calc(-1 * var(--space-sm));
+  transition: opacity 200ms;
+}
+
+/* Title block in the corner, like on an engineering drawing */
+.sleeve__title-block {
+  position: absolute;
+  right: var(--space-xs);
+  bottom: var(--space-xs);
+  display: none;
+  gap: var(--space-sm);
+  padding: 0 var(--space-sm);
+  border-top: 1px solid var(--sleeve-accent);
+  border-left: 1px solid var(--sleeve-accent);
+  background: var(--blueprint-backing);
+  font-size: var(--fs-body);
+  line-height: var(--lh-default);
+  color: var(--sleeve-accent);
+  text-align: right;
+  transition: opacity 200ms;
+}
+
+/* A leaning sleeve only shows a strip, where the name would be cut into
+   fragments. */
+.sleeve--leaning .sleeve__name,
+.sleeve--leaning .sleeve__title-block {
+  opacity: 0;
+}
+
+.sleeve__name::after {
+  content: '';
+  width: var(--space-xl);
+  height: var(--rule-size);
+  background: var(--sleeve-accent);
+}
+
+/* Wide enough for the title block: it runs along the bottom edge and the
+   name moves up above it. */
+@container (min-width: 154px) {
+  .sleeve__title-block {
+    display: flex;
   }
 
-  /* Three columns while the wide text column leaves too little room for four:
-     the skill names do not wrap, so four would spill past the content edge. */
-  .skills__grid {
-    flex: 1;
-    grid-template-columns: repeat(3, 1fr);
+  .sleeve__name {
+    margin-bottom: var(--space-md);
+  }
+}
+
+@media (min-width: 900px) {
+  /* Same rhythm as About me: both columns keep a set width and the free room
+     goes into the gap between them. */
+  .skills__inner {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--column-gap);
   }
 
   .skills__text {
-    flex: 0 0 var(--side-column);
+    flex: 0 1 var(--skills-text-width);
+    min-width: 0;
+  }
+
+  .skills__shelf {
+    flex: 0 0 min(44%, var(--skills-shelf-width));
   }
 }
 
-@media (min-width: 1200px) {
-  .skills__grid {
-    grid-template-columns: repeat(4, 1fr);
+.sleeve:not(.sleeve--leaning)::after {
+  animation: scan var(--blueprint-scan-time) linear infinite;
+}
+
+@keyframes scan {
+  from {
+    translate: -100% 0;
+    opacity: 1;
+  }
+
+  to {
+    translate: 500% 0;
+    opacity: 1;
   }
 }
 
-@media (max-width: 400px) {
-  .skills__grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (prefers-reduced-motion: reduce) {
+  .skills__grid,
+  .sleeve:not(.sleeve--leaning)::after {
+    animation: none;
   }
 }

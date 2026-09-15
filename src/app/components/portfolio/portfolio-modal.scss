@@ -18,42 +18,36 @@
   height: var(--icon-size);
 }
 
+/* Same size for both link buttons; the live one takes the global lime look. */
 .card__btn {
-  border: 1px solid var(--color-white);
-  border-radius: var(--btn-radius);
   padding: var(--space-sm) var(--space-lg);
+  border-width: 1px;
+}
+
+.card__btn--outline {
+  border-style: solid;
+  border-color: var(--color-white);
+  border-radius: var(--btn-radius);
   font-weight: var(--fw-bold);
   color: var(--color-white);
   background: transparent;
   cursor: pointer;
-  transition:
-    color 200ms,
-    border-color 200ms,
-    transform 200ms;
 }
 
-.card__btn:hover:not([disabled]) {
-  border-color: var(--color-accent-lime);
-  color: var(--color-accent-lime);
-  transform: scale(1.04);
+.card__btn--outline:hover:not(:disabled),
+.card__btn--outline:focus-visible {
+  border-color: var(--color-accent-purple);
+  color: var(--color-white);
+  background: var(--color-accent-purple);
+  box-shadow: var(--glow-purple);
 }
 
-.card__btn:focus-visible {
+.card__btn--outline:focus-visible {
   outline: 2px solid var(--color-accent-lime);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-.card__btn--primary {
-  background: var(--color-accent-lime);
-  border-color: var(--color-accent-lime);
-  color: var(--color-black);
-}
-
-.card__btn--primary:hover:not([disabled]) {
-  color: var(--color-black);
-}
-
-.card__btn[disabled] {
+.card__btn--outline:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
@@ -65,7 +59,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-lg);
+  padding: var(--space-sm);
 }
 
 .modal__backdrop {
@@ -81,6 +75,11 @@
   z-index: 1;
   width: 100%;
   max-width: 820px;
+  /* fixed height, so the project bar stays in place while flipping */
+  height: 90vh;
+  height: calc(90 * var(--dvh));
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: var(--btn-radius);
   border: 1px solid var(--color-border-subtle);
@@ -88,12 +87,12 @@
 }
 
 .modal__scroll {
-  max-height: 90vh;
-  max-height: 90dvh;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   padding: var(--space-lg);
 }
 
@@ -133,42 +132,42 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card__btn,
   .modal__close {
     transition: none;
   }
 
-  .card__btn:hover:not([disabled]),
   .modal__close:hover {
     transform: none;
   }
 }
 
-.modal__img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-  background: var(--color-surface);
+@media (prefers-reduced-motion: no-preference) {
+  .card__btn--outline {
+    transition:
+      color 200ms,
+      border-color 200ms,
+      background-color 200ms,
+      box-shadow 200ms,
+      translate 200ms;
+  }
 }
 
-.modal__img--logo {
-  object-fit: contain;
-  padding: var(--space-lg);
-  border: 1px solid var(--color-border-subtle);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card__btn--outline:hover:not(:disabled),
+  .card__btn--outline:focus-visible {
+    translate: 0 calc(-1 * var(--lift-md));
+  }
+
+  .card__btn--outline:active:not(:disabled) {
+    translate: 0;
+  }
 }
 
 .modal__title {
-  margin-bottom: var(--space-md);
+  padding-right: calc(var(--tap-target) + var(--space-md));
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
-}
-
-.modal__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
 }
 
 .modal__info {
@@ -197,57 +196,16 @@
   margin-top: var(--space-md);
 }
 
-.modal__story {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.modal__shot {
-  align-self: center;
-  max-width: 70%;
-  max-height: 380px;
-  border-radius: var(--radius-sm);
-}
 @media (min-width: 900px) {
   .modal__panel {
-    max-width: clamp(700px, 75vw, 1440px);
+    max-width: clamp(700px, 75vw, 1100px);
+    height: 86vh;
+    height: calc(86 * var(--dvh));
   }
 
   /* Grow the panel with the screen, but keep lines at a readable length. */
-  .modal__info,
-  .modal__story .modal__label,
-  .modal__story .modal__text,
-  .modal__story .modal__tech {
-    max-width: 72ch;
-  }
-
-  .modal__scroll {
-    max-height: 80vh;
-    max-height: 80dvh;
-  }
-}
-
-/* Wide screens: text on the left, screenshot and its buttons on the right. */
-@media (min-width: 1400px) {
-  .modal__body {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    grid-template-rows: auto auto;
-    column-gap: var(--space-xl);
-    align-items: start;
-  }
-
   .modal__info {
-    grid-area: 1 / 1 / span 2;
-  }
-
-  .modal__img {
-    grid-area: 1 / 2;
-  }
-
-  .modal__actions {
-    grid-area: 2 / 2;
+    max-width: 72ch;
   }
 }
 

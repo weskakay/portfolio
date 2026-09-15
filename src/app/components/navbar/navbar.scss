@@ -37,14 +37,24 @@
   height: 1.2em;
   width: auto;
   margin: 0 0.05em 0 0.3em;
+  filter: var(--logo-glow-low);
   transition:
     transform 250ms,
     filter 250ms;
 }
 
+/* The mark breathes a soft lime light, like a star on a clear night. The
+   hover glow below takes over while the pointer is on it. */
+@media (prefers-reduced-motion: no-preference) {
+  .navbar__logo-w {
+    animation: logo-shimmer 3s ease-in-out infinite;
+  }
+}
+
 .navbar__logo:hover .navbar__logo-w {
+  animation: none;
   transform: scale(1.12);
-  filter: drop-shadow(0 0 5px var(--color-accent-lime));
+  filter: var(--logo-glow-high);
 }
 
 .navbar__right {
@@ -64,11 +74,32 @@
   min-height: var(--tap-target);
   color: var(--color-white);
   font-size: var(--fs-nav);
-  transition: color 200ms;
 }
 
-.navbar__link:hover {
-  color: var(--color-secundario);
+/* Teal text with a soft glow, and a line that opens out from the middle.
+   ::after is already the tap area, so the line uses ::before. */
+.navbar__link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-xs);
+  height: var(--underline-size);
+  border-radius: var(--underline-size);
+  background: var(--color-secundario-bright);
+  box-shadow: var(--glow-secundario);
+  transform: scaleX(0);
+}
+
+.navbar__link:hover,
+.navbar__link:focus-visible {
+  color: var(--color-secundario-bright);
+  text-shadow: var(--glow-secundario-text);
+}
+
+.navbar__link:hover::before,
+.navbar__link:focus-visible::before {
+  transform: scaleX(1);
 }
 
 /* Below the breakpoint the switch lives in the menu, as the template has it. */
@@ -100,6 +131,14 @@
   color: var(--color-accent-lime);
 }
 
+/* The language you are not reading turns purple, so it reads as the other
+   choice and never as the active lime one. */
+.navbar__overlay-lang-btn:not(.is-active):hover,
+.navbar__overlay-lang-btn:not(.is-active):focus-visible {
+  color: var(--color-accent-purple-light);
+  text-shadow: var(--glow-purple);
+}
+
 .navbar__lang-btn {
   width: var(--tap-target);
   height: var(--tap-target);
@@ -108,15 +147,59 @@
   background: transparent;
   color: var(--color-white);
   font-size: var(--fs-body);
-  transition:
-    background 200ms,
-    color 200ms;
+}
+
+.navbar__lang-btn:not(.is-active):hover,
+.navbar__lang-btn:not(.is-active):focus-visible {
+  border-color: var(--color-accent-purple);
+  background: var(--color-accent-purple);
+  color: var(--color-white);
+  box-shadow: var(--glow-purple);
 }
 
 .navbar__lang-btn.is-active {
   background: var(--color-accent-lime);
   border-color: var(--color-accent-lime);
   color: var(--color-black);
+}
+
+.navbar__lang-btn.is-active:hover,
+.navbar__lang-btn.is-active:focus-visible {
+  box-shadow: var(--glow-lime);
+}
+
+.navbar__link:focus-visible,
+.navbar__lang-btn:focus-visible,
+.navbar__overlay-lang-btn:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .navbar__link,
+  .navbar__overlay a {
+    transition:
+      color 200ms,
+      text-shadow 200ms,
+      translate 200ms;
+  }
+
+  .navbar__link::before {
+    transition: transform 250ms ease-out;
+  }
+
+  .navbar__link:hover,
+  .navbar__link:focus-visible {
+    translate: 0 calc(-1 * var(--lift-sm));
+  }
+
+  .navbar__lang-btn {
+    transition:
+      background-color 200ms,
+      border-color 200ms,
+      color 200ms,
+      box-shadow 200ms;
+  }
 }
 
 .navbar__burger {
@@ -171,11 +254,12 @@
   color: var(--color-white);
   font-size: var(--fs-overlay-link);
   font-weight: var(--fw-bold);
-  transition: color 200ms;
 }
 
-.navbar__overlay a:hover {
-  color: var(--color-secundario);
+.navbar__overlay a:hover,
+.navbar__overlay a:focus-visible {
+  color: var(--color-secundario-bright);
+  text-shadow: var(--glow-secundario-text);
 }
 
 /* The links need 677px, the mark 140px and the bar 200px of padding, so they

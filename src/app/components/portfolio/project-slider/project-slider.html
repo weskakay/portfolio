@@ -1,0 +1,67 @@
+<div
+  class="slider"
+  role="group"
+  [attr.aria-label]="title() + ': ' + lang.dict().portfolio.images"
+  (keydown)="onKeydown($event)"
+>
+  <div class="slider__frame">
+    <ul
+      #track
+      class="slider__track"
+      tabindex="0"
+      [attr.aria-label]="lang.dict().portfolio.images"
+      (scroll)="measure()"
+      (scrollend)="settle()"
+    >
+      @for (src of images(); track src; let i = $index) {
+        <li class="slider__slide">
+          <img
+            class="slider__img"
+            [src]="src"
+            [alt]="title() + ', ' + label(i)"
+            [attr.loading]="i === 0 ? null : 'lazy'"
+          />
+        </li>
+      }
+    </ul>
+
+    @if (images().length > 1) {
+      <button
+        type="button"
+        class="arrow-btn slider__arrow slider__arrow--prev"
+        [attr.aria-label]="lang.dict().portfolio.prevImage"
+        (click)="step(-1)"
+      >
+        <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 4l-8 8 8 8" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="arrow-btn slider__arrow slider__arrow--next"
+        [attr.aria-label]="lang.dict().portfolio.nextImage"
+        (click)="step(1)"
+      >
+        <svg class="arrow-icon arrow-icon--next" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 4l-8 8 8 8" />
+        </svg>
+      </button>
+      <span class="slider__count" aria-hidden="true">{{ active() + 1 }} / {{ images().length }}</span>
+    }
+  </div>
+
+  @if (images().length > 1) {
+    <div class="slider__dots">
+      @for (src of images(); track src; let i = $index) {
+        <button
+          type="button"
+          class="slider__dot"
+          [class.is-active]="i === active()"
+          [attr.aria-current]="i === active() ? 'true' : null"
+          [attr.aria-label]="label(i)"
+          (click)="goTo(i)"
+        ></button>
+      }
+    </div>
+  }
+</div>

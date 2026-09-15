@@ -25,6 +25,16 @@ export interface Project {
   demoNote?: Record<Lang, string>;
 }
 
+/**
+ * Every screenshot of a project for the detail slider: the card image first,
+ * then the story shots in reading order. Logos stay out, duplicates are dropped.
+ */
+export function projectImages(project: Project): string[] {
+  const story = project.story ?? {};
+  const all = [project.image, story.afterHeading, story.afterAbout, story.afterTech, story.afterHighlight];
+  return [...new Set(all.filter((src): src is string => !!src))];
+}
+
 /** Portfolio entries in the order they appear on the page. */
 export const PROJECTS: readonly Project[] = [
   {
@@ -106,7 +116,7 @@ export const PROJECTS: readonly Project[] = [
   },
   {
     id: 'weather-station',
-    title: 'Wetterstation',
+    title: 'Wetter Station',
     titleEn: 'Weather Station',
     description: {
       de: 'Eine selbst gebaute Wetterstation mit eigener App. Sensoren erfassen Temperatur, Niederschlag und weitere Werte, ein Raspberry Pi rechnet sie um und sammelt sie auf einem eigenen Server. Eine App zeigt alles als Tages-, Wochen-, Monats- und Jahresansicht mit Diagrammen.',
