@@ -93,14 +93,38 @@
           {{ status() === 'sending' ? lang.dict().contact.sending : lang.dict().contact.submit }}
         </button>
 
-        <p class="contact__status contact__status--ok" aria-live="polite">
+        <p
+          class="contact__status contact__status--ok"
+          [class.contact__status--on]="status() === 'success'"
+          aria-live="polite"
+        >
           @if (status() === 'success') {
-            {{ lang.dict().contact.success }}
+            <span class="contact__code" aria-hidden="true">&#10003; 200 OK</span>
+            <!-- the full sentence holds the layout and is what gets announced,
+                 the copy on top is the one that types itself -->
+            <span class="contact__answer">
+              <span class="contact__answer-full">{{ lang.dict().contact.success }}</span>
+              <span class="contact__answer-typed" aria-hidden="true"
+                >{{ typedText()
+                }}<span class="contact__caret" [class.contact__caret--on]="typing()"></span
+              ></span>
+            </span>
           }
         </p>
-        <p class="contact__status contact__status--err" aria-live="polite">
+        <p
+          class="contact__status contact__status--err"
+          [class.contact__status--on]="status() === 'error'"
+          aria-live="polite"
+        >
           @if (status() === 'error') {
-            {{ lang.dict().contact.error }}
+            <span class="contact__code" aria-hidden="true">&#10007; 500</span>
+            <span class="contact__answer">
+              <span class="contact__answer-full">{{ lang.dict().contact.error }}</span>
+              <span class="contact__answer-typed" aria-hidden="true"
+                >{{ typedText()
+                }}<span class="contact__caret" [class.contact__caret--on]="typing()"></span
+              ></span>
+            </span>
           }
         </p>
       </form>

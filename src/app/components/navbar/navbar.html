@@ -1,8 +1,14 @@
 <header class="navbar">
   <div class="navbar__inner">
-    <a class="navbar__logo" routerLink="/" fragment="hero" (click)="closeMenu()">
+    <a
+      class="navbar__logo"
+      routerLink="/"
+      fragment="hero"
+      aria-label="Kay Weska"
+      (click)="closeMenu()"
+    >
       <span><span class="navbar__logo-k">K</span>ay</span>
-      <img class="navbar__logo-w" src="/logo-w.svg" alt="W" />
+      <app-logo-mark class="navbar__logo-w" />
       <span>eska</span>
     </a>
 

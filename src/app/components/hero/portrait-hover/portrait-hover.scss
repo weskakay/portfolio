@@ -52,16 +52,3 @@
     animation: none;
   }
 }
-
-@keyframes ph-crossfade {
-  0%, 35% {
-    opacity: 0;
-  }
-  50%, 85% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-

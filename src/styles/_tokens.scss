@@ -19,6 +19,7 @@
 
   /* Font */
   --font-family: 'Poppins', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
   /* Font sizes: headings scale fluidly between mobile and desktop.
      16px is the floor, nothing on the page goes below it.
@@ -135,8 +136,9 @@
   --glow-lime: 0 0 24px rgba(112, 230, 28, 0.55);
   --glow-lime-soft: 0 0 14px rgba(112, 230, 28, 0.35);
   --glow-lime-drop: drop-shadow(0 0 6px rgba(112, 230, 28, 0.8));
-  /* The shimmering W mark: resting and peak light */
+  /* The shimmering W mark: resting, peak and the still light for reduced motion */
   --logo-glow-low: drop-shadow(0 0 3px var(--color-accent-lime)) drop-shadow(0 0 10px rgba(112, 230, 28, 0.5)) brightness(1.15);
+  --logo-glow-still: drop-shadow(0 0 4px var(--color-accent-lime)) drop-shadow(0 0 14px rgba(112, 230, 28, 0.65)) brightness(1.35);
   --logo-glow-high: drop-shadow(0 0 6px var(--color-white)) drop-shadow(0 0 16px var(--color-accent-lime)) drop-shadow(0 0 36px rgba(112, 230, 28, 0.8)) brightness(1.6);
   /* Purple from the design file for the language switch; the light tone keeps
      text readable on the dark menu background */

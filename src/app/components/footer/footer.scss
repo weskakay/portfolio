@@ -30,21 +30,22 @@
 
 .footer__logo {
   height: 3em;
-  width: auto;
   filter: var(--logo-glow-low);
+  animation: logo-shimmer 3s ease-in-out infinite;
   transition: transform 250ms, filter 250ms;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .footer__logo {
-    animation: logo-shimmer 3s ease-in-out infinite;
-  }
 }
 
 .footer__logo-link:hover .footer__logo {
   animation: none;
   transform: scale(1.12);
   filter: var(--logo-glow-high);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__logo {
+    animation: none;
+    filter: var(--logo-glow-still);
+  }
 }
 
 .footer__legal {

@@ -107,6 +107,20 @@ img {
   }
 }
 
+/* Touch fallback of the portrait. The keyframes live here because Angular
+   renames component keyframes but not a reference inside a media query. */
+@keyframes ph-crossfade {
+  0%, 35% {
+    opacity: 0;
+  }
+  50%, 85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Section heading with its accent rule. */
 .section-head {
   position: relative;

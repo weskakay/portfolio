@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
+import { LogoMark } from '../logo-mark/logo-mark';
 
 /** Site footer with a short blurb, social links and legal navigation. */
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, LogoMark],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
 })

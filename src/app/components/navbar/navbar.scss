@@ -33,28 +33,29 @@
   color: var(--color-accent-lime);
 }
 
+/* The mark breathes a soft lime light, like a star on a clear night. The
+   hover glow below takes over while the pointer is on it. */
 .navbar__logo-w {
   height: 1.2em;
-  width: auto;
   margin: 0 0.05em 0 0.3em;
   filter: var(--logo-glow-low);
+  animation: logo-shimmer 3s ease-in-out infinite;
   transition:
     transform 250ms,
     filter 250ms;
-}
-
-/* The mark breathes a soft lime light, like a star on a clear night. The
-   hover glow below takes over while the pointer is on it. */
-@media (prefers-reduced-motion: no-preference) {
-  .navbar__logo-w {
-    animation: logo-shimmer 3s ease-in-out infinite;
-  }
 }
 
 .navbar__logo:hover .navbar__logo-w {
   animation: none;
   transform: scale(1.12);
   filter: var(--logo-glow-high);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__logo-w {
+    animation: none;
+    filter: var(--logo-glow-still);
+  }
 }
 
 .navbar__right {

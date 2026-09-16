@@ -10,12 +10,8 @@ export interface Project {
   type: 'web' | 'maker';
   image: string;
   logo?: string;
-  story?: {
-    afterHeading?: string;
-    afterAbout?: string;
-    afterTech?: string;
-    afterHighlight?: string;
-  };
+  /** More screenshots for the detail slider, after the card image. */
+  shots?: readonly string[];
   liveUrl?: string;
   /** The live site speaks both languages and takes the choice from the link. */
   followsLanguage?: boolean;
@@ -27,12 +23,10 @@ export interface Project {
 
 /**
  * Every screenshot of a project for the detail slider: the card image first,
- * then the story shots in reading order. Logos stay out, duplicates are dropped.
+ * then the rest. Logos stay out, duplicates are dropped.
  */
 export function projectImages(project: Project): string[] {
-  const story = project.story ?? {};
-  const all = [project.image, story.afterHeading, story.afterAbout, story.afterTech, story.afterHighlight];
-  return [...new Set(all.filter((src): src is string => !!src))];
+  return [...new Set([project.image, ...(project.shots ?? [])])];
 }
 
 /** Portfolio entries in the order they appear on the page. */
@@ -47,6 +41,10 @@ export const PROJECTS: readonly Project[] = [
     badges: ['Angular', 'TypeScript', 'PHP', 'MySQL', 'SCSS'],
     type: 'web',
     image: '/images/projects/poll-app.jpg',
+    shots: [
+      '/images/projects/poll-app-create.jpg',
+      '/images/projects/poll-app-detail.jpg',
+    ],
     logo: '/images/projects/logos/poll-app.svg',
     liveUrl: 'https://poll.weskakay.de',
     repoUrl: 'https://github.com/weskakay/poll-app',
@@ -65,6 +63,7 @@ export const PROJECTS: readonly Project[] = [
     badges: ['JavaScript', 'Canvas', 'OOP'],
     type: 'web',
     image: '/images/projects/el-pollo-loco.jpg',
+    shots: ['/images/projects/el-pollo-loco-gameplay.jpg'],
     logo: '/images/projects/logos/el-pollo-loco.svg',
     liveUrl: 'https://pollo.weskakay.de',
     repoUrl: 'https://github.com/weskakay/el-pollo-loco',
@@ -83,6 +82,11 @@ export const PROJECTS: readonly Project[] = [
     badges: ['Angular', 'TypeScript', 'SCSS', 'PHP', 'MySQL'],
     type: 'web',
     image: '/images/projects/j0in.jpg',
+    shots: [
+      '/images/projects/j0in-card.jpg',
+      '/images/projects/j0in-summary.jpg',
+      '/images/projects/j0in-contacts.jpg',
+    ],
     logo: '/images/projects/logos/j0in.svg',
     liveUrl: 'https://j0in.weskakay.de',
     followsLanguage: true,
@@ -106,6 +110,11 @@ export const PROJECTS: readonly Project[] = [
     badges: ['TypeScript', 'Vite', 'SCSS'],
     type: 'web',
     image: '/images/projects/memory.jpg',
+    shots: [
+      '/images/projects/memory-settings.jpg',
+      '/images/projects/memory-game.jpg',
+      '/images/projects/memory-winner.jpg',
+    ],
     logo: '/images/projects/logos/memory.svg',
     liveUrl: 'https://memory.weskakay.de',
     repoUrl: 'https://github.com/weskakay/memory',
@@ -125,12 +134,12 @@ export const PROJECTS: readonly Project[] = [
     badges: ['IoT', 'Sensorik', 'Python', 'PHP', 'Linux', 'Raspberry Pi', 'JavaScript', 'Android'],
     type: 'maker',
     image: '/images/projects/weather-station1.jpg',
-    story: {
-      afterHeading: '/images/projects/weather-station5.jpg',
-      afterAbout: '/images/projects/weather-station2.jpg',
-      afterTech: '/images/projects/weather-station4.jpg',
-      afterHighlight: '/images/projects/weather-station3.jpg',
-    },
+    shots: [
+      '/images/projects/weather-station5.jpg',
+      '/images/projects/weather-station2.jpg',
+      '/images/projects/weather-station4.jpg',
+      '/images/projects/weather-station3.jpg',
+    ],
     highlight: {
       de: 'Die Sensoren liefern laufend Rohwerte, interessant wird es erst danach. Die Werte werden umgerechnet, zusammengeführt und so aufbereitet, dass sie flüssig und in Echtzeit auf einem Display oder in der App stehen: Temperatur, Niederschlag, Wassertemperatur, Sonnenstunden und mehr, wahlweise als Tag, Woche, Monat oder Jahr mit Diagrammen. Wichtig war mir, dass man das ohne Erklärung versteht und gern draufschaut.',
       en: 'The sensors deliver raw readings continuously, and the interesting part begins after that. The values are converted, combined and prepared so they appear smoothly and in real time on a display or in the app: temperature, precipitation, water temperature, hours of sunshine and more, as a day, week, month or year view with charts. What mattered to me was that you can understand it without an explanation and enjoy looking at it.',
@@ -146,10 +155,10 @@ export const PROJECTS: readonly Project[] = [
     badges: ['IoT', 'GPS/GNSS', 'Embedded', 'Python', 'PHP'],
     type: 'maker',
     image: '/images/projects/tracker3.jpg',
-    story: {
-      afterHeading: '/images/projects/tracker5.jpg',
-      afterTech: '/images/projects/tracker2.jpg',
-    },
+    shots: [
+      '/images/projects/tracker5.jpg',
+      '/images/projects/tracker2.jpg',
+    ],
     highlight: {
       de: 'Die eigentliche Aufgabe war der Ausgleich zwischen Batterielaufzeit und Meldefrequenz. Gelöst über ein konfigurierbares Gerät: Weckzyklus, Meldeintervall und die einzelnen Sensoren lassen sich aus der Plattform heraus setzen, von Echtzeit bis stündlich, und Aktualisierungen gehen über Funk an das Gerät. Jeder Einsatzfall bekommt so seine eigene Einstellung, ohne dass jemand die Hardware anfassen muss.',
       en: 'The real task was balancing battery life against reporting frequency. It is solved by making the device configurable: wake cycle, reporting interval and the individual sensors are set from the platform, from real time down to hourly, and updates reach the device over the air. Every deployment gets its own setting without anyone touching the hardware.',
@@ -165,11 +174,11 @@ export const PROJECTS: readonly Project[] = [
     badges: ['IoT', 'RFID', 'BLE', 'C++', 'Python', 'Embedded'],
     type: 'maker',
     image: '/images/projects/rfidble1.jpg',
-    story: {
-      afterHeading: '/images/projects/rfidble4.jpg',
-      afterAbout: '/images/projects/rfidble3.jpg',
-      afterTech: '/images/projects/rfidble2.jpg',
-    },
+    shots: [
+      '/images/projects/rfidble4.jpg',
+      '/images/projects/rfidble3.jpg',
+      '/images/projects/rfidble2.jpg',
+    ],
     highlight: {
       de: 'Interessant war die Menge. In einem Scan-Fenster antworten viele Tags gleichzeitig, und die Daten kommen verschlüsselt an. Der Radius lässt sich an den Ort anpassen, ein Briefkasten braucht eine andere Reichweite als eine Lagerhalle. Dabei musste die Batterie lange halten und die Messwerte trotzdem stimmen, denn sie wurden gegen unabhängige Auswertungen gegengeprüft.',
       en: 'The interesting part was the volume. Many tags answer inside a single scan window, and the data arrives encrypted. The range adapts to the location, since a letterbox needs a different radius than a warehouse. Battery life had to stay long while the readings stayed correct, because they were checked against independent evaluations.',
@@ -185,11 +194,11 @@ export const PROJECTS: readonly Project[] = [
     badges: ['Smoke Test', 'Sensorik', 'Automation', 'Python', 'C++', 'Docker', 'AWS', 'JIRA'],
     type: 'maker',
     image: '/images/projects/atf3.jpg',
-    story: {
-      afterHeading: '/images/projects/atf2.jpg',
-      afterTech: '/images/projects/atf1.jpg',
-      afterHighlight: '/images/projects/atf4.jpg',
-    },
+    shots: [
+      '/images/projects/atf2.jpg',
+      '/images/projects/atf1.jpg',
+      '/images/projects/atf4.jpg',
+    ],
     highlight: {
       de: 'Der eigentliche Wert liegt nicht im Testen selbst, sondern in dem, was danach passiert. Die Ergebnisse laufen so aufbereitet an die Entwicklung zurück, dass direkt ablesbar ist, was umgesetzt wurde, was davon läuft und was nicht. Aus einem Testlauf werden damit konkrete nächste Schritte statt einer langen Fehlerliste, und niemand muss einen Stand verwerfen und von vorn anfangen.',
       en: 'The real value is not the testing itself but what happens afterwards. Results flow back to the development team prepared so the team can read directly what was implemented, what of it runs and what does not. A test run therefore produces concrete next steps instead of a long list of errors, and nobody has to discard a state and start over.',

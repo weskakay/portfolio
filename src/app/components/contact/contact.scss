@@ -165,13 +165,68 @@
   margin-top: var(--space-sm);
 }
 
+/* The answer reads like the server writing back. */
 .contact__status {
   min-height: var(--space-md);
+  font-family: var(--font-mono);
   font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+.contact__status--on {
+  padding-left: var(--space-md);
+  border-left: var(--underline-size) solid currentcolor;
+}
+
+.contact__code {
+  display: block;
+  font-weight: var(--fw-bold);
+}
+
+.contact__answer {
+  position: relative;
+  display: block;
+}
+
+/* Holds the layout and is the copy screen readers get. */
+.contact__answer-full {
+  color: transparent;
+}
+
+.contact__answer-typed {
+  position: absolute;
+  inset: 0;
+}
+
+.contact__caret {
+  display: none;
+  width: 1ch;
+  height: 1em;
+  vertical-align: text-bottom;
+  background: currentcolor;
+}
+
+.contact__caret--on {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact__caret--on {
+    animation: contact-blink 1.1s steps(2, jump-none) infinite;
+  }
+}
+
+@keyframes contact-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .contact__status--ok {
-  color: var(--color-secundario);
+  color: var(--color-accent-lime);
 }
 
 .contact__status--err {
