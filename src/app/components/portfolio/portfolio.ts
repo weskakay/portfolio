@@ -14,7 +14,7 @@ import { LanguageService } from '../../services/language.service';
 import { PROJECTS, projectImages, type Project } from '../../data/projects';
 import { ProjectSlider } from './project-slider/project-slider';
 
-const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'a[href], button:not([disabled]):not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])';
 const KEY_STEPS: Record<string, number> = { ArrowLeft: -1, ArrowRight: 1 };
 
 /**

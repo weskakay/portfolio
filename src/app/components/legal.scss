@@ -12,7 +12,7 @@
   padding-left: max(var(--section-pad-x), env(safe-area-inset-left));
   padding-right: max(var(--section-pad-x), env(safe-area-inset-right));
   min-height: 70vh;
-  min-height: calc(70 * var(--svh));
+  min-height: 70svh;
   color: var(--color-white);
 }
 

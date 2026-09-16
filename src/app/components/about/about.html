@@ -43,14 +43,14 @@
     @defer (on viewport; prefetch on idle) {
       <app-portrait-hover
         class="about__portrait"
-        [business]="'/images/hero-business.png'"
-        [football]="'/images/hero-football.png'"
+        [business]="'/images/hero-business.webp'"
+        [football]="'/images/hero-football.webp'"
         [altBusiness]="lang.dict().hero.altBusiness"
       />
     } @placeholder {
       <img
         class="about__portrait about__portrait--still"
-        src="/images/hero-business.png"
+        src="/images/hero-business.webp"
         [alt]="lang.dict().hero.altBusiness"
       />
     }

@@ -1,11 +1,15 @@
 .gallery {
   position: relative;
   z-index: 1;
-  /* control row: arrow + 20 + 220 + 20 + arrow. The design file has a 64px dot
-     block, but five dots need 44px each to be hit with a thumb. */
-  --gallery-control-gap: 20px;
-  /* clips the accent rule where it runs past the edge */
-  overflow-x: clip;
+  /* control row: arrow + gap + 220 + gap + arrow. The design file has a 64px dot
+     block, but five dots need 44px each to be hit with a thumb, so a phone
+     only has room for small gaps, the smallest none at all. */
+  --gallery-control-gap: 0;
+  /* no side padding here, the intro box below carries it */
+  --edge-gap: calc(var(--section-pad-x) + max(0px, (100cqw - var(--max-width)) / 2 - var(--section-pad-x)));
+  /* where the photos fade out at both ends of the band */
+  --gallery-fade: var(--section-pad-x);
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,8 +46,9 @@
 }
 
 /* The row is moved by hand: arrows, a swipe or a sideways trackpad gesture.
-   It runs to the screen edges on every width, like the section rules, and the
-   photos fade out into the margin at both ends. */
+   Up to 1440 it runs to the screen edges and the photos fade out in the side
+   margin. The photos are content, so wider screens keep them inside the
+   content box (see the container query below). */
 .gallery__viewport {
   width: 100%;
   margin: 0 auto;
@@ -51,19 +56,19 @@
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--section-pad-x);
+  scroll-padding-inline: var(--gallery-fade);
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent,
-    var(--color-black) var(--section-pad-x),
-    var(--color-black) calc(100% - var(--section-pad-x)),
+    var(--color-black) var(--gallery-fade),
+    var(--color-black) calc(100% - var(--gallery-fade)),
     transparent
   );
   mask-image: linear-gradient(
     90deg,
     transparent,
-    var(--color-black) var(--section-pad-x),
-    var(--color-black) calc(100% - var(--section-pad-x)),
+    var(--color-black) var(--gallery-fade),
+    var(--color-black) calc(100% - var(--gallery-fade)),
     transparent
   );
 }
@@ -74,8 +79,17 @@
   align-items: center;
   gap: var(--space-md);
   width: max-content;
-  height: calc(56 * var(--svh));
-  padding: 0 var(--section-pad-x);
+  height: 56svh;
+  padding: 0 var(--gallery-fade);
+}
+
+/* From 1440 content plus two full side margins (100px each) the band ends on
+   the content edge, and the photos fade out just inside it. */
+@container (min-width: 1640px) {
+  .gallery__viewport {
+    --gallery-fade: var(--space-xl);
+    width: var(--max-width);
+  }
 }
 
 .gallery__tile {
@@ -106,22 +120,22 @@
 
 /* tile shapes and heights below are collage layout, not shared tokens */
 .gallery__tile--portrait .gallery__frame {
-  height: calc(46 * var(--svh));
+  height: 46svh;
   aspect-ratio: 3 / 4;
 }
 
 .gallery__tile--landscape .gallery__frame {
-  height: calc(34 * var(--svh));
+  height: 34svh;
   aspect-ratio: 4 / 3;
 }
 
 .gallery__tile--square .gallery__frame {
-  height: calc(40 * var(--svh));
+  height: 40svh;
   aspect-ratio: 1 / 1;
 }
 
 .gallery__tile--tall .gallery__frame {
-  height: calc(52 * var(--svh));
+  height: 52svh;
   aspect-ratio: 2 / 3;
 }
 
@@ -133,7 +147,17 @@
   object-fit: cover;
 }
 
+@media (min-width: 340px) {
+  .gallery {
+    --gallery-control-gap: var(--space-sm);
+  }
+}
+
 @media (min-width: 900px) {
+  .gallery {
+    --gallery-control-gap: var(--gallery-control-gap-wide);
+  }
+
   /* Heading and subtitle start on the same edge as the skills text column and
      read left to right, so the rule runs out towards the screen edge. */
   .gallery__heading,
@@ -147,23 +171,23 @@
 
   .gallery__collage {
     gap: var(--space-xl);
-    height: calc(60 * var(--svh));
+    height: 60svh;
   }
 
   .gallery__tile--portrait .gallery__frame {
-    height: calc(54 * var(--svh));
+    height: 54svh;
   }
 
   .gallery__tile--landscape .gallery__frame {
-    height: calc(38 * var(--svh));
+    height: 38svh;
   }
 
   .gallery__tile--square .gallery__frame {
-    height: calc(44 * var(--svh));
+    height: 44svh;
   }
 
   .gallery__tile--tall .gallery__frame {
-    height: calc(60 * var(--svh));
+    height: 60svh;
   }
 }
 
@@ -176,6 +200,5 @@
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--section-pad-x);
 }
 

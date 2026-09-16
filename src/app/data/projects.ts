@@ -131,7 +131,7 @@ export const PROJECTS: readonly Project[] = [
       de: 'Eine selbst gebaute Wetterstation mit eigener App. Sensoren erfassen Temperatur, Niederschlag und weitere Werte, ein Raspberry Pi rechnet sie um und sammelt sie auf einem eigenen Server. Eine App zeigt alles als Tages-, Wochen-, Monats- und Jahresansicht mit Diagrammen.',
       en: 'A self-built weather station with its own app. Sensors capture temperature, precipitation and more, a Raspberry Pi converts the readings and gathers them on a dedicated server. An app shows everything as day, week, month and year views with charts.',
     },
-    badges: ['IoT', 'Sensorik', 'Python', 'PHP', 'Linux', 'Raspberry Pi', 'JavaScript', 'Android'],
+    badges: ['IoT', 'Sensors', 'Python', 'PHP', 'Linux', 'Raspberry Pi', 'JavaScript', 'Android'],
     type: 'maker',
     image: '/images/projects/weather-station1.jpg',
     shots: [
@@ -191,7 +191,7 @@ export const PROJECTS: readonly Project[] = [
       de: 'Ein firmeninternes Framework für automatisierte Tests in der Automobilbranche. Damit lassen sich Teststände, Testfahrten und Prüfabläufe automatisieren, von der Testfarm über Skripte und Steuer-Code bis zur Auswertung. Viele Werkzeuge laufen unter einer Oberfläche zusammen, das macht wiederkehrende Tests schnell und reproduzierbar.',
       en: 'A company-internal framework for automated testing in the automotive field. It automates test benches, test drives and test routines, from the test farm through scripts and control code to evaluation. Many tools come together under one interface, which makes recurring tests fast and reproducible.',
     },
-    badges: ['Smoke Test', 'Sensorik', 'Automation', 'Python', 'C++', 'Docker', 'AWS', 'JIRA'],
+    badges: ['Smoke Test', 'Sensors', 'Automation', 'Python', 'C++', 'Docker', 'AWS', 'JIRA'],
     type: 'maker',
     image: '/images/projects/atf3.jpg',
     shots: [

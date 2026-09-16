@@ -2,13 +2,15 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  min-height: calc(100 * var(--svh));
+  min-height: 100svh;
   display: flex;
   align-items: center;
   padding: calc(var(--navbar-height) + var(--space-xl)) var(--section-pad-x) var(--space-xl);
   padding-left: max(var(--section-pad-x), env(safe-area-inset-left));
   padding-right: max(var(--section-pad-x), env(safe-area-inset-right));
-  overflow: hidden;
+  /* the notch can widen the left padding, the rule has to cover that too */
+  --edge-gap: calc(max(var(--section-pad-x), env(safe-area-inset-left)) + max(0px, (100cqw - var(--max-width)) / 2));
+  container-type: inline-size;
 }
 
 /* Fills the hero box so the bottom row can sit on its lower edge instead of
@@ -42,7 +44,8 @@
 
 .hero__iam {
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  /* nudged along its own axis so it sits closer to the top of the name */
+  transform: rotate(180deg) translate(0, 0.17em);
   font-size: var(--fs-deco-i-am);
   line-height: 1;
   color: var(--color-white);
@@ -99,14 +102,14 @@
   list-style: none;
 }
 
-/* The rule runs off to the left edge of the screen; .hero clips the rest. */
+/* The rule runs from the icons to the left edge of the screen and ends there. */
 .hero__social::before {
   content: '';
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   right: calc(100% + var(--hero-rule-gap));
-  width: 100vw;
+  width: calc(var(--edge-gap) + var(--hero-rule-length) - var(--section-pad-x));
   height: var(--rule-size);
   background: var(--color-accent-lime);
 }
@@ -234,7 +237,7 @@
   .hero__inner {
     align-self: center;
     padding-bottom: 0;
-    min-height: calc(70 * var(--svh));
+    min-height: 70svh;
   }
 
   /* Only here is there room to make it bigger, which is what the review asked

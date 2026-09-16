@@ -19,11 +19,9 @@
 }
 
 html {
-  zoom: var(--zoom);
   scroll-padding-top: var(--navbar-height);
   background: var(--color-bg-dark);
   overscroll-behavior-y: none;
-  overflow-x: clip;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
   scrollbar-color: var(--color-accent-lime) transparent;
@@ -67,7 +65,6 @@ body {
   line-height: var(--lh-default);
   color: var(--color-white);
   background: var(--color-bg-dark);
-  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -107,8 +104,7 @@ img {
   }
 }
 
-/* Touch fallback of the portrait. The keyframes live here because Angular
-   renames component keyframes but not a reference inside a media query. */
+/* Photo crossfade of the portrait when WebGL2 is missing. */
 @keyframes ph-crossfade {
   0%, 35% {
     opacity: 0;
@@ -121,29 +117,31 @@ img {
   }
 }
 
-/* Section heading with its accent rule. */
+/* Section heading with its accent rule. The rule fills the row and reaches
+   through the side margin to the screen edge, so nothing has to be clipped.
+   The section around it is a size container for --edge-gap. */
 .section-head {
-  position: relative;
-  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: var(--rule-gap);
 }
 
-/* The rule leaves the heading towards the nearer edge of the screen and runs
-   all the way to it on every width. The section clips it there. */
 .section-head::after {
   content: '';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: calc(100% + var(--rule-gap));
-  width: 100vw;
+  flex: 1 1 0;
   height: var(--rule-size);
+  margin-right: calc(-1 * var(--edge-gap));
   background: var(--rule-gradient);
 }
 
-/* Headings that sit on the left send their rule the other way, on every width. */
+/* Headings on the left send their rule to the left edge. Sized from the
+   section itself, which cannot be a container because the project dialog
+   inside it is fixed. */
 .section-head--left::after {
-  left: auto;
-  right: calc(100% + var(--rule-gap));
+  position: absolute;
+  left: 0;
+  width: calc(max(var(--section-pad-x), (100% - var(--max-width)) / 2) - var(--rule-gap));
+  margin: 0;
 }
 
 /* The one arrow of the site: gallery, record row, image slider, project bar.

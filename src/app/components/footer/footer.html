@@ -4,7 +4,7 @@
       <a class="footer__logo-link" routerLink="/" fragment="hero" aria-label="Kay Weska">
         <app-logo-mark class="footer__logo" />
       </a>
-      <nav class="footer__legal" aria-label="Rechtliches">
+      <nav class="footer__legal" [attr.aria-label]="lang.dict().footer.legalLabel">
         <a routerLink="/impressum">{{ lang.dict().footer.impressum }}</a>
         <a routerLink="/datenschutz">{{ lang.dict().footer.datenschutz }}</a>
       </nav>

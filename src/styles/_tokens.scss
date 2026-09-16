@@ -25,10 +25,12 @@
      16px is the floor, nothing on the page goes below it.
      The hero pair keeps the 2:1 ratio it has on desktop and climbs steeply
      enough that a 375px phone lands on the 45px from the design, while 320px
-     still fits name and role on one line each. */
-  --fs-hero-name: clamp(38px, 12.2vw, 128px);
-  --fs-hero-sub: clamp(19px, 6.1vw, 64px);
-  --fs-deco-i-am: clamp(28px, 8vw, 90px);
+     still fits name and role on one line each. vw counts a desktop scrollbar
+     as well, so the hero (a size container) also caps them by its real width. */
+  --fs-hero-name: clamp(34px, min(12.2vw, 14.35cqw), 128px);
+  --fs-hero-sub: clamp(17px, min(6.1vw, 7.18cqw), 64px);
+  /* "Ich bin" a good step below the name, 58px beside the 128px name */
+  --fs-deco-i-am: calc(var(--fs-hero-name) * 0.45);
   --fs-section: clamp(30px, 11.5vw, 48px);
   --fs-overlay-link: 28px;
   /* Contact lead line (grows on desktop, see below) and the send button label,
@@ -38,18 +40,15 @@
   --fs-logo: 22px;
   --fs-nav: 18px;
   --fs-body: 16px;
+  /* Name on a skill sleeve: grows with the sleeve (cqi), so "Datenbanken"
+     still fits on a 320px phone */
+  --fs-sleeve: clamp(var(--fs-body), 13cqi, var(--fs-subtitle));
 
   /* Weights */
   --fw-regular: 400;
   --fw-bold: 700;
 
   /* Layout */
-  /* Big screens zoom the whole page (tiers below). Zoom scales viewport units
-     as well, so anything sized by the screen divides it back out with these. */
-  --zoom: 1;
-  --svh: calc(1svh / var(--zoom));
-  --dvh: calc(1dvh / var(--zoom));
-  --vw: calc(1vw / var(--zoom));
   --max-width: 1440px;
   /* Reading measure for long copy, narrower than the content box on purpose. */
   --max-width-text: 50rem;
@@ -61,7 +60,6 @@
   --btn-radius: 10px;
   --btn-pad-y: 15px;
   --btn-pad-x: 30px;
-  --btn-gap: 10px;
 
   /* Spacing scale */
   --space-xs: 4px;
@@ -73,7 +71,6 @@
   /* Radius + controls */
   --radius-sm: 8px;
   --radius-md: 10px;
-  --control-size: 36px;
   --tap-target: 44px;
   --icon-size: 24px;
   /* Skill icons in the list under the records */
@@ -91,6 +88,8 @@
   --blueprint-scan-time: 6s;
   /* Plain lime chevron from the gallery in the design template */
   --arrow-size: 40px;
+  /* Room between the gallery arrows and dots on a wide screen, per the design file */
+  --gallery-control-gap-wide: 20px;
   --dot-size: 8px;
   --arrow-stroke: 1.5;
   --arrow-stroke-hover: 2.5;
@@ -104,6 +103,10 @@
   /* Section spacing (desktop) */
   --section-pad-y: clamp(48px, 10vw, 120px);
   --section-pad-x: clamp(24px, 6vw, 100px);
+  /* Room from the content box to the screen edge, read inside a padded section
+     that is a size container (cqw is its width without the padding). Lines
+     use it to end exactly on the edge. */
+  --edge-gap: calc(var(--section-pad-x) + max(0px, (100cqw - var(--max-width)) / 2));
   /* Room between two columns side by side, e.g. the skills text and records */
   --column-gap: clamp(40px, 8vw, 160px);
   /* Skills columns: "Fähigkeiten" at 90px needs about 550px */
@@ -162,6 +165,11 @@
   --lh-body: 1.6;
 }
 
+/* "I am" is shorter than "Ich bin"; a larger size keeps the same closed block */
+:root:lang(en) {
+  --fs-deco-i-am: calc(var(--fs-hero-name) * 0.67);
+}
+
 @media (min-width: 900px) {
   :root {
     --navbar-height: 109px;
@@ -174,32 +182,6 @@
     --fs-lead: 32px;
     --field-message-height: 202px;
     --lead-rule-gap: 32px;
-  }
-}
-
-/* Wide screens show the 1600px layout scaled up instead of a small box in
-   the middle. Media queries still see the real screen width. */
-@media (min-width: 1920px) {
-  :root {
-    --zoom: 1.2;
-  }
-}
-
-@media (min-width: 2560px) {
-  :root {
-    --zoom: 1.6;
-  }
-}
-
-@media (min-width: 3200px) {
-  :root {
-    --zoom: 2;
-  }
-}
-
-@media (min-width: 3840px) {
-  :root {
-    --zoom: 2.4;
   }
 }
 

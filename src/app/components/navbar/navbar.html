@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar__right">
-      <nav class="navbar__nav" aria-label="Hauptnavigation">
+      <nav class="navbar__nav" [attr.aria-label]="lang.dict().nav.mainLabel">
         <a class="navbar__link" routerLink="/" fragment="about">{{ lang.dict().nav.about }}</a>
         <a class="navbar__link" routerLink="/" fragment="skills">{{ lang.dict().nav.skills }}</a>
         <a class="navbar__link" routerLink="/" fragment="portfolio">{{
@@ -23,7 +23,7 @@
         <a class="navbar__link" routerLink="/" fragment="contact">{{ lang.dict().nav.contact }}</a>
       </nav>
 
-      <div class="navbar__lang" role="group" aria-label="Sprache wählen">
+      <div class="navbar__lang" role="group" [attr.aria-label]="lang.dict().nav.langLabel">
         <button
           type="button"
           class="navbar__lang-btn"
@@ -49,7 +49,7 @@
         class="navbar__burger"
         [class.is-open]="menuOpen()"
         [attr.aria-expanded]="menuOpen()"
-        aria-label="Menü öffnen oder schließen"
+        [attr.aria-label]="lang.dict().nav.menuLabel"
         (click)="toggleMenu()"
       >
         <span></span>
@@ -61,7 +61,7 @@
 </header>
 
 @if (menuOpen()) {
-  <nav class="navbar__overlay" aria-label="Mobile Navigation">
+  <nav class="navbar__overlay" [attr.aria-label]="lang.dict().nav.mobileLabel">
     <a routerLink="/" fragment="about" (click)="closeMenu()">{{ lang.dict().nav.about }}</a>
     <a routerLink="/" fragment="skills" (click)="closeMenu()">{{ lang.dict().nav.skills }}</a>
     <a routerLink="/" fragment="portfolio" (click)="closeMenu()">{{ lang.dict().nav.portfolio }}</a>

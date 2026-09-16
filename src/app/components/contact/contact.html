@@ -19,6 +19,7 @@
             class="contact__input"
             type="text"
             formControlName="name"
+            (blur)="check('name')"
             autocomplete="name"
             [attr.aria-invalid]="showError('name')"
           />
@@ -36,6 +37,7 @@
             class="contact__input"
             type="email"
             formControlName="email"
+            (blur)="check('email')"
             autocomplete="email"
             [attr.aria-invalid]="showError('email')"
           />
@@ -55,6 +57,7 @@
             class="contact__input contact__textarea"
             rows="5"
             formControlName="message"
+            (blur)="check('message')"
             [attr.aria-invalid]="showError('message')"
           ></textarea>
           <span class="contact__error" aria-live="polite">
@@ -69,6 +72,8 @@
             id="contact-privacy"
             type="checkbox"
             formControlName="privacy"
+            (blur)="check('privacy')"
+            (change)="check('privacy')"
             [attr.aria-invalid]="showError('privacy')"
           />
           <label for="contact-privacy">

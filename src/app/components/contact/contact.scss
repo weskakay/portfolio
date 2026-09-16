@@ -2,8 +2,7 @@
   position: relative;
   z-index: 1;
   padding: var(--section-pad-y) var(--section-pad-x);
-  /* clips the accent rule where it runs past the edge, without a scroll box */
-  overflow-x: clip;
+  container-type: inline-size;
 }
 
 .contact__inner {
@@ -23,10 +22,16 @@
 /* Centred on the page on every width, as in the design file. */
 .contact__heading {
   --rule-gradient: var(--color-accent-lime);
-  margin: 0 auto;
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
   color: var(--color-white);
+}
+
+/* Invisible twin of the rule, so the heading stays in the middle. */
+.contact__heading::before {
+  content: '';
+  flex: 1 1 0;
+  margin-left: calc(-1 * var(--edge-gap));
 }
 
 .contact__lead-col {
@@ -50,7 +55,7 @@
   top: calc(var(--fs-lead) * var(--lh-default) / 2);
   transform: translateY(-50%);
   right: calc(100% + var(--lead-rule-gap));
-  width: 100vw;
+  width: calc(var(--edge-gap) - var(--lead-rule-gap));
   height: var(--rule-size);
   background: var(--color-accent-blue);
 }
@@ -153,10 +158,18 @@
   transform: translate(-50%, -50%);
 }
 
+/* Room for the message is kept free, so it never pushes the form down. On a
+   phone the longer ones take two lines. */
 .contact__error {
-  min-height: var(--space-md);
+  min-height: calc(2 * var(--lh-default) * 1em);
   font-size: var(--fs-body);
   color: var(--color-error);
+}
+
+@media (min-width: 600px) {
+  .contact__error {
+    min-height: calc(var(--lh-default) * 1em);
+  }
 }
 
 .contact__submit {

@@ -20,15 +20,17 @@
     'stage stage stage'
     'prev dots next';
   align-items: center;
-  gap: var(--space-md) var(--space-md);
+  /* no column gap on the smallest phones, so the controls also fit next to a
+     classic scrollbar: arrow + five 44px dots + arrow = 300px */
+  gap: var(--space-md) 0;
+  /* phone: stage and controls use the full screen width */
+  margin-inline: calc(-1 * var(--section-pad-x));
 }
 
 .records__stage {
   grid-area: stage;
   position: relative;
   height: calc(var(--records-cover) + 2 * var(--space-lg));
-  /* phone: runs out to the screen edges instead of stopping at the padding */
-  margin-inline: calc(-1 * var(--section-pad-x));
   overflow-x: clip;
   touch-action: pan-y;
   user-select: none;
@@ -133,6 +135,12 @@
   white-space: nowrap;
 }
 
+@media (min-width: 340px) {
+  .records {
+    column-gap: var(--space-sm);
+  }
+}
+
 /* Wide screens: the row sits in a column, so the sleeves take what the column
    leaves after the strips and gaps, and the whole row stays centred. */
 @media (min-width: 900px) {
@@ -146,9 +154,7 @@
     --records-lean: 50deg;
     --records-perspective: 1200px;
     container-type: inline-size;
-  }
-
-  .records__stage {
+    column-gap: var(--space-md);
     margin-inline: 0;
   }
 

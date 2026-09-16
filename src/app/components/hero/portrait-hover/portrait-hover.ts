@@ -14,7 +14,9 @@ import { FRAGMENT_SHADER, VERTEX_SHADER } from './portrait-shaders';
 /**
  * Portrait with a liquid WebGL reveal that runs on every device: the football
  * photo washes over the business photo automatically and follows the pointer
- * on desktop. Falls back to a photo crossfade when WebGL is unavailable.
+ * on desktop. The photo change is the point of the section, so it keeps
+ * running with reduced motion too. Falls back to a photo crossfade when
+ * WebGL2 is unavailable.
  */
 @Component({
   selector: 'app-portrait-hover',
@@ -56,6 +58,7 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
 
   /** Load textures, build the scene, wire events and start rendering. */
   private async initWebgl(): Promise<void> {
+    if (!this.canAnimate()) return;
     const [texA, texB] = await this.loadTextures();
     this.createRenderer();
     this.buildScene(texA, texB);
@@ -66,11 +69,21 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
     this.ready.set(true);
   }
 
-  /** Load both portrait images as textures. */
+  /** Only with a WebGL2 context, otherwise the photo crossfade takes over. */
+  private canAnimate(): boolean {
+    return document.createElement('canvas').getContext('webgl2') !== null;
+  }
+
+  /** Load both portrait images as textures, premultiplied so the cut-out edge filters clean. */
   private loadTextures(): Promise<[THREE.Texture, THREE.Texture]> {
     const loader = new THREE.TextureLoader();
     const load = (url: string): Promise<THREE.Texture> =>
-      new Promise((done) => loader.load(url, (texture) => done(texture)));
+      new Promise((done) =>
+        loader.load(url, (texture) => {
+          texture.premultiplyAlpha = true;
+          done(texture);
+        }),
+      );
     return Promise.all([load(this.business()), load(this.football())]);
   }
 
@@ -86,6 +99,7 @@ export class PortraitHover implements AfterViewInit, OnDestroy {
   private buildScene(texA: THREE.Texture, texB: THREE.Texture): void {
     this.material = new THREE.ShaderMaterial({
       transparent: true,
+      premultipliedAlpha: true,
       vertexShader: VERTEX_SHADER,
       fragmentShader: FRAGMENT_SHADER,
       uniforms: this.createUniforms(texA, texB),

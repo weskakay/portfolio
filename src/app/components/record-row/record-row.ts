@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { LanguageService } from '../../services/language.service';
-import { pageZoom } from '../../page-zoom';
 
 /** One sleeve in the row: the title announced for it and the label read out on it. */
 export interface RecordItem {
@@ -131,7 +130,7 @@ export class RecordRow {
   /** A sideways drag flips one record, a longer one several. */
   protected onPointerUp(event: PointerEvent): void {
     if (this.dragStart === null) return;
-    const distance = (event.clientX - this.dragStart) / pageZoom();
+    const distance = event.clientX - this.dragStart;
     this.dragStart = null;
     if (Math.abs(distance) < SWIPE_DISTANCE) return;
     this.dragged = true;

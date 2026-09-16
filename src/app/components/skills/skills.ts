@@ -36,8 +36,8 @@ export class Skills {
       id: 'frontend',
       accent: 'lime',
       skills: [
-        { name: 'HTML5', icon: 'html' },
-        { name: 'CSS3', icon: 'css' },
+        { name: 'HTML', icon: 'html' },
+        { name: 'CSS', icon: 'css' },
         { name: 'SCSS', icon: 'sass' },
         { name: 'JavaScript', icon: 'javascript' },
         { name: 'TypeScript', icon: 'typescript' },

@@ -13,6 +13,11 @@ export interface Dictionary {
     gallery: string;
     contact: string;
     toContact: string;
+    /** Screen reader names of the navigation landmarks and the menu button. */
+    mainLabel: string;
+    mobileLabel: string;
+    langLabel: string;
+    menuLabel: string;
   };
   hero: {
     iam: string;
@@ -103,6 +108,7 @@ export interface Dictionary {
     rights: string;
     impressum: string;
     datenschutz: string;
+    legalLabel: string;
   };
   legal: {
     back: string;
@@ -123,6 +129,10 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       gallery: 'Galerie',
       contact: 'Kontakt',
       toContact: 'Zum Kontaktformular',
+      mainLabel: 'Hauptnavigation',
+      mobileLabel: 'Mobile Navigation',
+      langLabel: 'Sprache wählen',
+      menuLabel: 'Menü öffnen oder schließen',
     },
     hero: {
       iam: 'Ich bin',
@@ -217,6 +227,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       rights: 'Alle Rechte vorbehalten.',
       impressum: 'Impressum',
       datenschutz: 'Datenschutz',
+      legalLabel: 'Rechtliches',
     },
     legal: {
       back: 'Zurück zur Startseite',
@@ -234,6 +245,10 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       gallery: 'Gallery',
       contact: 'Contact',
       toContact: 'Go to the contact form',
+      mainLabel: 'Main navigation',
+      mobileLabel: 'Mobile navigation',
+      langLabel: 'Choose language',
+      menuLabel: 'Open or close the menu',
     },
     hero: {
       iam: 'I am',
@@ -328,6 +343,7 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       rights: 'All rights reserved.',
       impressum: 'Legal notice',
       datenschutz: 'Privacy',
+      legalLabel: 'Legal',
     },
     legal: {
       back: 'Back to home',

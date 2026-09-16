@@ -1,8 +1,6 @@
 .portfolio {
   position: relative;
   z-index: 1;
-  /* clips the accent rule where it runs past the edge */
-  overflow-x: clip;
   padding: var(--section-pad-y) var(--section-pad-x);
 }
 
@@ -30,11 +28,19 @@
 .portfolio__grid {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-xl);
+  /* two small cards side by side already on a phone */
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg) var(--space-md);
+}
+
+/* Cards in a row share one height: names start on one line and the details
+   link sits on the bottom edge, however long a name is. */
+.portfolio__grid > li {
+  display: flex;
 }
 
 .card {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
@@ -103,6 +109,7 @@
 }
 
 .card__meta {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
@@ -113,6 +120,7 @@
    overlay. Under the title, so it stays clear of the logo. */
 .card__action {
   display: none;
+  margin-top: auto;
   font-size: var(--fs-body);
   font-weight: var(--fw-bold);
   color: var(--color-accent-lime);
@@ -160,23 +168,25 @@
 }
 
 .card__title {
-  font-size: var(--fs-overlay-link);
+  font-size: var(--fs-nav);
   font-weight: var(--fw-bold);
   color: var(--color-white);
 }
 
-/* Two cards side by side as soon as there is room, so eleven projects do not
-   turn into eleven screens of scrolling. */
-@media (min-width: 600px) {
+/* Three on a tablet, four on a wide screen, with the full size name. */
+@media (min-width: 900px) {
   .portfolio__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
+  }
+
+  .card__title {
+    font-size: var(--fs-subtitle);
   }
 }
 
-/* Three on a wide screen, so a single tile does not fill half the viewport. */
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   .portfolio__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }

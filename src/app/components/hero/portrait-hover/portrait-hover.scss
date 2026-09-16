@@ -39,16 +39,7 @@
   display: none;
 }
 
-/* Touch devices get no WebGL, so gently cross-dissolve the two photos instead */
-@media (hover: none), (pointer: coarse) {
-  .ph__fallback--football {
-    animation: ph-crossfade 8s ease-in-out infinite;
-  }
-}
-
-/* Someone who asked for less motion gets the business photo, held still */
-@media (prefers-reduced-motion: reduce) {
-  .ph__fallback--football {
-    animation: none;
-  }
+/* Without WebGL2 the two photos cross-dissolve instead */
+.ph__fallback--football {
+  animation: ph-crossfade 8s ease-in-out infinite;
 }

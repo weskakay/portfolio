@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-height: calc(100 * var(--svh));
+  min-height: 100svh;
 }
 
 app-footer {
@@ -18,9 +18,9 @@ app-footer {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(calc(42 * var(--vw)) calc(42 * var(--vw)) at 96% 8%, var(--color-glow-blue), transparent 60%),
-    radial-gradient(calc(44 * var(--vw)) calc(44 * var(--vw)) at 2% 34%, var(--color-glow-purple), transparent 60%),
-    radial-gradient(calc(38 * var(--vw)) calc(38 * var(--vw)) at 92% 60%, var(--color-glow-lime), transparent 60%),
-    radial-gradient(calc(42 * var(--vw)) calc(42 * var(--vw)) at 4% 88%, var(--color-glow-magenta), transparent 60%);
+    radial-gradient(42vw 42vw at 96% 8%, var(--color-glow-blue), transparent 60%),
+    radial-gradient(44vw 44vw at 2% 34%, var(--color-glow-purple), transparent 60%),
+    radial-gradient(38vw 38vw at 92% 60%, var(--color-glow-lime), transparent 60%),
+    radial-gradient(42vw 42vw at 4% 88%, var(--color-glow-magenta), transparent 60%);
   background-repeat: no-repeat;
 }

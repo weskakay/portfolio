@@ -40,7 +40,7 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 16 / 10;
-  max-height: calc(50 * var(--dvh));
+  max-height: 50dvh;
   scroll-snap-align: start;
 }
 

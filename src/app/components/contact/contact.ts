@@ -1,4 +1,5 @@
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -13,8 +14,8 @@ type Field = 'name' | 'email' | 'message' | 'privacy';
 
 /**
  * Contact section with a reactive form (name, email, message, privacy).
- * An error only appears once a field has been left, but it clears again
- * while typing as soon as the input is valid. The answer under the button
+ * A field is only checked when it is left, never while typing. Typing can
+ * clear an error that is shown, but it never brings one up. The answer under the button
  * prints itself out like a server response and clears after a few seconds.
  */
 @Component({
@@ -48,6 +49,9 @@ export class Contact {
   /** The part of that answer the typing has reached, so a language switch follows. */
   protected readonly typedText = computed(() => this.answer().slice(0, this.revealed()));
 
+  /** Fields that were invalid when they were last left. */
+  private readonly flagged = signal<ReadonlySet<Field>>(new Set());
+
   private successTimer?: ReturnType<typeof setTimeout>;
   private typeTimer?: ReturnType<typeof setInterval>;
 
@@ -55,7 +59,7 @@ export class Contact {
     name: this.fb.nonNullable.control('', [Validators.required]),
     email: this.fb.nonNullable.control('', [
       Validators.required,
-      Validators.email,
+      // stricter than Validators.email, which lets "name@host" without a domain pass
       Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     ]),
     message: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(10)]),
@@ -64,20 +68,30 @@ export class Contact {
 
   constructor() {
     inject(DestroyRef).onDestroy(() => this.clearTimers());
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => this.unflagValid());
   }
 
-  /** Whether a control should show its error (invalid and already touched). */
+  /** Whether a control shows its error: it was invalid when left and still is. */
   protected showError(control: Field): boolean {
-    const c = this.form.controls[control];
-    return c.invalid && c.touched;
+    return this.flagged().has(control) && this.form.controls[control].invalid;
+  }
+
+  /** Check a field when it loses focus. */
+  protected check(control: Field): void {
+    if (this.form.controls[control].valid) return;
+    this.flagged.update((set) => new Set(set).add(control));
+  }
+
+  /** Drop the errors that typing has fixed, so they do not return on the next key. */
+  private unflagValid(): void {
+    const stillInvalid = [...this.flagged()].filter((c) => this.form.controls[c].invalid);
+    if (stillInvalid.length !== this.flagged().size) this.flagged.set(new Set(stillInvalid));
   }
 
   /** Validate and submit the form. */
   protected async submit(): Promise<void> {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+    // the button is disabled then; this still stops a submit that gets through another way
+    if (this.form.invalid) return;
     this.clearTimers();
     this.status.set('sending');
     await this.send();

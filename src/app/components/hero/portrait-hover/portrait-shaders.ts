@@ -64,7 +64,7 @@ void main() {
   vec4 color = mix(colorA, colorB, rev);
 
   // lime shimmer along the transition edge (only on the figure)
-  color.rgb = mix(color.rgb, uTint, edge * 0.3 * color.a);
+  color.rgb = mix(color.rgb, uTint * color.a, edge * 0.3 * color.a);
 
   gl_FragColor = color;
 }

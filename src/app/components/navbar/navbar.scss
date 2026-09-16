@@ -252,9 +252,21 @@
 }
 
 .navbar__overlay a {
+  position: relative;
   color: var(--color-white);
   font-size: var(--fs-overlay-link);
   font-weight: var(--fw-bold);
+}
+
+/* A full tap target without pushing the links apart. */
+.navbar__overlay a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: max(100%, var(--tap-target));
+  transform: translateY(-50%);
 }
 
 .navbar__overlay a:hover,
