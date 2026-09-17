@@ -2,8 +2,10 @@
   display: none;
 }
 
-/* Only phones in landscape (short height): cover the page and ask to rotate back */
-@media (orientation: landscape) and (max-height: 500px) {
+/* Only touch phones in landscape (short height): cover the page and ask to rotate
+   back. A desktop window can be just as wide and low (dev tools docked at the
+   bottom, a snapped window), but it has a mouse, so it never gets the hint. */
+@media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
   .rotate {
     position: fixed;
     inset: 0;

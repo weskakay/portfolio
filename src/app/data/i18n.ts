@@ -81,8 +81,15 @@ export interface Dictionary {
     subtitle: string;
     prev: string;
     next: string;
-    /** Label of a position dot. `%1` is the position, `%2` how many there are. */
+    /** Label of a position dot. `%1` is the photo number, `%2` how many there are. */
     goTo: string;
+    /** Announced on every move. `%1` is the photo number, `%2` how many there are. */
+    position: string;
+    /** Label of a photo that opens it large. `%1` and `%2` as above. */
+    open: string;
+    /** Accessible name of the large view. */
+    lightbox: string;
+    close: string;
   };
   contact: {
     heading: string;
@@ -200,7 +207,11 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       subtitle: 'Ein paar Momente auf und neben dem Platz.',
       prev: 'Vorheriges Bild',
       next: 'Nächstes Bild',
-      goTo: 'Zu Abschnitt %1 von %2 springen',
+      goTo: 'Bild %1 von %2 anzeigen',
+      position: 'Bild %1 von %2',
+      open: 'Bild %1 von %2 groß anzeigen',
+      lightbox: 'Galerie, Großansicht',
+      close: 'Großansicht schließen',
     },
     contact: {
       heading: 'Kontakt',
@@ -316,7 +327,11 @@ export const TRANSLATIONS: Record<Lang, Dictionary> = {
       subtitle: 'A few moments on and off the pitch.',
       prev: 'Previous photo',
       next: 'Next photo',
-      goTo: 'Go to section %1 of %2',
+      goTo: 'Show photo %1 of %2',
+      position: 'Photo %1 of %2',
+      open: 'Open photo %1 of %2 large',
+      lightbox: 'Gallery, large view',
+      close: 'Close large view',
     },
     contact: {
       heading: 'Contact',

@@ -9,6 +9,8 @@
   --edge-gap: calc(var(--section-pad-x) + max(0px, (100cqw - var(--max-width)) / 2 - var(--section-pad-x)));
   /* where the photos fade out at both ends of the band */
   --gallery-fade: var(--section-pad-x);
+  /* the widest a photo may get and still show in full between both fades */
+  --gallery-room: calc(100cqw - 2 * var(--gallery-fade));
   container-type: inline-size;
   display: flex;
   flex-direction: column;
@@ -45,17 +47,20 @@
   color: var(--color-white);
 }
 
-/* The row is moved by hand: arrows, a swipe or a sideways trackpad gesture.
+/* The row is moved with the arrows, the dots, the arrow keys, a swipe or a
+   sideways trackpad gesture, and always settles with one photo in the middle.
+   It is the offset parent of the photos, so their offsets are row coordinates.
    Up to 1440 it runs to the screen edges and the photos fade out in the side
    margin. The photos are content, so wider screens keep them inside the
    content box (see the container query below). */
 .gallery__viewport {
+  position: relative;
   width: 100%;
   margin: 0 auto;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--gallery-fade);
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -73,14 +78,21 @@
   );
 }
 
-/* the row is wider than the screen, so it scrolls sideways inside the viewport */
+.gallery__viewport:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: -2px;
+}
+
+/* The row is wider than the screen, so it scrolls sideways inside the viewport.
+   Half a viewport of padding at both ends lets the first and the last photo
+   reach the middle as well. */
 .gallery__collage {
   display: flex;
   align-items: center;
   gap: var(--space-md);
   width: max-content;
   height: 56svh;
-  padding: 0 var(--gallery-fade);
+  padding: 0 50%;
 }
 
 /* From 1440 content plus two full side margins (100px each) the band ends on
@@ -109,33 +121,42 @@
   align-self: flex-end;
 }
 
+/* Each photo is a button that opens the large view. */
 .gallery__frame {
   position: relative;
+  display: block;
   width: auto;
+  padding: 0;
   overflow: hidden;
   border-radius: var(--btn-radius);
   border: 1px solid var(--color-border-subtle);
   background: var(--color-surface);
+  cursor: zoom-in;
+}
+
+.gallery__frame:focus-visible {
+  outline: 2px solid var(--color-accent-lime);
+  outline-offset: 2px;
 }
 
 /* tile shapes and heights below are collage layout, not shared tokens */
 .gallery__tile--portrait .gallery__frame {
-  height: 46svh;
+  height: min(46svh, var(--gallery-room) * 4 / 3);
   aspect-ratio: 3 / 4;
 }
 
 .gallery__tile--landscape .gallery__frame {
-  height: 34svh;
+  height: min(34svh, var(--gallery-room) * 3 / 4);
   aspect-ratio: 4 / 3;
 }
 
 .gallery__tile--square .gallery__frame {
-  height: 40svh;
+  height: min(40svh, var(--gallery-room));
   aspect-ratio: 1 / 1;
 }
 
 .gallery__tile--tall .gallery__frame {
-  height: 52svh;
+  height: min(52svh, var(--gallery-room) * 3 / 2);
   aspect-ratio: 2 / 3;
 }
 
@@ -175,19 +196,19 @@
   }
 
   .gallery__tile--portrait .gallery__frame {
-    height: 54svh;
+    height: min(54svh, var(--gallery-room) * 4 / 3);
   }
 
   .gallery__tile--landscape .gallery__frame {
-    height: 38svh;
+    height: min(38svh, var(--gallery-room) * 3 / 4);
   }
 
   .gallery__tile--square .gallery__frame {
-    height: 44svh;
+    height: min(44svh, var(--gallery-room));
   }
 
   .gallery__tile--tall .gallery__frame {
-    height: 60svh;
+    height: min(60svh, var(--gallery-room) * 3 / 2);
   }
 }
 
@@ -202,3 +223,42 @@
   margin: 0 auto;
 }
 
+/* The dots are a band: every dot keeps its element while the active photo
+   changes and slides to its new place. Five show, one more waits invisible at
+   each end to slide in. */
+.gallery__dots {
+  position: relative;
+  display: block;
+  width: calc(5 * var(--tap-target));
+}
+
+.gallery__dot {
+  position: absolute;
+  top: 0;
+  left: calc(50% - var(--tap-target) / 2);
+  translate: calc(var(--offset) * var(--tap-target)) 0;
+}
+
+/* waits under the outer visible dot, so the band never sticks out */
+.gallery__dot.is-hidden {
+  translate: calc(var(--offset) * var(--tap-target) * 2 / 3) 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery__dot {
+    transition:
+      translate 300ms,
+      opacity 300ms;
+  }
+}
+
+.gallery__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

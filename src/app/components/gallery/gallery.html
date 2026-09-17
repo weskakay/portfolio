@@ -4,18 +4,38 @@
     <p class="gallery__subtitle">{{ lang.dict().gallery.subtitle }}</p>
   </div>
 
-  <div #viewport class="gallery__viewport" (scroll)="measure()">
+  <div
+    #viewport
+    class="gallery__viewport"
+    role="region"
+    tabindex="0"
+    [attr.aria-label]="lang.dict().gallery.heading"
+    (scroll)="onScroll()"
+    (pointerdown)="takeOver()"
+    (wheel)="takeOver()"
+    (keydown)="onKeydown($event)"
+  >
     <div class="gallery__collage">
-      @for (shot of shots; track shot.id) {
-        <figure class="gallery__tile gallery__tile--{{ shot.ratio }}">
-          <div class="gallery__frame">
+      @for (shot of row; track $index; let i = $index) {
+        <figure
+          #tile
+          class="gallery__tile gallery__tile--{{ shot.ratio }}"
+          [attr.aria-hidden]="isCopy(i) || null"
+        >
+          <button
+            type="button"
+            class="gallery__frame"
+            [attr.tabindex]="isCopy(i) ? -1 : null"
+            [attr.aria-label]="label(lang.dict().gallery.open, i % shots.length)"
+            (click)="open(i)"
+          >
             <img
               class="gallery__img"
               [src]="shot.image"
               [alt]="shot.alt[lang.lang()]"
               loading="lazy"
             />
-          </div>
+          </button>
         </figure>
       }
     </div>
@@ -26,22 +46,26 @@
       type="button"
       class="arrow-btn"
       [attr.aria-label]="lang.dict().gallery.prev"
-      (click)="step(-1)"
+      (click)="moveBy(-1)"
     >
       <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M15 4l-8 8 8 8" />
       </svg>
     </button>
 
-    <div class="dot-nav">
-      @for (dot of dots; track dot) {
+    <div class="dot-nav gallery__dots">
+      @for (dot of dots(); track dot.position) {
         <button
           type="button"
-          class="dot-nav__dot"
-          [class.is-active]="dot === active()"
-          [attr.aria-current]="dot === active() ? 'true' : null"
-          [attr.aria-label]="dotLabel(dot)"
-          (click)="goToDot(dot)"
+          class="dot-nav__dot gallery__dot"
+          [class.is-active]="dot.offset === 0"
+          [class.is-hidden]="dot.hidden"
+          [style.--offset]="dot.offset"
+          [attr.tabindex]="dot.hidden ? -1 : null"
+          [attr.aria-hidden]="dot.hidden || null"
+          [attr.aria-current]="dot.offset === 0 ? 'true' : null"
+          [attr.aria-label]="label(lang.dict().gallery.goTo, dot.photo)"
+          (click)="moveBy(dot.offset)"
         ></button>
       }
     </div>
@@ -50,11 +74,22 @@
       type="button"
       class="arrow-btn"
       [attr.aria-label]="lang.dict().gallery.next"
-      (click)="step(1)"
+      (click)="moveBy(1)"
     >
       <svg class="arrow-icon arrow-icon--next" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M15 4l-8 8 8 8" />
       </svg>
     </button>
   </div>
+
+  <p class="gallery__sr" aria-live="polite">{{ label(lang.dict().gallery.position, active()) }}</p>
+
+  @if (isOpen()) {
+    <app-gallery-lightbox
+      [shots]="shots"
+      [index]="active()"
+      (step)="moveBy($event)"
+      (closed)="onClosed()"
+    />
+  }
 </section>

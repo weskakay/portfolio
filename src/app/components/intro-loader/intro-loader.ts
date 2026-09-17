@@ -89,9 +89,10 @@ export class IntroLoader implements AfterViewInit, OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  /** Skip on reduced motion, or when the intro already ran in this tab. */
+  /** Skip on reduced motion, on a direct visit to a legal page, or when it already ran in this tab. */
   private shouldSkip(): boolean {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+    if (location.pathname !== '/') return true;
     return this.readSeen();
   }
 

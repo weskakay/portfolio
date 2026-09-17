@@ -1,19 +1,22 @@
-/* Same content box and padding as every section, so the heading lines up with
-   the logo above it. The box grows by its own padding, otherwise the text would
-   sit one padding further in than every section heading. The reading measure is
-   capped on the text itself. */
+/* Same content box and padding as every section, so the text runs from the logo
+   to the end of the navigation. The page is a size container for --edge-gap,
+   which lets the heading rule reach the screen edge. */
 .legal {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  max-width: calc(var(--max-width) + 2 * var(--section-pad-x));
-  margin: 0 auto;
-  padding: calc(var(--navbar-height) + var(--space-xl)) var(--section-pad-x) var(--space-xl);
+  padding: calc(var(--navbar-height) + var(--space-xl)) var(--section-pad-x) var(--section-pad-y);
   padding-left: max(var(--section-pad-x), env(safe-area-inset-left));
   padding-right: max(var(--section-pad-x), env(safe-area-inset-right));
   min-height: 70vh;
   min-height: 70svh;
   color: var(--color-white);
+  container-type: inline-size;
+}
+
+.legal__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
 .legal__back {
@@ -26,23 +29,49 @@
   text-decoration: underline;
 }
 
+/* On phones the heading starts on the content edge and the rule runs to the
+   right, as in the mobile design. The rule keeps a minimum length, so it does
+   not vanish when a long heading wraps. */
 .legal__heading {
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
+}
+
+.legal__heading::after {
+  min-width: var(--space-xl);
+}
+
+/* From 900 the heading is centred with the rule on both sides. The left one is
+   the mirror image of the right, so both fade in from the screen edge. */
+@media (min-width: 900px) {
+  .legal__heading {
+    text-align: center;
+  }
+
+  .legal__heading::before {
+    content: '';
+    flex: 1 1 0;
+    min-width: var(--space-xl);
+    height: var(--rule-size);
+    margin-left: calc(-1 * var(--edge-gap));
+    background: var(--rule-gradient);
+    transform: scaleX(-1);
+  }
 }
 
 .legal__text {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  max-width: var(--max-width-text);
   line-height: var(--lh-body);
   overflow-wrap: break-word;
 }
 
 .legal__text h2 {
-  margin-top: var(--space-md);
-  font-size: var(--fs-body);
+  margin-top: var(--space-lg);
+  /* a step above the body text, close to the section titles in the design */
+  font-size: var(--fs-nav);
+  color: var(--color-accent-lime);
   font-weight: var(--fw-bold);
 }
 
