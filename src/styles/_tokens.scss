@@ -10,7 +10,8 @@
   --color-accent-lime: #70e61c;
   --color-accent-purple: #9747ff;
   --color-secundario: #00bc8f;
-  /* "Blue" from the design file, for the skills rule and the contact lead rule */
+  /* "Blue" from the design file, for the skills rule, the contact lead rule and
+     links in the legal text */
   --color-accent-blue: #1cdae6;
   --color-magenta: #fb47ff;
   --color-yellow: #ff9900;
@@ -122,6 +123,8 @@
      stay small or the rule would not show at all on its own side. */
   --rule-gap: var(--space-sm);
   --rule-gradient: linear-gradient(90deg, var(--color-accent-lime), var(--color-accent-purple));
+  /* Short rule left of the centred legal page heading, as in the design at 1440 */
+  --rule-lead-length: 130px;
 
   /* Surfaces + overlays */
   --color-overlay: rgba(0, 0, 0, 0.7);

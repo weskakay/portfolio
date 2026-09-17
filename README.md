@@ -34,10 +34,10 @@ The contact form posts to a PHP script on the same host instead of a third party
 ✅ Portfolio grid with a detail view per project: image slider, links to the live demo and the code, and a bar to flip on to the next project without closing
 ✅ Every web project runs on its own subdomain and is linked from its detail view
 ✅ Skills sorted into five blueprint cards that flip with arrows, dots, keys, a drag or a swipe
-✅ Photo gallery moved by arrows, dots or a swipe
+✅ Endless photo carousel, one photo per step with arrows, dots, keys or a swipe, and a large view per photo
 ✅ One arrow and one button style shared by the whole site, with the same state on hover and on keyboard focus
 ✅ Content capped at 1440px, only the accent rules run to the screen edge, with no overflow clipping on the page
-✅ Intro loader covering the first paint
+✅ Intro loader covering the first paint of the home page
 ✅ Pointer reactive portrait in the about section, built on Three.js
 ✅ Contact form that validates a field when you leave it, posting to a PHP mailer on the same origin
 ✅ Imprint and privacy pages on their own routes
@@ -97,7 +97,7 @@ portfolio/
 │   │   │   ├── skills/          # Skill areas as blueprint cards
 │   │   │   ├── record-row/      # The rack the skill cards flip through
 │   │   │   ├── portfolio/       # Project grid, detail modal, image slider
-│   │   │   ├── gallery/         # Photo row with arrows and dots
+│   │   │   ├── gallery/         # Photo carousel and its large view
 │   │   │   ├── contact/
 │   │   │   ├── navbar/ footer/
 │   │   │   ├── intro-loader/

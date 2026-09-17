@@ -30,22 +30,23 @@
 }
 
 /* On phones the heading starts on the content edge and the rule runs to the
-   right, as in the mobile design. The rule keeps a minimum length, so it does
-   not vanish when a long heading wraps. */
+   right, as in the mobile design. The rule may shrink to nothing beside a long
+   word like Datenschutz, so it never widens the page. */
 .legal__heading {
   font-size: var(--fs-section);
   font-weight: var(--fw-bold);
 }
 
-.legal__heading::after {
-  min-width: var(--space-xl);
-}
-
-/* From 900 the heading is centred with the rule on both sides. The left one is
-   the mirror image of the right, so both fade in from the screen edge. */
+/* From 900 the heading is centred. The rule on the right runs to the screen
+   edge, on the left only a short piece shows next to the heading. The left
+   side still takes the same room as the right, so the heading stays centred. */
 @media (min-width: 900px) {
   .legal__heading {
     text-align: center;
+  }
+
+  .legal__heading::after {
+    min-width: var(--space-xl);
   }
 
   .legal__heading::before {
@@ -54,7 +55,7 @@
     min-width: var(--space-xl);
     height: var(--rule-size);
     margin-left: calc(-1 * var(--edge-gap));
-    background: var(--rule-gradient);
+    background: var(--rule-gradient) left / min(var(--rule-lead-length), 100%) 100% no-repeat;
     transform: scaleX(-1);
   }
 }
@@ -69,14 +70,19 @@
 
 .legal__text h2 {
   margin-top: var(--space-lg);
-  /* a step above the body text, close to the section titles in the design */
-  font-size: var(--fs-nav);
-  color: var(--color-accent-lime);
+  /* 23px on phones and 32px on desktop, close to the design (23 / 33) */
+  font-size: var(--fs-lead);
+  color: var(--color-accent-purple);
   font-weight: var(--fw-bold);
 }
 
 .legal__text a {
-  color: var(--color-accent-lime);
+  color: var(--color-accent-blue);
+}
+
+.legal__text a:hover,
+.legal__text a:focus-visible {
+  text-decoration: underline;
 }
 
 .legal__note {
