@@ -1,5 +1,7 @@
 /* The dialog fills the screen; its own padding is the area a click closes on. */
 .lightbox {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,11 +28,13 @@
   opacity: 0.95;
 }
 
-/* the whole photo, never cropped, leaving room for the controls below */
+/* The photo takes the room above the controls and is centred in it, never
+   cropped. Taking the full height keeps the controls in the same place on
+   every photo, so you can click on and on without moving the mouse. */
 .lightbox__img {
+  flex: 1;
   min-height: 0;
   max-width: min(100%, var(--max-width));
-  max-height: 100%;
   object-fit: contain;
   border-radius: var(--btn-radius);
 }
@@ -45,6 +49,33 @@
   min-width: 4rem;
   text-align: center;
   font-variant-numeric: tabular-nums;
+}
+
+/* From 600 the arrows move out to the screen edges, level with the middle of
+   the photo, and the counter stays under it. The band spans the whole overlay
+   but takes no clicks itself, so a click beside the photo still closes. */
+@media (min-width: 600px) {
+  .lightbox__controls {
+    position: absolute;
+    inset: var(--space-xl) var(--section-pad-x);
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .lightbox__controls .arrow-btn {
+    pointer-events: auto;
+  }
+
+  .lightbox__counter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    translate: -50% 0;
+  }
+
+  .lightbox__img {
+    max-width: min(calc(100% - 2 * (var(--tap-target) + var(--space-md))), var(--max-width));
+  }
 }
 
 /* same round lime button as the project dialog */
