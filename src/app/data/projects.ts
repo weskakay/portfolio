@@ -32,6 +32,33 @@ export function projectImages(project: Project): string[] {
 /** Portfolio entries in the order they appear on the page. */
 export const PROJECTS: readonly Project[] = [
   {
+    id: 'coderr',
+    title: 'Coderr',
+    description: {
+      de: 'Ein Marktplatz für Freelancer. Anbieter stellen eine Leistung in drei Paketen ein, Kunden bestellen ein Paket und bewerten danach. Mein Teil ist das Backend: eine REST-Schnittstelle in Django mit 23 Endpunkten, Rollen, Filtern, Suche, seitenweiser Ausgabe und Bild-Upload. Das Frontend war vorgegeben, die Schnittstelle musste sich genau danach richten.',
+      en: 'A marketplace for freelancers. Providers list a service in three packages, customers order a package and review it afterwards. My part is the backend: a REST API in Django with 23 endpoints, roles, filters, search, paging and image upload. The frontend was a given, so the API had to match it exactly.',
+    },
+    badges: ['Python', 'Django', 'DRF', 'REST API', 'SQLite'],
+    type: 'web',
+    image: '/images/projects/coderr.jpg',
+    shots: [
+      '/images/projects/coderr-offer.jpg',
+      '/images/projects/coderr-profile.jpg',
+      '/images/projects/coderr-stats.jpg',
+    ],
+    logo: '/images/projects/logos/coderr.svg',
+    liveUrl: 'https://coderr.weskakay.de',
+    repoUrl: 'https://github.com/weskakay/coderr',
+    highlight: {
+      de: 'Ein Angebot wird an drei Stellen verschieden gebraucht: in der Übersicht mit kurzen Links und dem Namen des Anbieters, auf seiner eigenen Seite mit vollständigen Links zu den drei Paketen, nach dem Speichern mit jedem Paket im Detail. Statt Verzweigungen im Code erbt die Übersicht von der Einzelansicht und tauscht nur die Links aus. Mindestpreis und kürzeste Lieferzeit rechnet die Datenbank in derselben Abfrage aus, Anbieter und Pakete kommen gleich mit. Wie viele Abfragen die Übersicht braucht, hängt deshalb nicht davon ab, wie viele Angebote es gibt.',
+      en: 'An offer is needed in three different shapes: in the list with short links and the name of its provider, on its own page with full links to the three packages, and after saving with every package written out. Instead of branching in code, the list inherits from the single view and only swaps the links. The lowest price and the fastest delivery are computed by the database in the same query, with provider and packages loaded alongside. The number of queries for the list therefore does not depend on how many offers there are.',
+    },
+    demoNote: {
+      de: 'Zum Ausprobieren gibt es zwei Gast-Zugänge. Der Knopf „Gäste-Login“ auf der Anmeldeseite lässt dich wählen, oder du meldest dich selbst an: andrey / asdasd als Kunde, kevin / asdasd24 als Anbieter. Als Anbieter legst du Angebote an und änderst den Status einer Bestellung, als Kunde bestellst du ein Paket und schreibst eine Bewertung.',
+      en: 'Two guest accounts are there to try it out. The guest login button on the sign-in page lets you pick one, or you sign in yourself: andrey / asdasd as a customer, kevin / asdasd24 as a provider. As a provider you create offers and change the status of an order, as a customer you order a package and write a review.',
+    },
+  },
+  {
     id: 'poll-app',
     title: 'Poll-App',
     description: {

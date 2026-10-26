@@ -71,6 +71,7 @@ export class Portfolio {
     Firebase: 'firebase',
     Vite: 'vite',
     Python: 'python',
+    Django: 'django',
     PHP: 'php',
     'C++': 'cplusplus',
     Docker: 'docker',
